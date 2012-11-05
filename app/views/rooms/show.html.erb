@@ -3,7 +3,7 @@
 <div id="showRoom">
   <div id="title" class="wrapper">
     <div id="title_content">
-      <div id="room_icon">
+      <div id="user_image">
       </div>
       <h3><%= @room.title %></h3>
     </div>
@@ -36,13 +36,6 @@
       </div>
     </div>
   </div>
-  <div id="videoPrompt">
-
-    <h4>Video Prompt</h4>
-    <div id="prompt">
-      <iframe width="420" height="315" src="" frameborder="1" allowfullscreen></iframe>
-    </div>
-  </div>
 
   <div id="chatroom">
     <div id="displayChat"><ul id=""></ul></div>
@@ -54,8 +47,6 @@
 </div>
 
 <div id="startRecording" class="btn" >Buttons for different video effects</div>
-
-
 
 <div id="info" room_id="<%= @room.id %>" tbSession="<%= @room.session_id %>" tbToken="<%= @token %>"></div>
 
