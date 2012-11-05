@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WebRTC Demo</title>
+  <link rel="stylesheet" href="/bootstrap/css/bootstrap.css" />
+  <link rel="stylesheet" href="/fontAwesome/css/font-awesome.css" />
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+  <script src="/bootstrap/js/bootstrap.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Carrois+Gothic+SC' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+  <div class="container">
+    <%= yield %>
+  </div>
+
+</body>
+</html>

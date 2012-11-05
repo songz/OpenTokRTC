@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  room_id: 1
+  imgdata: MyText
+  flag: 1
+  point: 1
+
+two:
+  room_id: 1
+  imgdata: MyText
+  flag: 1
+  point: 1

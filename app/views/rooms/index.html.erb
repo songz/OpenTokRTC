@@ -1,0 +1,114 @@
+<%=stylesheet_link_tag "rooms"%>
+
+<h2 class="roomsTitle">Rooms</h2>
+<ul id="roomList">
+<% @rooms.each do |room| %>
+  <li class="room_view" room="<%=room.id%>" href="#joinRoom" data-toggle="modal">
+    <span class="name"><%= room.title %></span>
+    <span class="description">
+      <i class="icon-info-sign"></i>
+      <p>
+        <%= room.description %>
+      </p>
+    </span>
+    <span class="liveSign">
+      <img src="/img/greenlight.png" alt="" />
+      Open
+    </span>
+
+    <h5 class="user_preview_header">Currently In Chat:</h5>
+    <ul id="user_preview">
+      <li><img src="http://7icons.files.wordpress.com/2010/08/user256.png?w=256&h=256" alt="" /></li>
+      <li><img src="http://7icons.files.wordpress.com/2010/08/user256.png?w=256&h=256" alt="" /></li>
+      <li><img src="http://7icons.files.wordpress.com/2010/08/user256.png?w=256&h=256" alt="" /></li>
+      <li><img src="http://7icons.files.wordpress.com/2010/08/user256.png?w=256&h=256" alt="" /></li>
+    </ul>
+  </li>
+<% end %>
+</ul>
+
+<br />
+
+<a href="#createRoom" data-toggle="modal" id="create_topic">Create Room</a>
+
+<div class="modal hide fade" id="createRoom">
+<%= form_for(@room) do |f| %>
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+  <h3>Create A Jam</h3>
+  </div>
+  <div class="modal-body">
+    <% if @room.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@room.errors.count, "error") %> prohibited this room from being saved:</h2>
+
+        <ul>
+          <% @room.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= f.text_field :title, placeholder:"Title:" %>
+    <%= f.text_area :description, {placeholder:"Description", id:"description", rows:10, cols:30} %>
+  </div>
+  <div class="modal-footer">
+    <%= f.submit "Create", :class=>"submitTopic" %>
+  </div>
+<% end %>
+</div>
+
+<div class="modal hide fade" id="joinRoom">
+<%= form_for(@client) do |f| %>
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+  <h3>Create A Jam</h3>
+  </div>
+  <div class="modal-body">
+    <% if @room.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@room.errors.count, "error") %> prohibited this room from being saved:</h2>
+
+        <ul>
+          <% @client.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div id="publisherContainer">
+      <div id="myPublisher"></div>
+    </div>
+
+    <%= f.text_field :name, placeholder:"Your Name" %>
+    <%= f.text_field :imgdata, type:"hidden" %>
+    <%= f.number_field :room_id, type:"hidden" %>
+  </div>
+  <div class="modal-footer">
+    <%= f.submit "Create", :class=>"submitTopic" %>
+  </div>
+<% end %>
+</div>
+
+
+
+<script id="room-template" type="text/x-handlebars-template">
+  <tr>
+    <td>{{archive_id}}</td>
+    <td>{{session_id}}</td>
+    <td>{{title}}</td>
+    <td>{{private}}</td>
+    <td>Show</td>
+    <td>Edit</td>
+    <td>Destroy</td>
+  </tr>
+</script>
+
+
+
+<script src="http://static.opentok.com/webrtc/v0.92-alpha/js/TB.min.js" type="text/javascript"></script>
+<script src="http://js.pusher.com/1.12/pusher.min.js"></script>
+<%= javascript_include_tag "handlebar" %>
+<%= javascript_include_tag "rooms" %>
