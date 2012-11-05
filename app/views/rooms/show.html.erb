@@ -15,25 +15,21 @@
         <div class="stream_content">
           <div id="streamv1" ></div>
         </div>
-        <a  href="#joinModal" data-toggle="modal" stream="streamv1" class="joinButton">Join Chat</a>
       </div>
       <div id="stream_2">
         <div class="stream_content">
           <div id="streamv2"></div>
         </div>
-        <a  href="#joinModal" data-toggle="modal" stream="streamv2" class="joinButton">Join Chat</a>
       </div>
       <div id="stream_3">
         <div class="stream_content">
           <div id="streamv3"></div>
         </div>
-        <a  href="#joinModal" data-toggle="modal" stream="streamv3" class="joinButton">Join Chat</a>
       </div>
       <div id="stream_4">
         <div class="stream_content">
           <div id="streamv4"></div>
         </div>
-        <a  href="#joinModal" data-toggle="modal" stream="streamv4" class="joinButton">Join Chat</a>
       </div>
     </div>
   </div>
@@ -52,30 +48,9 @@
 <div id="info" room_id="<%= @room.id %>" tbSession="<%= @room.session_id %>" tbToken="<%= @token %>"></div>
 
 
-<div id="joinModal" class="modal hide fade">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h3>Photo Snapshot</h3>
-  </div>
-  <div class="modal-body">
-    <div id="photoShoot">
-      <div id="myPublisher"></div>
-      <div id="photo_preview">
-        <img id="preview_img" src="http://graph.facebook.com/songzme/picture" alt="" />
-      </div>
-      <button id="retake" class="btn">retake</button>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <a href="#" data-dismiss="modal"  class="btn" id="finishPictureButton">Continue ...</a>
-  </div>
-</div>
-
 <script type="text/javascript">
-        var userName=""
-        $('.submitName').removeAttr('disabled')
+        window.userName = "<%= @client.name %>";
         $('#chatInput input').focus(function(){
-          console.log()
           $('.icon-comments-alt').css('color','#C40A68')
         })
         $('#chatInput input').focusout(function(){
