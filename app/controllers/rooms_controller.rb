@@ -15,7 +15,7 @@ class RoomsController < ApplicationController
   # GET /rooms/1
   # GET /rooms/1.json
   def show
-    @client_name = session[:client_name]
+    @client = Client.find session[:client_id]
     @room = Room.find(params[:id])
     @token = OTSDK.generateToken( :session_id=>@room.session_id, :role=>OpenTok::RoleConstants::PUBLISHER )
 
