@@ -20,15 +20,12 @@ $("#new_client").submit ->
 pusher = new Pusher('9b96f0dc2bd6198af8ed')
 channel = pusher.subscribe('newroom')
 
-
-
 # BackboneJS
 class Room extends Backbone.Model
   initialize: ->
     # subscribe to Pusher channel for this room to find out when Clients are
     # created, updated, or destroyed
     channel = pusher.subscribe(@get("channel_name"))
-    backpusher = new Backpusher()
 
 class Rooms extends Backbone.Collection
   model: Room
@@ -63,6 +60,3 @@ class RoomsView extends Backbone.View
 
 rooms = new Rooms()
 roomsView = new RoomsView collection:rooms
-
-
-
