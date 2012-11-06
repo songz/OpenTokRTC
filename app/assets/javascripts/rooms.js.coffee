@@ -14,10 +14,10 @@ $("#new_client").submit ->
 
 
 # BackboneJS
-class RoomClass extends Backbone.Model
+class Room extends Backbone.Model
 
-class RoomsClass extends Backbone.Collection
-  model: RoomClass
+class Rooms extends Backbone.Collection
+  model: Room
   url: "/rooms"
 
 class RoomView extends Backbone.View
@@ -29,7 +29,6 @@ class RoomView extends Backbone.View
 
 class RoomsView extends Backbone.View
   el: "#roomList"
-  template: Handlebars.compile( $("#room-template").html() )
   initialize: ->
     @collection.on 'reset', @render
     @collection.fetch()
@@ -39,7 +38,7 @@ class RoomsView extends Backbone.View
       view = new RoomView {model:model}
       @$el.append view.render().el
 
-rooms = new RoomsClass()
+rooms = new Rooms()
 roomsView = new RoomsView collection:rooms
 
 
