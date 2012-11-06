@@ -20,13 +20,14 @@ class PagesController < ApplicationController
     if webhook.valid?
       webhook.events.each do |event|
         printa event["name"]
+        ap event
         case event["name"]
         when 'channel_occupied'
           puts "Channel occupied: #{event["channel"]}"
         when 'channel_vacated'
           printa "EMPTY CHANNEL!!!!"
         else
-          ap event
+          #ap event
         end
       end
       render text: 'ok'

@@ -9,10 +9,9 @@ channel = pusher.subscribe("presence-#{sessionId}")
 channel.bind 'pusher:subscription_succeeded', ->
   myId = channel.members.me.id
   count = channel.members.count
+  console.log channel.members
   console.log("you are user number: "+count)
   console.log("Your user ID is: "+myId)
-
-
 
 
 # OpenTok Video
