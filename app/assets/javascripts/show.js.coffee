@@ -2,7 +2,7 @@ myId = ""
 position = ""
 
 Pusher.channel_auth_transport = 'jsonp'
-Pusher.channel_auth_endpoint = 'http://tbrtcdemo.herokuapp.com/pusher/auth'
+Pusher.channel_auth_endpoint = '/pusher/auth'
 pusher = new Pusher('9b96f0dc2bd6198af8ed')
 channel = pusher.subscribe("presence-#{sessionId}")
 
@@ -12,11 +12,11 @@ channel.bind 'pusher:subscription_succeeded', ->
   console.log("you are user number: "+count)
   console.log("Your user ID is: "+myId)
 
-#TB.setLogLevel(TB.DEBUG)
 
 
 
 # OpenTok Video
+#TB.setLogLevel(TB.DEBUG)
 api_key = '21393201'
 publisher = TB.initPublisher( api_key, "myPublisher", {width:260, height:190} )
 sessionId = $('#info').attr('tbSession')
