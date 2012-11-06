@@ -76,7 +76,7 @@
   text-align:center;
   color:white;
 }
-#room_icon{
+#user_image{
   float:left;
   margin-left:10px;
   margin-top:10px;
@@ -86,43 +86,29 @@
   overflow:hidden;
   border:5px solid rgba(252,252,252,0.7) ;
 }
+#user_image img{
+  display:block;
+  width:50px;
+  height:50px;
+}
 #room-icon img{
   width:80px;
   height:80px;
 }
-#videoPrompt{
-  color:#C40A68;
-  position:absolute;
-  top:0px;
-  right:-20px;
- }
- #prompt{
-   height:315px;
-   border:4px solid #C40A68;
- }
- #videoPrompt h4{
-   width:98%;
-   padding:10px 0 10px 10px;
-   background:#C40A68;
-   color:white;
-   border-radius:10px;
-
- }
-  
   #chatroom{
     position:absolute;
     right:-20px;
-    top:400px;
+    top:0px;
     background:white;
     width:422px;
-    height:150px;
+    height:545px;
     border-radius:5px;
     border:3px solid #C40A68;   
     
   }
   #displayChat{
     width:410px;
-    height:100px;
+    height:495px;
     padding:5px;
     overflow:auto;
     background:#EEE;

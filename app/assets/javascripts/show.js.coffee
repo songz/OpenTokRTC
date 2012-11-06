@@ -55,40 +55,6 @@ parseArchiveResponse = (response) ->
 getDownloadUrl = ->
   $.post "/archive/#{window.archive.archiveId}", {token:$('#info').attr('tbToken')}, parseArchiveResponse
 
-setRecordingCapability = ->
-    $('#startRecording').show()
-    $('#startRecording').text(RECORD)
-    $('#startRecording').click ->
-      console.log "button click"
-      console.log window.archive
-      switch $(@).text()
-        when RECORD
-          if window.archive==""
-            session.createArchive( key, 'perSession', "#{Date.now()}")
-          else
-            session.startRecording(window.archive)
-          $(@).text(RSTOP)
-        when RSTOP
-          session.stopRecording( window.archive )
-          session.closeArchive( window.archive )
-          $(@).text(PROCESS)
-        when READY
-          window.open( downloadURL )
-
-archiveClosedHandler = (event) ->
-  console.log window.archive
-  interval = window.setInterval(getDownloadUrl, 5000)
-
-archiveCreatedHandler = (event) ->
-  window.archive = event.archives[0]
-  session.startRecording(window.archive)
-  console.log window.archive
-
-archiveLoadedHandler = (event) ->
-  window.archive = event.archives[0]
-  window.archive.startPlayback()
-
-window.archive = ""
 window.users = 0
 
 subscribeStreams = (streams) ->
@@ -115,8 +81,6 @@ streamCreatedHandler = (event) ->
 
 destroyedStreams = (e) ->
   users -= 1
-  if users==0 # including myself
-    setRecordingCapability()
   for stream in e.streams
     if session.connection.connectionId == stream.connection.connectionId
       return
@@ -129,9 +93,6 @@ session = TB.initSession( sessionId )
 session.addEventListener 'streamCreated', streamCreatedHandler
 session.addEventListener 'sessionConnected', sessionConnectedHandler
 session.addEventListener 'streamDestroyed', destroyedStreams
-session.addEventListener 'archiveCreated', archiveCreatedHandler
-session.addEventListener 'archiveClosed', archiveClosedHandler
-session.addEventListener 'archiveLoaded', archiveLoadedHandler
 
 session.connect( api_key, token )
 
@@ -149,10 +110,10 @@ session.connect( api_key, token )
 dataRef = new Firebase("https://gamma.firebase.com/song/actroulette/#{sessionId}")
 console.log $('#messageInput')
 $('#messageInput').keydown (e) ->
-  console.log e.keyCode
   if (e.keyCode == 13)
     text = $('#messageInput').val()
-    dataRef.push({name: userName, text: text})
+    console.log window.userName
+    dataRef.push({name: window.userName, text: text})
     $('#messageInput').val('')
 
 dataRef.on 'child_added', (snapshot) ->
