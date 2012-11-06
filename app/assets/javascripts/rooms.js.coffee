@@ -22,6 +22,10 @@ class RoomsClass extends Backbone.Collection
 
 class RoomView extends Backbone.View
   template: Handlebars.compile( $("#room-template").html() )
+  events:
+    "click .room_view" : "enterRoom"
+  enterRoom: ->
+    $('#client_room_id').val( @model.get('id') )
   render: ->
     @$el.html @template(@model.toJSON())
     return @
@@ -56,6 +60,4 @@ channel.bind 'new', (data) ->
   $('table').append( roomTemplate(data) )
 
 $('.room_view').click ->
-  roomId=$(this).attr('room')
-  $('#client_room_id').val( roomId )
 
