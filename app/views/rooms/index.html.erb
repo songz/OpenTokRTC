@@ -39,7 +39,7 @@
 <%= form_for(@client) do |f| %>
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-  <h3>Create A Jam</h3>
+  <h3>Join Room</h3>
   </div>
   <div class="modal-body">
     <% if @room.errors.any? %>
@@ -98,4 +98,5 @@
 <%= javascript_include_tag "underscore" %>
 <%= javascript_include_tag "backbone" %>
 <%= javascript_include_tag "handlebar" %>
+<%= javascript_include_tag "backpusher" %>
 <%= javascript_include_tag "rooms" %>

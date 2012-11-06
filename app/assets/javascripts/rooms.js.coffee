@@ -7,33 +7,34 @@ $("#new_client").submit ->
   imgData = publisher.getImgData()
   if imgData?
     $("#client_imgdata").val( imgData )
-    $("#new_client")[0].submit()
+    publisher.destroy()
+    return
   else
     alert "Please allow chrome to access your camera"
-  return false
+    return false
 
 
 # BackboneJS
-class RoomClass extends Backbone.Model
+class Room extends Backbone.Model
 
-class RoomsClass extends Backbone.Collection
-  model: RoomClass
+class Rooms extends Backbone.Collection
+  model: Room
   url: "/rooms"
 
 class RoomView extends Backbone.View
   template: Handlebars.compile( $("#room-template").html() )
   events:
-    "click .room_view" : "enterRoom"
-  enterRoom: ->
-    $('#client_room_id').val( @model.get('id') )
+    "click" : "roomSelected"
   render: ->
     @$el.html @template(@model.toJSON())
     return @
+  roomSelected: ->
+    $('#joinRoom [name="client[room_id]"]').val(@model.get "id")
+
 
 
 class RoomsView extends Backbone.View
   el: "#roomList"
-  template: Handlebars.compile( $("#room-template").html() )
   initialize: ->
     @collection.on 'reset', @render
     @collection.fetch()
@@ -44,7 +45,7 @@ class RoomsView extends Backbone.View
       view = new RoomView {model:model}
       @$el.append view.render().el
 
-rooms = new RoomsClass()
+rooms = new Rooms()
 roomsView = new RoomsView collection:rooms
 
 
