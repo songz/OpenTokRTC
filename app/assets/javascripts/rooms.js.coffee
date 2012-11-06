@@ -12,10 +12,23 @@ $("#new_client").submit ->
   else
     alert "Please allow chrome to access your camera"
     return false
+#
+# TODO: When new members are updated via pusher, the corresponding room member and pictures should be updated.
+#
+# TODO: When new room is created, new view should be created
+
+pusher = new Pusher('9b96f0dc2bd6198af8ed')
+channel = pusher.subscribe('newroom')
+
 
 
 # BackboneJS
 class Room extends Backbone.Model
+  initialize: ->
+    # subscribe to Pusher channel for this room to find out when Clients are
+    # created, updated, or destroyed
+    channel = pusher.subscribe(@get("channel_name"))
+    backpusher = new Backpusher()
 
 class Rooms extends Backbone.Collection
   model: Room
@@ -48,19 +61,4 @@ rooms = new Rooms()
 roomsView = new RoomsView collection:rooms
 
 
-# TODO: When new members are updated via pusher, the corresponding room member and pictures should be updated.
-#
-# TODO: When new room is created, new view should be created
-source = $("#room-template").html()
-roomTemplate = Handlebars.compile(source)
-
-pusher = new Pusher('9b96f0dc2bd6198af8ed')
-channel = pusher.subscribe('newroom')
-
-channel.bind 'new', (data) ->
-  $('table').append( roomTemplate(data) )
-
-$('.room_view').click ->
-  roomId=$(this).attr('room')
-  $('#client_room_id').val( roomId )
 
