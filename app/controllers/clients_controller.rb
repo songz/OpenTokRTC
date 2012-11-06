@@ -31,7 +31,7 @@ class ClientsController < ApplicationController
         # Notify everyone else interested via Pusher
         Pusher[@room.channel_name].trigger('created', client.attributes, request.headers["X-Pusher-Socket-ID"])
         
-        format.html { redirect_to @client.room, notice: 'Room was successfully created.' }
+        format.html { redirect_to @client.room, notice: 'Client was successfully created.' }
         format.json { render json: @client, status: :created, location: @client }
       else
         format.html { render action: "new" }
