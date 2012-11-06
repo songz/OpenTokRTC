@@ -1,4 +1,6 @@
 class ClientsController < ApplicationController
+  before_filter :get_room
+
   # GET /rooms
   # GET /rooms.json
   def index
@@ -18,17 +20,21 @@ class ClientsController < ApplicationController
   # POST /rooms
   # POST /rooms.json
   def create
-    @client = Client.new(params[:client])
+    client = @room.clients.create(params[:client])
 
     respond_to do |format|
-      if @client.save
-        session[:client_id] = @client.id
-        session[:client_name] = @client.name
-        format.html { redirect_to @client.room, notice: 'Room was successfully created.' }
-        format.json { render json: @client, status: :created, location: @client }
+      if client.save
+        session[:client_id] = client.id
+        session[:client_name] = client.name
+
+        # Notify everyone else interested via Pusher
+        Pusher[@room.channel_name].trigger('created', client.attributes, request.headers["X-Pusher-Socket-ID"])
+
+        format.html { redirect_to client.room, notice: 'Client was successfully created.' }
+        format.json { render json: client, status: :created, location: client }
       else
         format.html { render action: "new" }
-        format.json { render json: @client.errors, status: :unprocessable_entity }
+        format.json { render json: client.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -36,15 +42,19 @@ class ClientsController < ApplicationController
   # PUT /rooms/1
   # PUT /rooms/1.json
   def update
-    @client = Client.find(params[:id])
+    client = @rooms.clients.find(params[:id])
 
     respond_to do |format|
-      if @client.update_attributes(params[:room])
-        format.html { redirect_to @client, notice: 'Room was successfully updated.' }
+      if client.update_attributes(params[:client])
+
+        # Notify everyone else interested via Pusher
+        Pusher[@room.channel_name].trigger('updated', client.attributes, request.headers["X-Pusher-Socket-ID"])
+
+        format.html { redirect_to client, notice: 'Client was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @client.errors, status: :unprocessable_entity }
+        format.json { render json: client.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -52,10 +62,13 @@ class ClientsController < ApplicationController
   # DELETE /rooms/1
   # DELETE /rooms/1.json
   def destroy
-    @client = Client.find(params[:id])
-    @client.destroy
+    client = @room.clients.find(params[:id])
+    client.destroy
 
     respond_to do |format|
+      # Notify everyone else interested via Pusher
+      Pusher[@room.channel_name].trigger('destroyed', client.attributes, request.headers["X-Pusher-Socket-ID"])
+
       format.html { redirect_to rooms_url }
       format.json { head :no_content }
     end
