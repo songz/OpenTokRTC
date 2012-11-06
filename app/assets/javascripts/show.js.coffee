@@ -1,23 +1,8 @@
 myId = ""
-api_key = '21393201'
-publisher = TB.initPublisher( api_key, "myPublisher" )
-sessionId = $('#info').attr('tbSession')
-token = $("#info").attr('tbToken')
-
 position = ""
 
-$('#retake').click ->
-  console.log( publisher )
-  img = publisher.getImgData()
-  $('#preview_img').attr('src', "data:image/png;base64,#{img}")
-
-$("#confirmButton").click ->
-  img = $('#myPicture').attr('src')
-  $.post("/users/#{myId}", {user: {imgdata:img, room_id:$("#info").attr('room_id')}} )
-  $("#publisher").remove()
-
 Pusher.channel_auth_transport = 'jsonp'
-Pusher.channel_auth_endpoint = '/pusher/auth'
+Pusher.channel_auth_endpoint = 'http://tbrtcdemo.herokuapp.com/pusher/auth'
 pusher = new Pusher('9b96f0dc2bd6198af8ed')
 channel = pusher.subscribe("presence-#{sessionId}")
 
@@ -27,67 +12,42 @@ channel.bind 'pusher:subscription_succeeded', ->
   console.log("you are user number: "+count)
   console.log("Your user ID is: "+myId)
 
+#TB.setLogLevel(TB.DEBUG)
 
 
 
-RECORD = "Record Videos"
-RSTOP = "Stop Recording"
-DOWNLOAD = "Process Video"
-PROCESS = "Video Processing..."
-READY = "Download"
-
-interval = ""
-key = api_key
+# OpenTok Video
+api_key = '21393201'
+publisher = TB.initPublisher( api_key, "myPublisher", {width:260, height:190} )
 sessionId = $('#info').attr('tbSession')
-token = $('#info').attr('tbToken')
-downloadURL=""
-users = 0
-
-TB.setLogLevel(TB.DEBUG)
-
-parseArchiveResponse = (response) ->
-  console.log response
-  if response.status != "fail"
-    window.clearInterval(interval)
-    $('#startRecording').text(READY)
-    downloadURL = 'http://'+response.url.split('https://')[1]
-
-getDownloadUrl = ->
-  $.post "/archive/#{window.archive.archiveId}", {token:$('#info').attr('tbToken')}, parseArchiveResponse
-
-window.users = 0
+token = $("#info").attr('tbToken')
 
 subscribeStreams = (streams) ->
+  console.log streams.length
   for stream in streams
     if session.connection.connectionId == stream.connection.connectionId
       return
-    console.log stream.name
-    newDiv = $("<div />", {id:"div#{stream.name}"})
-    $("##{stream.name}").append newDiv
-    session.subscribe( stream, "div#{stream.name}", {width:259, height: 189} )
-    users += 1
+    divId = "stream#{stream.connection.connectionId}"
+    newDiv = $("<div />", {id:divId})
+    element$ = $(".subscriberContainer:first")
+    element$.append newDiv
+    element$.removeClass("subscriberContainer")
+    session.subscribe( stream, divId , {width:259, height: 189} )
 
 sessionConnectedHandler = (event) ->
-  console.log event.archives
-  if event.archives[0]
-    window.archive=event.archives[0]
-  users = event.streams.length
-  if users==0
-    setRecordingCapability()
   subscribeStreams(event.streams)
+  session.publish( publisher )
 
 streamCreatedHandler = (event) ->
   subscribeStreams(event.streams)
 
 destroyedStreams = (e) ->
-  users -= 1
   for stream in e.streams
     if session.connection.connectionId == stream.connection.connectionId
       return
     name = stream.name
     console.log name
 
-TB.setLogLevel( TB.DEBUG )
 session = TB.initSession( sessionId )
 
 session.addEventListener 'streamCreated', streamCreatedHandler
@@ -97,37 +57,24 @@ session.addEventListener 'streamDestroyed', destroyedStreams
 session.connect( api_key, token )
 
 
+# Chat Box
+dataRef = new Firebase("https://song.firebaseio.com/tbwebrtc/#{sessionId}")
 
+window.messageTemplate = Handlebars.compile( $("#message-template").html() )
 
-
-
-
-
-
-
-
-
-dataRef = new Firebase("https://gamma.firebase.com/song/actroulette/#{sessionId}")
-console.log $('#messageInput')
 $('#messageInput').keydown (e) ->
   if (e.keyCode == 13)
     text = $('#messageInput').val()
-    console.log window.userName
     dataRef.push({name: window.userName, text: text})
     $('#messageInput').val('')
 
 dataRef.on 'child_added', (snapshot) ->
-  message = snapshot.val()
-  text = message.text
-  name = message.name
-  $('<div/>').text(text).prepend($('<em/>').text(name+': ')).appendTo($('#displayChat'))
+  message = window.messageTemplate( snapshot.val() )
+  $("#displayChat").append message
   $('#displayChat')[0].scrollTop = $('#displayChat')[0].scrollHeight
 
-$(".joinButton").click ->
-  position = $(@).attr('stream')
-
-$('#finishPictureButton').click ->
-  publisher = TB.initPublisher( api_key, position, {width:259, height: 189, name:position} )
-  session.publish( publisher )
-  $(".joinButton").remove()
+$('#chatInput input').focus ->
+  $('.icon-comments-alt').css('color','#C40A68')
+$('#chatInput input').focusout ->
+  $('.icon-comments-alt').css('color','#8D8F8F')
 

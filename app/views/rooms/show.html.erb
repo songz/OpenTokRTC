@@ -13,22 +13,24 @@
     <div id="streams_container">
       <div id="stream_1" >
         <div class="stream_content">
-          <div id="streamv1" ></div>
+          <div id="streamv1" class="publisherContainer">
+            <div id="myPublisher"></div>
+          </div>
         </div>
       </div>
       <div id="stream_2">
         <div class="stream_content">
-          <div id="streamv2"></div>
+          <div id="streamv2" class="subscriberContainer"></div>
         </div>
       </div>
       <div id="stream_3">
         <div class="stream_content">
-          <div id="streamv3"></div>
+          <div id="streamv3" class="subscriberContainer"></div>
         </div>
       </div>
       <div id="stream_4">
         <div class="stream_content">
-          <div id="streamv4"></div>
+          <div id="streamv4" class="subscriberContainer"></div>
         </div>
       </div>
     </div>
@@ -47,20 +49,17 @@
 
 <div id="info" room_id="<%= @room.id %>" tbSession="<%= @room.session_id %>" tbToken="<%= @token %>"></div>
 
-
-<script type="text/javascript">
-        window.userName = "<%= @client.name %>";
-        $('#chatInput input').focus(function(){
-          $('.icon-comments-alt').css('color','#C40A68')
-        })
-        $('#chatInput input').focusout(function(){
-          $('.icon-comments-alt').css('color','#8D8F8F')
-        })
+<script id="message-template" type="text/x-handlebars-template">
+  <div class="chatMessage"><em>{{name}}: </em>{{text}}</div>
 </script>
 
 
+<script type="text/javascript">
+  window.userName = "<%= @client.name %>";
+</script>
 <script src="http://static.opentok.com/v0.91/js/TB.min.js"></script>
 <script src="http://js.pusher.com/1.12/pusher.min.js"></script>
 <script type='text/javascript' src='//static.firebase.com/v0/firebase.js'></script>
 
+<%= javascript_include_tag "handlebar" %>
 <%= javascript_include_tag "show" %>

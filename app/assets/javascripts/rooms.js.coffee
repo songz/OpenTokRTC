@@ -61,6 +61,4 @@ channel.bind 'new', (data) ->
   $('table').append( roomTemplate(data) )
 
 $('.room_view').click ->
-  roomId=$(this).attr('room')
-  $('#client_room_id').val( roomId )
 
