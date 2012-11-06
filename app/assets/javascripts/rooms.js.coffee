@@ -7,10 +7,11 @@ $("#new_client").submit ->
   imgData = publisher.getImgData()
   if imgData?
     $("#client_imgdata").val( imgData )
-    $("#new_client")[0].submit()
+    publisher.destroy()
+    return
   else
     alert "Please allow chrome to access your camera"
-  return false
+    return false
 
 
 # BackboneJS
