@@ -78,8 +78,11 @@
       <p> {{description}} </p>
     </span>
     <span class="liveSign">
-      <img src="/img/greenlight.png" alt="" />
-      Open
+      {{#if open}}
+      <img src="/img/greenlight.png" alt="" /> Open
+      {{else}}
+      <img src="/img/greylight.png" alt="" /> Closed
+      {{/if}}
     </span>
 
     <h5 class="user_preview_header">Currently In Chat:</h5>
