@@ -5,7 +5,12 @@ class PagesController < ApplicationController
     printa session[:client_room_id]
     @client = Client.find session[:client_id]
     response = Pusher[params[:channel_name]].authenticate(params[:socket_id], {
-      :user_id => @client.id
+      user_id: @client.id,
+      user_info: {
+        name: @client.name,
+        room_id: @client.room_id,
+        imgdata: @client.imgdata
+      }
     })
     render :json=> response.to_json, :callback => params[:callback]
   end
@@ -20,6 +25,8 @@ class PagesController < ApplicationController
           puts "Channel occupied: #{event["channel"]}"
         when 'channel_vacated'
           printa "EMPTY CHANNEL!!!!"
+        else
+          ap event
         end
       end
       render text: 'ok'

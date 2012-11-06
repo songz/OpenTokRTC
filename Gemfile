@@ -13,6 +13,7 @@ gem 'thin'
 gem 'pusher'
 gem 'opentok'
 gem 'pg'
+gem 'awesome_print'
 
 # Gems used only for assets and not required
 # in production environments by default.
