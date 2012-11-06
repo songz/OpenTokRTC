@@ -73,11 +73,10 @@
 }
 
 .description p{
-  display:block;
   position:absolute;
   top:0px;
   left:30px;
-  width:100%;
+  right: 0px;
   word-wrap: break-word;
   line-height:110%;
 }
@@ -164,6 +163,7 @@
   padding-top:10px;
   border-radius;5px;
   box-shadow:inset 2px 2px 3px rgba(0, 0, 0, 0.3);
+  line-height:110%;
 }
 .modal-footer span{
   color:#D65C95;

@@ -10,7 +10,8 @@ class Room < ActiveRecord::Base
 	end
 
 	def create_token
-		self.token = strip_for_channel_name(ActiveSupport::SecureRandom.base64(8))
+    # This generates error when you try to create token
+		#self.token = strip_for_channel_name(ActiveSupport::SecureRandom.base64(8))
 	end
 
 	def channel_name

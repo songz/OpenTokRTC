@@ -3,9 +3,14 @@ apiKey = "21393201"
 publisher = ""
 
 # Activate Publisher when Modal is shown
-$("#joinRoom").on 'show', ->
+$("#joinRoom").on 'shown', ->
   if publisher == ""
     publisher = TB.initPublisher apiKey, 'myPublisher', {width:400, height:300}
+  $("#client_name").focus()
+
+# Focus Input when modal loads
+$("#createRoom").on 'shown', ->
+  $("#room_title").focus()
 
 # When user submits form, take a picture
 $("#new_client").submit ->
@@ -17,7 +22,6 @@ $("#new_client").submit ->
   else
     alert "Please allow chrome to access your camera"
     return false
-
 
 # BackboneJS
 class Room extends Backbone.Model
@@ -35,8 +39,6 @@ class RoomView extends Backbone.View
     return @
   roomSelected: ->
     $('#joinRoom [name="client[room_id]"]').val(@model.get "id")
-
-
 
 class RoomsView extends Backbone.View
   el: "#roomList"
