@@ -1,6 +1,11 @@
 # OpenTok Code:
 apiKey = "21393201"
-publisher = TB.initPublisher apiKey, 'myPublisher', {width:400, height:300}
+publisher = ""
+
+# Activate Publisher when Modal is shown
+$("#joinRoom").on 'show', ->
+  if publisher == ""
+    publisher = TB.initPublisher apiKey, 'myPublisher', {width:400, height:300}
 
 # When user submits form, take a picture
 $("#new_client").submit ->
