@@ -24,6 +24,7 @@ class ClientsController < ApplicationController
       if @client.save
         session[:client_id] = @client.id
         session[:client_name] = @client.name
+        session[:client_room_id] = @client.room_id
         format.html { redirect_to @client.room, notice: 'Room was successfully created.' }
         format.json { render json: @client, status: :created, location: @client }
       else

@@ -1,16 +1,16 @@
 myId = ""
 position = ""
 
-#Pusher.channel_auth_transport = 'jsonp'
-#Pusher.channel_auth_endpoint = '/pusher/auth'
-#pusher = new Pusher('9b96f0dc2bd6198af8ed')
-#channel = pusher.subscribe("presence-#{sessionId}")
-#
-#channel.bind 'pusher:subscription_succeeded', ->
-#  myId = channel.members.me.id
-#  count = channel.members.count
-#  console.log("you are user number: "+count)
-#  console.log("Your user ID is: "+myId)
+Pusher.channel_auth_transport = 'jsonp'
+Pusher.channel_auth_endpoint = 'http://tbrtcdemo.herokuapp.com/pusher/auth'
+pusher = new Pusher('9b96f0dc2bd6198af8ed')
+channel = pusher.subscribe("presence-#{sessionId}")
+
+channel.bind 'pusher:subscription_succeeded', ->
+  myId = channel.members.me.id
+  count = channel.members.count
+  console.log("you are user number: "+count)
+  console.log("Your user ID is: "+myId)
 
 #TB.setLogLevel(TB.DEBUG)
 
@@ -55,7 +55,6 @@ session.addEventListener 'sessionConnected', sessionConnectedHandler
 session.addEventListener 'streamDestroyed', destroyedStreams
 
 session.connect( api_key, token )
-
 
 
 # Chat Box
