@@ -1,8 +1,11 @@
 class PagesController < ApplicationController
   def auth
-    @user = User.create( imgdata:'/img/person.png' )
+    printa session[:client_id]
+    printa session[:client_name]
+    printa session[:client_room_id]
+    @client = Client.find session[:client_id]
     response = Pusher[params[:channel_name]].authenticate(params[:socket_id], {
-      :user_id => @user.id
+      :user_id => @client.id
     })
     render :json=> response.to_json, :callback => params[:callback]
   end

@@ -54,6 +54,10 @@ class RoomsView extends Backbone.View
   render: (data) =>
     @$el.empty()
     for model in data.models
+      if model.get('clients').length >= 4
+        model.set {open:false}
+      else
+        model.set {open:true}
       view = new RoomView {model:model}
       @$el.append view.render().el
 

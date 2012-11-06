@@ -18,7 +18,6 @@
     <% if @room.errors.any? %>
       <div id="error_explanation">
         <h2><%= pluralize(@room.errors.count, "error") %> prohibited this room from being saved:</h2>
-
         <ul>
           <% @room.errors.full_messages.each do |msg| %>
             <li><%= msg %></li>
@@ -79,22 +78,21 @@
       <p> {{description}} </p>
     </span>
     <span class="liveSign">
-      <img src="/img/greenlight.png" alt="" />
-      Open
+      {{#if open}}
+      <img src="/img/greenlight.png" alt="" /> Open
+      {{else}}
+      <img src="/img/greylight.png" alt="" /> Closed
+      {{/if}}
     </span>
 
     <h5 class="user_preview_header">Currently In Chat:</h5>
     <ul id="user_preview">
-      <li><img src="http://7icons.files.wordpress.com/2010/08/user256.png?w=256&h=256" alt="" /></li>
-      <li><img src="http://7icons.files.wordpress.com/2010/08/user256.png?w=256&h=256" alt="" /></li>
-      <li><img src="http://7icons.files.wordpress.com/2010/08/user256.png?w=256&h=256" alt="" /></li>
-      <li><img src="http://7icons.files.wordpress.com/2010/08/user256.png?w=256&h=256" alt="" /></li>
+      {{#each clients}}
+      <li><img src="data:image/png;base64,{{this.imgdata}}" alt="" /></li>
+      {{/each}}
     </ul>
   </li>
 </script>
-
-
-
 
 
 
