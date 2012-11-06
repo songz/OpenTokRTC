@@ -22,9 +22,14 @@ class Rooms extends Backbone.Collection
 
 class RoomView extends Backbone.View
   template: Handlebars.compile( $("#room-template").html() )
+  events:
+    "click" : "roomSelected"
   render: ->
     @$el.html @template(@model.toJSON())
     return @
+  roomSelected: ->
+    $('#joinRoom [name="client[room_id]"]').val(@model.get "id")
+
 
 
 class RoomsView extends Backbone.View
