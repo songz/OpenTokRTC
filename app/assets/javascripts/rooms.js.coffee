@@ -40,6 +40,7 @@ class RoomsView extends Backbone.View
   render: (data) =>
     @$el.empty()
     for model in data.models
+      console.log model.get('clients')
       view = new RoomView {model:model}
       @$el.append view.render().el
 
