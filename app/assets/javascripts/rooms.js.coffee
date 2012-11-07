@@ -54,9 +54,18 @@ class RoomsView extends Backbone.View
         model.set {open:true}
       view = new RoomView {model:model}
       @$el.append view.render().el
+  destroyRoom: (rid) ->
+    @.$("[room=#{rid}]").fadeOut ->
+      $(@).remove()
+  destroyClient: (data) ->
+    cid = data.client_id
+    @.$("[room=#{rid}] .liveSign img").attr( 'src', "/img/greenlight.png" )
+    @.$("[room=#{rid}] .liveSign .roomStatus").text("Open")
+    @.$("[client=#{cid}]").fadeOut ->
+      $(@).remove()
 
 rooms = new Rooms()
-roomsView = new RoomsView collection:rooms
+window.roomsView = new RoomsView collection:rooms
 
 
 # TODO: When new members are updated via pusher, the corresponding room member and pictures should be updated.
@@ -66,10 +75,16 @@ source = $("#room-template").html()
 roomTemplate = Handlebars.compile(source)
 
 pusher = new Pusher('9b96f0dc2bd6198af8ed')
-channel = pusher.subscribe('newroom')
+channel = pusher.subscribe('roomstatus')
 
-channel.bind 'new', (data) ->
-  $('table').append( roomTemplate(data) )
-
-$('.room_view').click ->
-
+channel.bind 'newRoom', (data) ->
+  console.log data
+channel.bind 'destroyRoom', (data) ->
+  console.log "destroy room"
+  console.log data
+  roomsView.destroyRoom( data.room_id )
+channel.bind 'newClient', (data) ->
+  console.log data
+channel.bind 'destroyClient', (data) ->
+  roomsView.destroyClient( data )
+  console.log data

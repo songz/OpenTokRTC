@@ -30,9 +30,11 @@ class PagesController < ApplicationController
           client = Client.find(event['user_id'])
           client.destroy()
           ap "client destroyed"
+          Pusher['roomstatus'].trigger('destroyClient', {client_id:client.id, room_id:client.room.id})
           if client.room.clients.length == 0
             ap "room destroyed"
             client.room.destroy()
+            Pusher['roomstatus'].trigger('destroyRoom', {room_id:client.room.id})
           end
         end
       end

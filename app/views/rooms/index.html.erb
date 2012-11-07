@@ -82,16 +82,18 @@
     </span>
     <span class="liveSign">
       {{#if open}}
-      <img src="/img/greenlight.png" alt="" /> Open
+      <img src="/img/greenlight.png" alt="" />
+      <span class="roomStatus">Open</span>
       {{else}}
-      <img src="/img/greylight.png" alt="" /> Closed
+      <img src="/img/greylight.png" alt="" />
+      <span class="roomStatus">Closed</span>
       {{/if}}
     </span>
 
     <h5 class="user_preview_header">Currently In Chat:</h5>
     <ul id="user_preview">
       {{#each clients}}
-      <li><img src="data:image/png;base64,{{this.imgdata}}" alt="" /></li>
+      <li><img src="data:image/png;base64,{{this.imgdata}}" alt="" client="{{this.id}}"/></li>
       {{/each}}
     </ul>
   </li>
