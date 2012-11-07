@@ -1,8 +1,8 @@
 class PagesController < ApplicationController
   def auth
-    printa session[:client_id]
-    printa session[:client_name]
-    printa session[:client_room_id]
+    ap session[:client_id]
+    ap session[:client_name]
+    ap session[:client_room_id]
     @client = Client.find session[:client_id]
     response = Pusher[params[:channel_name]].authenticate(params[:socket_id], {
       user_id: @client.id,
@@ -19,15 +19,21 @@ class PagesController < ApplicationController
     webhook = Pusher::WebHook.new(request)
     if webhook.valid?
       webhook.events.each do |event|
-        printa event["name"]
+        ap event["name"]
         ap event
         case event["name"]
         when 'channel_occupied'
-          puts "Channel occupied: #{event["channel"]}"
+          p "Channel occupied"
         when 'channel_vacated'
-          printa "EMPTY CHANNEL!!!!"
-        else
-          #ap event
+          p "channel is empty"
+        when 'member_removed'
+          client = Client.find(event['user_id'])
+          client.destroy()
+          ap "client destroyed"
+          if client.room.clients.length == 0
+            ap "room destroyed"
+            client.room.destroy()
+          end
         end
       end
       render text: 'ok'
