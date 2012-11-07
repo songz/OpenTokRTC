@@ -3,14 +3,15 @@ apiKey = "21393201"
 publisher = ""
 
 # Activate Publisher when Modal is shown
-$("#joinRoom").on 'shown', ->
+$("#joinRoom").on 'show', ->
   if publisher == ""
     publisher = TB.initPublisher apiKey, 'myPublisher', {width:400, height:300}
-  $("#client_name").focus()
 
 # Focus Input when modal loads
 $("#createRoom").on 'shown', ->
   $("#room_title").focus()
+$("#joinRoom").on 'shown', ->
+  $("#client_name").focus()
 
 # When user submits form, take a picture
 $("#new_client").submit ->
