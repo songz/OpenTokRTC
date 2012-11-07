@@ -22,10 +22,9 @@ class PagesController < ApplicationController
         ap event["name"]
         ap event
         case event["name"]
-        when 'channel_occupied'
-          p "Channel occupied"
-        when 'channel_vacated'
-          p "channel is empty"
+        when 'member_added'
+          client = Client.find(event['user_id'])
+          Pusher['roomstatus'].trigger('addClient', {client_id:client.id, room_id:client.room.id, imgdata: client.imgdata})
         when 'member_removed'
           client = Client.find(event['user_id'])
           client.destroy()
@@ -36,6 +35,10 @@ class PagesController < ApplicationController
             client.room.destroy()
             Pusher['roomstatus'].trigger('destroyRoom', {room_id:client.room.id})
           end
+        when 'channel_occupied'
+          p "Channel occupied"
+        when 'channel_vacated'
+          p "channel is empty"
         end
       end
       render text: 'ok'

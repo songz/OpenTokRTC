@@ -54,15 +54,25 @@ class RoomsView extends Backbone.View
         model.set {open:true}
       view = new RoomView {model:model}
       @$el.append view.render().el
+  addRoom: (data) ->
+    roomTemplate = Handlebars.compile( $("#room-template").html() )
+    @$el.append roomTemplate( data )
   destroyRoom: (rid) ->
     @.$("[room=#{rid}]").fadeOut ->
       $(@).remove()
+  addClient: (data) ->
+    cid = data.client_id
+    rid = data.room_id
+    clientTemplate = Handlebars.compile( $('#client-template').html() )
+    @.$("[room=#{rid}] #user_preview").append( clientTemplate(data) )
+    if @.$("[room=#{rid}] #user_preview li").length >= 4
+      @.$("[room=#{rid}] .liveSign img").attr( 'src', "/img/greylight.png" )
+      @.$("[room=#{rid}] .liveSign .roomStatus").text("Closed")
   destroyClient: (data) ->
     cid = data.client_id
+    rid = data.room_id
     @.$("[room=#{rid}] .liveSign img").attr( 'src', "/img/greenlight.png" )
     @.$("[room=#{rid}] .liveSign .roomStatus").text("Open")
-    @.$("[client=#{cid}]").fadeOut ->
-      $(@).remove()
 
 rooms = new Rooms()
 window.roomsView = new RoomsView collection:rooms
@@ -77,14 +87,18 @@ roomTemplate = Handlebars.compile(source)
 pusher = new Pusher('9b96f0dc2bd6198af8ed')
 channel = pusher.subscribe('roomstatus')
 
-channel.bind 'newRoom', (data) ->
+channel.bind 'addRoom', (data) ->
+  console.log "add room"
   console.log data
+  roomsView.addRoom( data )
 channel.bind 'destroyRoom', (data) ->
   console.log "destroy room"
   console.log data
   roomsView.destroyRoom( data.room_id )
-channel.bind 'newClient', (data) ->
+channel.bind 'addClient', (data) ->
+  console.log "addClient"
   console.log data
+  roomsView.addClient( data )
 channel.bind 'destroyClient', (data) ->
   roomsView.destroyClient( data )
   console.log data
