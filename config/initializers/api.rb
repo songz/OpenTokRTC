@@ -7,3 +7,9 @@ API_SECRET="a5289da5fb66b137533fd0d56d134ff8fd789be8"
 
 OTSDK = OpenTok::OpenTokSDK.new API_KEY, API_SECRET
 
+AWS::S3::Base.establish_connection!(
+:access_key_id => 'AKIAIEA4LRXVDKAWPUNA',
+:secret_access_key => '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'
+)
+S3Bucket = 'DemoWebRTC'
+S3URL = 'https://s3.amazonaws.com/DemoWebRTC'

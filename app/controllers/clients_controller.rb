@@ -21,7 +21,7 @@ class ClientsController < ApplicationController
     @client = Client.new(params[:client])
 
     respond_to do |format|
-      if @client.save
+      if @client.save!
         session[:client_id] = @client.id
         session[:client_name] = @client.name
         session[:client_room_id] = @client.room_id
