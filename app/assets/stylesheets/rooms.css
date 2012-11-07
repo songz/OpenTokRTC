@@ -38,10 +38,15 @@
   border-bottom-left-radius:100px;
   margin-bottom:15px;
   height:90px;
+  opacity: 0.6;
 }
-#roomList li:hover{
-  cursor:pointer;
+#roomList .openRoom{
+  background:white;
+  opacity: 1;
+}
+#roomList .openRoom:hover{
   border-color:#C40A68;
+  cursor:pointer;
 }
 
 .name{

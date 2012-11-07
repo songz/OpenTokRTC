@@ -70,7 +70,11 @@
 
 
 <script id="room-template" type="text/x-handlebars-template">
-  <li class="room_view" room="{{id}}" href="#joinRoom" data-toggle="modal">
+  {{#if open}}
+  <li class="room_view openRoom" room="{{id}}" href="#joinRoom" data-toggle="modal">
+  {{else}}
+  <li class="room_view" room="{{id}}" href="#joinRoom">
+  {{/if}}
     <span class="name">{{title}}</span>
     <span class="description">
       <i class="icon-info-sign"></i>
