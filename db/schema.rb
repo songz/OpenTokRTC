@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(:version => 20121105172517) do
   create_table "clients", :force => true do |t|
     t.string   "name"
     t.integer  "room_id"
-    t.string   "imgdata"
+    t.text     "imgdata"
     t.integer  "flag"
     t.integer  "point"
     t.datetime "created_at", :null => false
