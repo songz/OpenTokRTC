@@ -1,9 +1,6 @@
 <h2 class="roomsTitle">Rooms</h2>
-<ul id="roomList">
-</ul>
-
+<ul id="roomList"> </ul>
 <br />
-
 <a id="create_topic">Create Room</a>
 
 <div class="modal hide fade" id="createRoom">
@@ -24,15 +21,6 @@
       </div>
     <% end %>
 
-    <div class="publisherContainer">
-      <div id="createRoomPublisher"></div>
-    </div>
-
-    <%= f.fields_for :clients do |client_fields| %>
-      <%= client_fields.text_field :name, placeholder: "Your Name" %>
-      <%= client_fields.text_field :imgdata, :type => "hidden", :class => "imgdata" %>
-    <% end %>
-
     <%= f.text_field :title, placeholder: "Room Title:" %>
     <%= f.text_area :description, {placeholder: "Room Description", rows:10, cols:30} %>
   </div>
@@ -41,40 +29,6 @@
   </div>
 <% end %>
 </div>
-
-<div class="modal hide fade" id="joinRoom">
-<%= form_for(@client) do |f| %>
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-  <h3>Join Room</h3>
-  </div>
-  <div class="modal-body">
-    <% if @room.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@room.errors.count, "error") %> prohibited this room from being saved:</h2>
-
-        <ul>
-          <% @client.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-
-    <div class="publisherContainer">
-      <div id="joinRoomPublisher"></div>
-    </div>
-
-    <%= f.text_field :name, placeholder:"Your Name" %>
-    <%= f.text_field :imgdata, :type => "hidden" , :class => "imgdata"%>
-    <%= f.number_field :room_id, type:"hidden" %>
-  </div>
-  <div class="modal-footer">
-    <%= f.submit "Create", :class=>"submitTopic" %>
-  </div>
-<% end %>
-</div>
-
 
 <script id="room-template" type="text/x-handlebars-template">
   {{#if open}}
@@ -110,9 +64,6 @@
   <li client="{{id}}"><img src="{{imgdata}}" alt="" /></li>
 </script>
 
-
-
-<script src="http://static.opentok.com/webrtc/v2.0/js/TB.min.js"></script>
 <script src="http://js.pusher.com/1.12/pusher.min.js"></script>
 <%= javascript_include_tag "underscore" %>
 <%= javascript_include_tag "backbone" %>

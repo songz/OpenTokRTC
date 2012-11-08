@@ -1,39 +1,12 @@
 $('#create_topic').on 'click', ->
   $('#createRoom').modal('show')
 
-$('#joinRoom').on 'show', ->
-  # One reason why I don't always like coffeescript:
-  # window?? I'd like some freedom with my scopes.
-  window.publisher = TB.initPublisher apiKey, 'joinRoomPublisher', {width:400, height:300}
-
-$('#joinRoom').on 'hide', ->
-  window.publisher.destroy()
-
-$('#createRoom').on 'show', ->
-  window.publisher = TB.initPublisher apiKey, 'createRoomPublisher', {width:400, height:300}
-
-$('#createRoom').on 'hide', ->
-  window.publisher.destroy()
-
 # Focus Input when modal loads
 $("#createRoom").on 'shown', ->
   $("#room_title").focus()
-$("#joinRoom").on 'shown', ->
-  $("#client_name").focus()
 
-# When user submits form, take a picture
-$("#new_client, #new_room").submit ->
-  imgData = publisher.getImgData()
-  if imgData?
-    $(@).find(".imgdata").val( imgData )
-    publisher.destroy()
-    return
-  else
-    alert "Please allow chrome to access your camera"
-    return false
-
-# TODO: When new members are updated via pusher, the corresponding room member and pictures should be updated.
-# TODO: When new room is created, new view should be created
+# When new members are updated via pusher, the corresponding room member and pictures should be updated.
+# When new room is created, new view should be created
 clientTemplate = Handlebars.compile( $("#client-template").html() )
 pusher = new Pusher('9b96f0dc2bd6198af8ed')
 channel = pusher.subscribe(applicationChannel)
@@ -69,8 +42,7 @@ class RoomView extends Backbone.View
     @$el.html @template(@model.toJSON())
     return @
   roomSelected: ->
-    $('#joinRoom [name="client[room_id]"]').val(@model.get "id")
-    $('#joinRoom').modal('show')
+    window.location = "/rooms/#{@model.get('id')}"
 
 class RoomsView extends Backbone.View
   el: "#roomList"
@@ -94,7 +66,4 @@ class RoomsView extends Backbone.View
 
 rooms = new Rooms()
 roomsView = new RoomsView collection:rooms
-
-
-
 

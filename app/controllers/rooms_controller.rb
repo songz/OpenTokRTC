@@ -3,7 +3,6 @@ class RoomsController < ApplicationController
   # GET /rooms.json
   def index
     @room = Room.new
-    @client = @room.clients.build
     @rooms = Room.all
 
     respond_to do |format|
@@ -15,8 +14,8 @@ class RoomsController < ApplicationController
   # GET /rooms/1
   # GET /rooms/1.json
   def show
-    @client = Client.find session[:client_id]
     @room = Room.find(params[:id])
+    @client = @room.clients.build
     @token = OTSDK.generateToken( :session_id=>@room.session_id, :role=>OpenTok::RoleConstants::PUBLISHER )
 
     respond_to do |format|
@@ -50,9 +49,6 @@ class RoomsController < ApplicationController
     respond_to do |format|
       if @room.save
         format.html { 
-          session[:client_id] = @room.clients.first.id
-          session[:client_name] = @room.clients.first.name
-          session[:client_room_id] = @room.id
           redirect_to @room, notice: 'Room was successfully created.' 
         }
         format.json { render json: @room, status: :created, location: @room }
