@@ -100,14 +100,14 @@
     <h5 class="user_preview_header">Currently In Chat:</h5>
     <ul id="user_preview">
       {{#each clients}}
-      <li><img src="{{this.imgdata}}" alt="" client="{{this.id}}"/></li>
+      <li client="{{this.id}}"><img src="{{this.imgdata}}" alt="" /></li>
       {{/each}}
     </ul>
   </li>
 </script>
 
 <script id="client-template" type="text/x-handlebars-template">
-  <li><img src="{{imgdata}}" alt="" client="{{client_id}}"/></li>
+  <li client="{{id}}"><img src="{{imgdata}}" alt="" /></li>
 </script>
 
 

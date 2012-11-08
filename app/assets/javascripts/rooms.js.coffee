@@ -34,18 +34,28 @@ $("#new_client, #new_room").submit ->
 
 # TODO: When new members are updated via pusher, the corresponding room member and pictures should be updated.
 # TODO: When new room is created, new view should be created
+clientTemplate = Handlebars.compile( $("#client-template").html() )
 pusher = new Pusher('9b96f0dc2bd6198af8ed')
 channel = pusher.subscribe(applicationChannel)
-
-channel.bind 'room-destroyed', (roomData)->
-  room = rooms.get(roomData.id)
-  rooms.remove(room)
+channel.bind 'room-created', (data)->
+  console.log "room-created"
+  console.log data
+  roomsView.addRoom( data )
+channel.bind 'room-destroyed', (data)->
+  console.log "room-destroyed"
+  console.log data
+  $("[room=#{data.id}]").remove()
+channel.bind 'client-destroyed', (data)->
+  console.log "client-destroyed"
+  console.log data
+  $("[client=#{data.id}]").remove()
+channel.bind 'client-created', (data)->
+  console.log "client-created"
+  console.log data
+  console.log $("[room=#{data.room_id}] #user_preview").append( clientTemplate(data) )
 
 # BackboneJS
 class Room extends Backbone.Model
-  initialize: ->
-    # subscribe to Pusher presence channel for this room
-    channel = pusher.subscribe(@get("channel_name"))
 
 class Rooms extends Backbone.Collection
   model: Room
@@ -77,6 +87,10 @@ class RoomsView extends Backbone.View
         model.set {open:true}
       view = new RoomView {model:model}
       @$el.append view.render().el
+  addRoom: (data) ->
+    model = new Room( data )
+    view = new RoomView {model:model}
+    @$el.append view.render().el
 
 rooms = new Rooms()
 roomsView = new RoomsView collection:rooms
