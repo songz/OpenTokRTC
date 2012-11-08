@@ -1,5 +1,4 @@
 class ClientsController < ApplicationController
-  before_filter :get_room
 
   # GET /rooms
   # GET /rooms.json
@@ -20,23 +19,21 @@ class ClientsController < ApplicationController
   # POST /rooms
   # POST /rooms.json
   def create
+    @room = Room.find(params[:client][:room])
     client = @room.clients.create(params[:client])
+    if client.save!
+      session[:client_id] = client.id
+      session[:client_name] = client.name
+      session[:client_room_id] = client.room_id
 
-    respond_to do |format|
-      if @client.save!
-        session[:client_id] = @client.id
-        session[:client_name] = @client.name
-        session[:client_room_id] = @client.room_id
+      # Notify everyone else interested via Pusher
+      Pusher[@room.channel_name].trigger('created', client.attributes, request.headers["X-Pusher-Socket-ID"])
 
-        # Notify everyone else interested via Pusher
-        Pusher[@room.channel_name].trigger('created', client.attributes, request.headers["X-Pusher-Socket-ID"])
-        
-        format.html { redirect_to @client.room, notice: 'Client was successfully created.' }
-        format.json { render json: @client, status: :created, location: @client }
-      else
-        format.html { render action: "new" }
-        format.json { render json: client.errors, status: :unprocessable_entity }
-      end
+      format.html { redirect_to client.room, notice: 'Client was successfully created.' }
+      format.json { render json: client, status: :created, location: client }
+    else
+      format.html { render action: "new" }
+      format.json { render json: client.errors, status: :unprocessable_entity }
     end
   end
 

@@ -30,11 +30,10 @@
       <div id="createRoomPublisher"></div>
     </div>
 
-		<%= f.fields_for :clients do |client_fields| %>
-			<%= client_fields.text_field :name, placeholder: "Your Name" %>
-			<%= client_fields.text_field :imgdata, type: "hidden" %>
-			<%= client_fields.number_field :room_id, type: "hidden" %>
-		<% end %>
+    <%= f.fields_for :clients do |client_fields| %>
+      <%= client_fields.text_field :name, placeholder: "Your Name" %>
+      <%= client_fields.text_field :imgdata, :type => "hidden", :class => "imgdata" %>
+    <% end %>
 
     <%= f.text_field :title, placeholder: "Room Title:" %>
     <%= f.text_area :description, {placeholder: "Room Description", rows:10, cols:30} %>
@@ -69,7 +68,7 @@
     </div>
 
     <%= f.text_field :name, placeholder:"Your Name" %>
-    <%= f.text_field :imgdata, type:"hidden" %>
+    <%= f.text_field :imgdata, :type => "hidden" , :class => "imgdata"%>
     <%= f.number_field :room_id, type:"hidden" %>
   </div>
   <div class="modal-footer">
@@ -121,7 +120,7 @@
 <%= javascript_include_tag "backbone" %>
 <%= javascript_include_tag "handlebar" %>
 <script>
-	var applicationChannel = "<%= Webrtc::Application.config.application_channel %>";
-	var apiKey = "<%= API_KEY %>";
+  var applicationChannel = "<%= Webrtc::Application.config.application_channel %>";
+  var apiKey = "<%= API_KEY %>";
 </script>
 <%= javascript_include_tag "rooms" %>

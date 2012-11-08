@@ -22,10 +22,10 @@ $("#joinRoom").on 'shown', ->
   $("#client_name").focus()
 
 # When user submits form, take a picture
-$("#new_client").submit ->
+$("#new_client, #new_room").submit ->
   imgData = publisher.getImgData()
   if imgData?
-    $("#client_imgdata").val( imgData )
+    $(@).find(".imgdata").val( imgData )
     publisher.destroy()
     return
   else

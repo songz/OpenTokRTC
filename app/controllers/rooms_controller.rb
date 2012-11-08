@@ -3,7 +3,7 @@ class RoomsController < ApplicationController
   # GET /rooms.json
   def index
     @room = Room.new
-    @client = Client.new
+    @client = @room.clients.build
     @rooms = Room.all
 
     respond_to do |format|
@@ -50,7 +50,9 @@ class RoomsController < ApplicationController
     respond_to do |format|
       if @room.save
         format.html { 
-          Pusher['roomstatus'].trigger('addRoom', {id:@room.id, open:true, title:@room.title, description:@room.description})
+					session[:client_id] = @room.clients.first.id
+					session[:client_name] = @room.clients.first.name
+					session[:client_room_id] = @room.id
           redirect_to @room, notice: 'Room was successfully created.' 
         }
         format.json { render json: @room, status: :created, location: @room }
