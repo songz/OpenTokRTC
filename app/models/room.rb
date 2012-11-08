@@ -3,9 +3,7 @@ class Room < ActiveRecord::Base
   has_many :clients, :dependent => :destroy
   accepts_nested_attributes_for :clients
   before_destroy :notify_destruction
-  before_create do
-    self.clients << Client.new
-  end
+
 
   def self.find_by_channel_name(channel_name="")
     session_id = channel_name.gsub(/^presence-/, "")

@@ -16,13 +16,6 @@ class RoomsController < ApplicationController
   # GET /rooms/1.json
   def show
     @client = Client.find session[:client_id]
-    p "---------"
-    p "---------"
-    p "---------"
-    p "---------"
-    p @client
-    p "---------"
-    p "---------"
     @room = Room.find(params[:id])
     @token = OTSDK.generateToken( :session_id=>@room.session_id, :role=>OpenTok::RoleConstants::PUBLISHER )
 
@@ -56,7 +49,10 @@ class RoomsController < ApplicationController
 
     respond_to do |format|
       if @room.save
-        format.html { redirect_to @room, notice: 'Room was successfully created.' }
+        format.html { 
+          Pusher['roomstatus'].trigger('addRoom', {id:@room.id, open:true, title:@room.title, description:@room.description})
+          redirect_to @room, notice: 'Room was successfully created.' 
+        }
         format.json { render json: @room, status: :created, location: @room }
       else
         format.html { render action: "new" }

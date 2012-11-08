@@ -15,6 +15,12 @@ $('#createRoom').on 'show', ->
 $('#createRoom').on 'hide', ->
   window.publisher.destroy()
 
+# Focus Input when modal loads
+$("#createRoom").on 'shown', ->
+  $("#room_title").focus()
+$("#joinRoom").on 'shown', ->
+  $("#client_name").focus()
+
 # When user submits form, take a picture
 $("#new_client").submit ->
   imgData = publisher.getImgData()
@@ -56,8 +62,6 @@ class RoomView extends Backbone.View
     $('#joinRoom [name="client[room_id]"]').val(@model.get "id")
     $('#joinRoom').modal('show')
 
-
-
 class RoomsView extends Backbone.View
   el: "#roomList"
   initialize: =>
@@ -76,3 +80,7 @@ class RoomsView extends Backbone.View
 
 rooms = new Rooms()
 roomsView = new RoomsView collection:rooms
+
+
+
+

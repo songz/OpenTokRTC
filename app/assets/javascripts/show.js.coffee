@@ -9,10 +9,6 @@ channel = pusher.subscribe("presence-#{sessionId}")
 channel.bind 'pusher:subscription_succeeded', ->
   myId = channel.members.me.id
   count = channel.members.count
-  console.log("you are user number: "+count)
-  console.log("Your user ID is: "+myId)
-
-
 
 
 # OpenTok Video
@@ -23,7 +19,6 @@ sessionId = $('#info').attr('tbSession')
 token = $("#info").attr('tbToken')
 
 subscribeStreams = (streams) ->
-  console.log streams.length
   for stream in streams
     if session.connection.connectionId == stream.connection.connectionId
       return
@@ -31,6 +26,7 @@ subscribeStreams = (streams) ->
     newDiv = $("<div />", {id:divId})
     element$ = $(".subscriberContainer:first")
     element$.append newDiv
+    element$.addClass("stream#{stream.connection.connectionId}")
     element$.removeClass("subscriberContainer")
     session.subscribe( stream, divId , {width:259, height: 189} )
 
@@ -45,8 +41,9 @@ destroyedStreams = (e) ->
   for stream in e.streams
     if session.connection.connectionId == stream.connection.connectionId
       return
-    name = stream.name
-    console.log name
+    element$ = $(".stream#{stream.connection.connectionId}")
+    element$.addClass "subscriberContainer"
+    element$.removeClass ".stream#{stream.connection.connectionId}"
 
 session = TB.initSession( sessionId )
 

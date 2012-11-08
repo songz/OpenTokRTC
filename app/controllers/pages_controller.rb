@@ -1,11 +1,16 @@
 class PagesController < ApplicationController
   def auth
-    printa session[:client_id]
-    printa session[:client_name]
-    printa session[:client_room_id]
+    ap session[:client_id]
+    ap session[:client_name]
+    ap session[:client_room_id]
     @client = Client.find session[:client_id]
     response = Pusher[params[:channel_name]].authenticate(params[:socket_id], {
-      :user_id => @client.id
+      user_id: @client.id,
+      user_info: {
+        name: @client.name,
+        room_id: @client.room_id,
+        imgdata: @client.imgdata
+      }
     })
     render :json=> response.to_json, :callback => params[:callback]
   end
@@ -14,17 +19,21 @@ class PagesController < ApplicationController
     webhook = Pusher::WebHook.new(request)
     if webhook.valid?
       webhook.events.each do |event|
-        printa event["name"]
+        ap event["name"]
+        ap event
         case event["name"]
+        when 'member_added'
+          ap "member_added"
+        when 'member_removed'
+          ap "member_removed"
         when 'channel_occupied'
-          puts "Channel occupied: #{event["channel"]}"
+          ap "channel_occupied"
         when 'channel_vacated'
-          printa "EMPTY CHANNEL!!!!"
+          ap "channel_vacated"
 
           # Channel is empty, time to remove the Room
           room = Room.find_by_channel_name event.data.name
           room.destroy
-
         end
       end
       render text: 'ok'
