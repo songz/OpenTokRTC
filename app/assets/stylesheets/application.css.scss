@@ -9,5 +9,8 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require app
  */
+
+@import "app.css.scss";
+@import "rooms.css.scss";
+@import "showRoom.css.scss";
