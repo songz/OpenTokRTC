@@ -11,7 +11,7 @@ class Room < ActiveRecord::Base
   end
 
   def channel_name
-    @channel_name ||= "presence-#{@session_id}"
+    "presence-#{self.session_id}"
   end
 
   def as_json(options=nil)

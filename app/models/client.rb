@@ -18,12 +18,14 @@ class Client < ActiveRecord::Base
 	protected
 
 	def notify_creation
-    # When a client is created, the room's presence channel will be notified
-    Pusher[self.room.channel_name].trigger('client-created', self.attributes)
+    # When a client is created, the public channel for the whole app will be
+		# notified
+    Pusher[Webrtc::Application.config.application_channel].trigger('client-created', self.attributes)
 	end
 
 	def notify_destruction
-    # When a client is destroyed, the room's presence channel will be notified
-    Pusher[self.room.channel_name].trigger('client-destroyed', self.attributes)
+    # When a client is destroyed, the public channel for the whole app will be
+		# notified
+    Pusher[Webrtc::Application.config.application_channel].trigger('client-destroyed', self.attributes)
 	end
 end
