@@ -2,6 +2,8 @@ Pusher.app_id="31088"
 Pusher.key="9b96f0dc2bd6198af8ed"
 Pusher.secret="b3259a68b4801db6d127"
 
+Webrtc::Application.config.application_channel = "opentok-webrtc"
+
 API_KEY ="21393201"
 API_SECRET="a5289da5fb66b137533fd0d56d134ff8fd789be8"
 

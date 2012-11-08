@@ -1,6 +1,19 @@
-# OpenTok Code:
-apiKey = "21393201"
-publisher = TB.initPublisher apiKey, 'myPublisher', {width:400, height:300}
+$('#create_topic').on 'click', ->
+  $('#createRoom').modal('show')
+
+$('#joinRoom').on 'show', ->
+  # One reason why I don't always like coffeescript:
+  # window?? I'd like some freedom with my scopes.
+  window.publisher = TB.initPublisher apiKey, 'joinRoomPublisher', {width:400, height:300}
+
+$('#joinRoom').on 'hide', ->
+  window.publisher.destroy()
+
+$('#createRoom').on 'show', ->
+  window.publisher = TB.initPublisher apiKey, 'createRoomPublisher', {width:400, height:300}
+
+$('#createRoom').on 'hide', ->
+  window.publisher.destroy()
 
 # When user submits form, take a picture
 $("#new_client").submit ->
@@ -12,19 +25,20 @@ $("#new_client").submit ->
   else
     alert "Please allow chrome to access your camera"
     return false
-#
-# TODO: When new members are updated via pusher, the corresponding room member and pictures should be updated.
-#
-# TODO: When new room is created, new view should be created
 
+# TODO: When new members are updated via pusher, the corresponding room member and pictures should be updated.
+# TODO: When new room is created, new view should be created
 pusher = new Pusher('9b96f0dc2bd6198af8ed')
-channel = pusher.subscribe('newroom')
+channel = pusher.subscribe(applicationChannel)
+
+channel.bind 'room-destroyed', (roomData)->
+  room = rooms.get(roomData.id)
+  rooms.remove(room)
 
 # BackboneJS
 class Room extends Backbone.Model
   initialize: ->
-    # subscribe to Pusher channel for this room to find out when Clients are
-    # created, updated, or destroyed
+    # subscribe to Pusher presence channel for this room
     channel = pusher.subscribe(@get("channel_name"))
 
 class Rooms extends Backbone.Collection
@@ -40,17 +54,19 @@ class RoomView extends Backbone.View
     return @
   roomSelected: ->
     $('#joinRoom [name="client[room_id]"]').val(@model.get "id")
+    $('#joinRoom').modal('show')
 
 
 
 class RoomsView extends Backbone.View
   el: "#roomList"
-  initialize: ->
+  initialize: =>
     @collection.on 'reset', @render
+    @collection.on 'remove', @render
     @collection.fetch()
-  render: (data) =>
+  render: =>
     @$el.empty()
-    for model in data.models
+    for model in @collection.models
       if model.get('clients').length >= 4
         model.set {open:false}
       else

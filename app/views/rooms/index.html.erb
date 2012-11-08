@@ -6,13 +6,13 @@
 
 <br />
 
-<a href="#createRoom" data-toggle="modal" id="create_topic">Create Room</a>
+<a id="create_topic">Create Room</a>
 
 <div class="modal hide fade" id="createRoom">
 <%= form_for(@room) do |f| %>
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-  <h3>Create A Jam</h3>
+  <h3>Create A Room</h3>
   </div>
   <div class="modal-body">
     <% if @room.errors.any? %>
@@ -26,8 +26,18 @@
       </div>
     <% end %>
 
-    <%= f.text_field :title, placeholder:"Title:" %>
-    <%= f.text_area :description, {placeholder:"Description", id:"description", rows:10, cols:30} %>
+    <div class="publisherContainer">
+      <div id="createRoomPublisher"></div>
+    </div>
+
+		<%= f.fields_for :clients do |client_fields| %>
+			<%= client_fields.text_field :name, placeholder: "Your Name" %>
+			<%= client_fields.text_field :imgdata, type: "hidden" %>
+			<%= client_fields.number_field :room_id, type: "hidden" %>
+		<% end %>
+
+    <%= f.text_field :title, placeholder: "Room Title:" %>
+    <%= f.text_area :description, {placeholder: "Room Description", rows:10, cols:30} %>
   </div>
   <div class="modal-footer">
     <%= f.submit "Create", :class=>"submitTopic" %>
@@ -54,8 +64,8 @@
       </div>
     <% end %>
 
-    <div id="publisherContainer">
-      <div id="myPublisher"></div>
+    <div class="publisherContainer">
+      <div id="joinRoomPublisher"></div>
     </div>
 
     <%= f.text_field :name, placeholder:"Your Name" %>
@@ -71,7 +81,7 @@
 
 
 <script id="room-template" type="text/x-handlebars-template">
-  <li class="room_view" room="{{id}}" href="#joinRoom" data-toggle="modal">
+  <li class="room_view" room="{{id}}">
     <span class="name">{{title}}</span>
     <span class="description">
       <i class="icon-info-sign"></i>
@@ -101,4 +111,8 @@
 <%= javascript_include_tag "underscore" %>
 <%= javascript_include_tag "backbone" %>
 <%= javascript_include_tag "handlebar" %>
+<script>
+	var applicationChannel = "<%= Webrtc::Application.config.application_channel %>";
+	var apiKey = "<%= API_KEY %>";
+</script>
 <%= javascript_include_tag "rooms" %>

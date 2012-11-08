@@ -1,17 +1,20 @@
 class Room < ActiveRecord::Base
   attr_accessible :client_id, :description, :feature, :session_id, :title
-
   has_many :clients, :dependent => :destroy
+  accepts_nested_attributes_for :clients
+  before_destroy :notify_destruction
+  before_create do
+    self.clients << Client.new
+  end
 
-	before_create :create_token
+  def self.find_by_channel_name(channel_name="")
+    session_id = channel_name.gsub(/^presence-/, "")
+    self.find_by :session_id => session_id
+  end
 
-	def self.find_by_token(token)
-		self.includes(:clients).where(:token => token).limit(1).first
-	end
-
-	def channel_name
-		@channel_name ||= "list-#{Rails.env}-#{strip_for_channel_name(self.token)}"
-	end
+  def channel_name
+    @channel_name ||= "presence-#{@session_id}"
+  end
 
   def as_json(options=nil)
     super({
@@ -20,13 +23,11 @@ class Room < ActiveRecord::Base
     }.merge(options))
   end
 
-  private
+  protected
 
-	def create_token
-		self.token = strip_for_channel_name(ActiveSupport::SecureRandom.base64(8))
-	end
+  def notify_destruction
+    # When a room is destroyed, the public channel for the whole app will be notified
+    Pusher[Webrtc::Application.config.application_channel].trigger('room-destroyed', self.attributes)
+  end
 
-	def strip_for_channel_name(str)
-		str.gsub("/", "").gsub("+", "").gsub(/=+$/, "")
-	end
 end

@@ -20,6 +20,11 @@ class PagesController < ApplicationController
           puts "Channel occupied: #{event["channel"]}"
         when 'channel_vacated'
           printa "EMPTY CHANNEL!!!!"
+
+          # Channel is empty, time to remove the Room
+          room = Room.find_by_channel_name event.data.name
+          room.destroy
+
         end
       end
       render text: 'ok'
