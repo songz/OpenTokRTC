@@ -50,9 +50,9 @@ class RoomsController < ApplicationController
     respond_to do |format|
       if @room.save
         format.html { 
-					session[:client_id] = @room.clients.first.id
-					session[:client_name] = @room.clients.first.name
-					session[:client_room_id] = @room.id
+          session[:client_id] = @room.clients.first.id
+          session[:client_name] = @room.clients.first.name
+          session[:client_room_id] = @room.id
           redirect_to @room, notice: 'Room was successfully created.' 
         }
         format.json { render json: @room, status: :created, location: @room }
