@@ -42,7 +42,8 @@ class RoomView extends Backbone.View
     @$el.html @template(@model.toJSON())
     return @
   roomSelected: ->
-    window.location = "/rooms/#{@model.get('id')}"
+    if @model.get('open')
+      window.location = "/rooms/#{@model.get('id')}"
 
 class RoomsView extends Backbone.View
   el: "#roomList"
