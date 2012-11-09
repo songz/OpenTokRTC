@@ -1,4 +1,14 @@
 body.rooms_controller {
+  #createClientOverlay{
+    position:fixed;
+    top:0;
+    right:0;
+    left:0;
+    bottom:0;
+    background-color: rgba(0,0,0,0.95);
+    z-index:2;
+  }
+
 	&.show_action {
 
 		#showRoom{
@@ -40,12 +50,23 @@ body.rooms_controller {
 			position:absolute;
 			width:260px;
 			height:190px;
-			box-shadow:0 0 2px #C40A68 inset;
+			#box-shadow:0 0 2px #C40A68 inset;
 		}
 		.stream_content {
-			z-index:50;
+			z-index:1;
 			pointer-events:none;
 		}
+    #stream_1{
+      left:0px;
+      z-index:3;
+    }
+    #clientInfoContainer{
+      top: 0px;
+      right: 0px;
+      left:280px;
+      z-index:3;
+      color: #C40A68;
+    }
 		#stream_2{
 			right:0px;
 		}
