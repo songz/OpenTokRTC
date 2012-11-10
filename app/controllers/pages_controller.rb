@@ -23,17 +23,19 @@ class PagesController < ApplicationController
         ap event
         case event["name"]
         when 'member_added'
-          ap "member_added"
-        when 'member_removed'
-          ap "member_removed"
+          ap "client is added to room"
         when 'channel_occupied'
-          ap "channel_occupied"
+          p "Channel occupied"
         when 'channel_vacated'
-          ap "channel_vacated"
-
-          # Channel is empty, time to remove the Room
-          room = Room.find_by_channel_name event.data.name
-          room.destroy
+          p "channel is empty"
+        when 'member_removed'
+          client = Client.find(event['user_id'])
+          if client.room.clients.length == 1
+            ap "room destroyed"
+            client.room.destroy()
+          end
+          client.destroy()
+          ap "client destroyed"
         end
       end
       render text: 'ok'

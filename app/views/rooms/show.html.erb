@@ -9,7 +9,12 @@
   </div>
   <div id="streams" class="wrapper">
     <div id="streams_container">
-      <div id="stream_1" >
+      <div id="clientInfoContainer">
+        <h1>What is your name?</h1>
+        <input type="text" name="client[name]" />
+        <span id="submitClientName" class="btn">Submit</span>
+      </div>
+      <div id="stream_1" class="createClientVideo">
         <div class="stream_content">
           <div id="streamv1" class="publisherContainer">
             <div id="myPublisher"></div>
@@ -18,7 +23,8 @@
       </div>
       <div id="stream_2">
         <div class="stream_content">
-          <div id="streamv2" class="subscriberContainer"></div>
+          <div id="streamv2" class="subscriberContainer">
+          </div>
         </div>
       </div>
       <div id="stream_3">
@@ -50,6 +56,10 @@
 <script id="message-template" type="text/x-handlebars-template">
   <div class="chatMessage"><em>{{name}}: </em>{{text}}</div>
 </script>
+
+<div id="createClientOverlay">
+
+</div>
 
 
 <script type="text/javascript">
