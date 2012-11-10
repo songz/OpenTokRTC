@@ -3,6 +3,12 @@
  @include opacity(0.8);
 }
 
+.modal {
+  &.fade {
+    @include transition(opacity .3s linear, top .3s ease-out);
+  }
+}
+
 .close {
   @include opacity(0.2);
   &:hover {
