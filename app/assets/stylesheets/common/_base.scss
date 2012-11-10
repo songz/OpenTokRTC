@@ -1,0 +1,16 @@
+// Border Box Rulez
+* { 
+	@include box-sizing('border-box');
+}
+
+html {
+	background-color: $backgroundColor;
+}
+
+/*
+ * Layout
+ */
+.container {
+	@include centered( $fixedPageWidth );
+}
+

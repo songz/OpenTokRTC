@@ -21,7 +21,9 @@ gem 'mini_magick'
 # in production environments by default.
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
+  gem 'compass-rails'
   gem 'coffee-rails', '~> 3.2.1'
+  gem 'bootstrap-sass-rails'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby

@@ -1,0 +1,11 @@
+.modal-backdrop,
+.modal-backdrop.fade.in {
+ @include opacity(0.8);
+}
+
+.close {
+  @include opacity(0.2);
+  &:hover {
+    @include opacity(0.4);
+  }
+}

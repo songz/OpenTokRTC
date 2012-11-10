@@ -36,10 +36,8 @@ body.rooms_controller {
     box-shadow:0 0 10px black;
     background:white;
     border:10px solid transparent;
-    border-radius:10px;
     padding:5px;
-    border-top-left-radius:100px;
-    border-bottom-left-radius:100px;
+		@include border-radius(100px 10px 10px 100px);
     margin-bottom:15px;
     height:90px;
     opacity: 0.6;
