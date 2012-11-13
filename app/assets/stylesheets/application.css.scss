@@ -18,7 +18,8 @@
 @import "compass/typography";
 @import "compass/utilities";
 
-// Bootstrap framework
+// Bootstrap framework – these output code :(
+// TODO: rewrite these in terms of compass / custom mixins, functions
 @import "twitter/bootstrap/utilities";
 @import "twitter/bootstrap/close";
 @import "twitter/bootstrap/component-animations";
@@ -35,6 +36,4 @@
 @import "modules/all";
 
 // Refactoring away
-@import "app.css.scss";
-@import "rooms.css.scss";
 @import "showRoom.css.scss";
