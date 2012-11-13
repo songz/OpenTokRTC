@@ -45,7 +45,6 @@ session.addEventListener 'streamCreated', streamCreatedHandler
 session.addEventListener 'sessionConnected', sessionConnectedHandler
 session.addEventListener 'streamDestroyed', destroyedStreams
 
-
 # Start Execution
 startExecution = ->
   channel = pusher.subscribe("presence-#{sessionId}")
@@ -53,8 +52,6 @@ startExecution = ->
     myId = channel.members.me.id
     count = channel.members.count
   session.connect( api_key, token )
-
-
 
 # Chat Box
 dataRef = new Firebase("https://song.firebaseio.com/tbwebrtc/#{sessionId}")
