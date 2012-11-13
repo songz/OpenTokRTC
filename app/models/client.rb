@@ -6,16 +6,7 @@ class Client < ActiveRecord::Base
 	before_destroy :notify_destruction
 
   def uploadImage
-    ap self.imgdata
-    ap "printed imgdata!"
-    File.open("test.texts","wb") do |file|
-      file.write((self.imgdata))
-    end
-    File.open("filename.png","wb") do |file|
-      file.write(Base64.decode64(self.imgdata))
-    end
     img = MiniMagick::Image.read(Base64.decode64(self.imgdata))
-    #img = MiniMagick::Image.read(File.open("filename.png"))
     img.resize "100x100"
     img.format "png"
 
