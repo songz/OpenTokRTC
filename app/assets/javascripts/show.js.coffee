@@ -93,9 +93,7 @@ $('#submitClientName').click ->
     if data.id > 0
       $('#clientInfoContainer').fadeOut('fast')
       $('#createClientOverlay').fadeOut('slow')
+      startExecution()
     else
       $('#clientInfoContainer h1').text('What is your name?')
       $('#submitClientName').fadeIn('fast')
-      
-
-  
