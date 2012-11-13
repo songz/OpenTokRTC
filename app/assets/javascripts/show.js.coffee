@@ -50,6 +50,7 @@ startExecution = ->
   channel = pusher.subscribe("presence-#{sessionId}")
   channel.bind 'pusher:subscription_succeeded', ->
     myId = channel.members.me.id
+    window.userName = channel.members.me.info.name
     count = channel.members.count
   session.connect( api_key, token )
 
