@@ -10,7 +10,30 @@
  *
  *= require_self
  */
+// Variables
+@import "settings";
 
-@import "app.css.scss";
-@import "rooms.css.scss";
+// Compass framework
+@import "compass/css3";
+@import "compass/typography";
+@import "compass/utilities";
+
+// Bootstrap framework – these output code :(
+// TODO: rewrite these in terms of compass / custom mixins, functions
+@import "twitter/bootstrap/utilities";
+@import "twitter/bootstrap/close";
+@import "twitter/bootstrap/component-animations";
+@import "twitter/bootstrap/modals";
+@import "bootstrap-overrides";
+
+// Custom Functions, Mixins
+@import "functions";
+@import "mixins";
+
+// These will actually output code (making use of above)
+@import "normalize";
+@import "common/base";
+@import "modules/all";
+
+// Refactoring away
 @import "showRoom.css.scss";

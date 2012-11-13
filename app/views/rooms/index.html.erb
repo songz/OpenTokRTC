@@ -1,13 +1,13 @@
-<h2 class="roomsTitle">Rooms</h2>
-<ul id="roomList"> </ul>
+<h1 class="page-hdr">Rooms</h1>
+<ul class="room-list"> </ul>
 <br />
-<a id="create_topic">Create Room</a>
+<a class="create-room-btn">Create Room</a>
 
-<div class="modal hide fade" id="createRoom">
+<div class="modal hide fade create-room">
 <%= form_for(@room) do |f| %>
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-  <h3>Create A Room</h3>
+    <h3>Create A Room</h3>
   </div>
   <div class="modal-body">
     <% if @room.errors.any? %>
@@ -32,31 +32,31 @@
 
 <script id="room-template" type="text/x-handlebars-template">
   {{#if open}}
-  <li class="room_view openRoom" room="{{id}}">
+  <li class="room open" room="{{id}}">
   {{else}}
-  <li class="room_view" room="{{id}}">
+  <li class="room" room="{{id}}">
   {{/if}}
-    <span class="name">{{title}}</span>
-    <span class="description">
-      <i class="icon-info-sign"></i>
-      <p> {{description}} </p>
-    </span>
+    <h2 class="name">{{title}}</h2>
+    <h3 class="description"><i class="icon-info-sign"></i> {{description}} </h3>
     <span class="liveSign">
+      {{! TODO: fill in the text and swap out the image with css }}
       {{#if open}}
       <img src="/img/greenlight.png" alt="" />
-      <span class="roomStatus">Open</span>
+      <span>Open</span>
       {{else}}
       <img src="/img/greylight.png" alt="" />
-      <span class="roomStatus">Closed</span>
+      <span>Closed</span>
       {{/if}}
     </span>
 
-    <h5 class="user_preview_header">Currently In Chat:</h5>
-    <ul id="user_preview">
-      {{#each clients}}
-      <li client="{{this.id}}"><img src="{{this.imgdata}}" alt="" /></li>
-      {{/each}}
-    </ul>
+    <div class="userPreview">
+      <h4>Currently In Chat:</h4>
+      <ul>
+        {{#each clients}}
+        <li client="{{this.id}}"><img src="{{this.imgdata}}"/></li>
+        {{/each}}
+      </ul>
+    </div>
   </li>
 </script>
 

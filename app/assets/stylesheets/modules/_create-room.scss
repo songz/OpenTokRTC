@@ -1,0 +1,57 @@
+/*
+ * This module contains styles for a button that is used to trigger
+ * a room creation modal as well as the form that is contained in
+ * the modal.
+ */
+
+.create-room-btn {
+  @extend .rounded-shadow-btn;
+
+  //padding: 20px 10px 20px 10px;
+  //font-size: 30px;
+  @include adjust-font-size-to($h1-font-size);
+  width: 300px;
+  height: 2em;
+  line-height: 2em;
+  position: absolute;
+  bottom: 30px;
+  left: 20px;
+}
+
+.create-room {
+  input, textarea {
+    @include adjust-font-size-to($h2-font-size);
+    @include border-radius(5px);
+    @include box-shadow(inset 2px 2px 3px $inputInnerShadowColor);
+    background-color: desaturate(darken($backgroundColor, 9%), 3%);
+    padding: 5px 10px;
+    margin-bottom: 15px;
+    color: desaturate(lighten($hdrColor, 10%), 15%);
+    line-height: 1em;
+    outline: none;
+    border: 1px solid transparent;
+    &:focus {
+      border: 1px solid $hdrColor;
+    }
+  }
+  input[type="text"] {
+    display:block;
+    margin:0 auto 15px auto;
+    width:450px;
+  }
+  textarea {
+    display:block;
+    height:100px;
+    width:450px;
+    margin:0 auto;
+    resize:none;
+  }
+  input[type="submit"] {
+    @extend .rounded-shadow-btn;
+    @include border-radius(5px);
+    @include adjust-font-size-to( $h3-font-size );
+    display: inline;
+    border: none;
+    padding:10px;
+  }
+}

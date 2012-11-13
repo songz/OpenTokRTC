@@ -1,8 +1,8 @@
-$('#create_topic').on 'click', ->
-  $('#createRoom').modal('show')
+$('.create-room-btn').on 'click', ->
+  $('.create-room').modal('show')
 
 # Focus Input when modal loads
-$("#createRoom").on 'shown', ->
+$(".create-room").on 'shown', ->
   $("#room_title").focus()
 
 # When new members are updated via pusher, the corresponding room member and pictures should be updated.
@@ -46,7 +46,7 @@ class RoomView extends Backbone.View
       window.location = "/rooms/#{@model.get('id')}"
 
 class RoomsView extends Backbone.View
-  el: "#roomList"
+  el: ".room-list"
   initialize: =>
     @collection.on 'reset', @render
     @collection.on 'remove', @render

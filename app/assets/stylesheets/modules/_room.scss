@@ -1,0 +1,107 @@
+/*
+ * This module describes the representation of a room in a list.
+ * It contains styles for both the list and the items within
+ */
+
+
+// TODO: make this one list type value
+$roomPaddingTop : 10px;
+$roomPaddingRight : 10px;
+$roomPaddingBottom : 10px;
+$roomPaddingLeft : 50px;
+
+$roomOpenBorderThickness : 10px;
+
+// TODO: the two sides still overlap, why?
+$roomLeftSideWidth : 70%;
+
+$roomDescriptionColor: #bbb;
+
+.room {
+  @include border-radius(100px 10px 10px 100px);
+  @include box-shadow(0 0 10px $roomShadowColor);
+  background-color: $roomBackgroundColor;
+  padding: $roomPaddingTop $roomPaddingRight $roomPaddingBottom $roomPaddingLeft;
+  margin-bottom: 15px;
+  // TODO: does the height need to be hard coded?
+  height: 120px;
+  position: relative;
+
+  // By default, a room is closed
+  @include opacity(0.6);
+
+  // Open room
+  &.open {
+    @include opacity(1);
+
+    &:hover {
+      // subtract the padding from the border thickness
+      padding-top: ($roomPaddingTop - $roomOpenBorderThickness);
+      padding-right: ($roomPaddingRight - $roomOpenBorderThickness);
+      padding-bottom: ($roomPaddingBottom - $roomOpenBorderThickness);
+      padding-left: ($roomPaddingLeft - $roomOpenBorderThickness);
+
+      // the thick pink border
+      border: $roomOpenBorderThickness solid $roomBorderColor;
+      cursor: pointer;
+    }
+  }
+
+  // Left side of Room View
+  .name, .description {
+    margin:0;
+    width: $roomLeftSideWidth;
+  }
+
+  .description {
+    color: $roomDescriptionColor;
+  }
+
+  // Right side of Room View
+  .liveSign {
+    position: absolute;
+    top: ($roomPaddingTop + 10px);
+    right: ($roomPaddingRight + 10px);
+    color: $hdrColor;
+
+    img {
+      width: 15px; height: 15px;
+      vertical-align: middle;
+    }
+  }
+
+  .userPreview {
+    position: absolute;
+    width: (100% - $roomLeftSideWidth);
+    top: ($roomPaddingTop + 10px);
+    right: ($roomPaddingRight + 10px);
+
+    h4 {
+      margin:0;
+      border-bottom:1px dotted $hdrColor;
+    }
+
+    ul {
+      @include horizontal-list;
+      margin:5px 0;
+      li {
+        @include border-radius(50%);
+        border: 2px solid gray;
+        overflow: hidden;
+        width: 50px;
+        height: 50px;
+        padding:0;
+        margin-left: 4px;
+        margin-right: 4px;
+      }
+    }
+  }
+
+}
+
+.room-list {
+  @include no-bullets;
+  @include border-radius(10px);
+  padding:15px;
+  background-color: desaturate(darken($backgroundColor, 9%), 3%)
+}
