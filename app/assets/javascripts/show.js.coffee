@@ -1,22 +1,18 @@
 myId = ""
 position = ""
 
+# Pusher Initialization
 Pusher.channel_auth_transport = 'jsonp'
 Pusher.channel_auth_endpoint = '/pusher/auth'
 pusher = new Pusher('9b96f0dc2bd6198af8ed')
-channel = pusher.subscribe("presence-#{sessionId}")
 
-channel.bind 'pusher:subscription_succeeded', ->
-  myId = channel.members.me.id
-  count = channel.members.count
-
-
-# OpenTok Video
+# OpenTok Video Initializers
 #TB.setLogLevel(TB.DEBUG)
 api_key = '21393201'
 publisher = TB.initPublisher( api_key, "myPublisher", {width:260, height:190} )
 sessionId = $('#info').attr('tbSession')
 token = $("#info").attr('tbToken')
+session = TB.initSession( sessionId )
 
 subscribeStreams = (streams) ->
   for stream in streams
@@ -45,13 +41,19 @@ destroyedStreams = (e) ->
     element$.addClass "subscriberContainer"
     element$.removeClass ".stream#{stream.connection.connectionId}"
 
-session = TB.initSession( sessionId )
-
 session.addEventListener 'streamCreated', streamCreatedHandler
 session.addEventListener 'sessionConnected', sessionConnectedHandler
 session.addEventListener 'streamDestroyed', destroyedStreams
 
-session.connect( api_key, token )
+
+# Start Execution
+startExecution = ->
+  channel = pusher.subscribe("presence-#{sessionId}")
+  channel.bind 'pusher:subscription_succeeded', ->
+    myId = channel.members.me.id
+    count = channel.members.count
+  session.connect( api_key, token )
+
 
 
 # Chat Box
@@ -75,3 +77,25 @@ $('#chatInput input').focus ->
 $('#chatInput input').focusout ->
   $('.icon-comments-alt').css('color','#8D8F8F')
 
+$('#submitClientName').click ->
+  name = $("#clientName").val()
+  imgdata = publisher.getImgData()
+  room_id = $('#info').attr('room_id')
+  if (not imgdata?) or imgdata.length < 10
+    alert("Please allow chrome to access your device camera")
+    return
+  client =
+    imgdata:imgdata
+    name:name
+  $.post "/clients", {client:client, room:room_id}, (data)->
+    $('#clientInfoContainer h1').text('Loading...')
+    $('#submitClientName').fadeOut('fast')
+    if data.id > 0
+      $('#clientInfoContainer').fadeOut('fast')
+      $('#createClientOverlay').fadeOut('slow')
+    else
+      $('#clientInfoContainer h1').text('What is your name?')
+      $('#submitClientName').fadeIn('fast')
+      
+
+  

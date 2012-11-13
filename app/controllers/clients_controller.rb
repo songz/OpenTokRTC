@@ -19,21 +19,18 @@ class ClientsController < ApplicationController
   # POST /rooms
   # POST /rooms.json
   def create
-    @room = Room.find(params[:client][:room])
-    client = @room.clients.create(params[:client])
+    @room = Room.find(params[:room])
+    client = @room.clients.build(params[:client])
     if client.save!
       session[:client_id] = client.id
       session[:client_name] = client.name
       session[:client_room_id] = client.room_id
 
       # Notify everyone else interested via Pusher
-      Pusher[@room.channel_name].trigger('created', client.attributes, request.headers["X-Pusher-Socket-ID"])
-
-      format.html { redirect_to client.room, notice: 'Client was successfully created.' }
-      format.json { render json: client, status: :created, location: client }
+      #Pusher[@room.channel_name].trigger('created', client.attributes, request.headers["X-Pusher-Socket-ID"])
+      render json: client, status: :created, location: client
     else
-      format.html { render action: "new" }
-      format.json { render json: client.errors, status: :unprocessable_entity }
+      render json: {status:"failed"}
     end
   end
 
