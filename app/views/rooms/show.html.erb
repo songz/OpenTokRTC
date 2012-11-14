@@ -1,51 +1,49 @@
-<div id="showRoom">
-  <div id="title" class="wrapper">
-    <div id="title_content">
-      <div id="user_image">
-        <img src="<%= @client.imgdata %>" alt="" />
-      </div>
-      <h3><%= @room.title %></h3>
+<div id="title" class="wrapper">
+  <div id="title_content">
+    <div id="user_image">
+      <img src="<%= @client.imgdata %>" alt="" />
     </div>
+    <h3><%= @room.title %></h3>
   </div>
-  <div id="streams" class="wrapper">
-    <div id="streams_container">
-      <div id="clientInfoContainer">
-        <h1>What is your name?</h1>
-        <input type="text" name="client[name]" id="clientName" />
-        <span id="submitClientName" class="btn">Submit</span>
-      </div>
-      <div id="stream_1" class="createClientVideo">
-        <div class="stream_content">
-          <div id="streamv1" class="publisherContainer">
-            <div id="myPublisher"></div>
-          </div>
-        </div>
-      </div>
-      <div id="stream_2">
-        <div class="stream_content">
-          <div id="streamv2" class="subscriberContainer">
-          </div>
-        </div>
-      </div>
-      <div id="stream_3">
-        <div class="stream_content">
-          <div id="streamv3" class="subscriberContainer"></div>
-        </div>
-      </div>
-      <div id="stream_4">
-        <div class="stream_content">
-          <div id="streamv4" class="subscriberContainer"></div>
-        </div>
+</div>
+<div id="streams" class="wrapper">
+  <div id="streams_container">
+    <div id="clientInfoContainer">
+      <h1>What is your name?</h1>
+      <input type="text" name="client[name]" id="clientName" />
+      <span id="submitClientName" class="btn">Submit</span>
+    </div>
+    <div id="stream_1" class="createClientVideo">
+      <div class="stream_content">
+	<div id="streamv1" class="publisherContainer">
+	  <div id="myPublisher"></div>
+	</div>
       </div>
     </div>
+    <div id="stream_2">
+      <div class="stream_content">
+	<div id="streamv2" class="subscriberContainer">
+	</div>
+      </div>
+    </div>
+    <div id="stream_3">
+      <div class="stream_content">
+	<div id="streamv3" class="subscriberContainer"></div>
+      </div>
+    </div>
+    <div id="stream_4">
+      <div class="stream_content">
+	<div id="streamv4" class="subscriberContainer"></div>
+      </div>
+    </div>
   </div>
+</div>
 
-  <div id="chatroom">
-    <div id="displayChat"><ul id=""></ul></div>
-    <div id="chatInput">
-      <input type="" id="messageInput" />
-      <i class="icon-comments-alt"></i>
-    </div>
+<div id="chatroom">
+  <div id="displayChat"><ul id=""></ul></div>
+  <div id="chatInput">
+    <input type="" id="messageInput" />
+    <i class="icon-comments-alt"></i>
   </div>
 </div>
 
@@ -57,9 +55,7 @@
   <div class="chatMessage"><em>{{name}}: </em>{{text}}</div>
 </script>
 
-<div id="createClientOverlay">
-
-</div>
+<div id="createClientOverlay"></div>
 
 <script src="http://static.opentok.com/webrtc/v2.0/js/TB.min.js"></script>
 <script src="http://js.pusher.com/1.12/pusher.min.js"></script>

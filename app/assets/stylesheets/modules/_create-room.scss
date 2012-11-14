@@ -6,16 +6,10 @@
 
 .create-room-btn {
   @extend .rounded-shadow-btn;
-
-  //padding: 20px 10px 20px 10px;
-  //font-size: 30px;
   @include adjust-font-size-to($h1-font-size);
   width: 300px;
   height: 2em;
   line-height: 2em;
-  position: absolute;
-  bottom: 30px;
-  left: 20px;
 }
 
 .create-room {
