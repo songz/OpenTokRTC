@@ -2,16 +2,17 @@
  * Layout
  */
 html {
-	background-color: $backgroundColor;
+  background-color: $backgroundColor;
 }
 
 .container {
-	@include centered( $fixedPageWidth );
+  @include centered( $fixedPageWidth );
+  position:relative;
 }
 
 // Border Box Rulez
 * { 
-	@include box-sizing('border-box');
+  @include box-sizing('border-box');
 }
 
 /*
@@ -19,26 +20,26 @@ html {
  */
 
 .btn {
-	text-decoration: none;
-	display: block;
-	text-align: center;
-	color: $btnTextColor;
-	background-color: $btnBackgroundColor;
-	&:hover {
-		background-color: $btnHoverBackgroundColor;
-		cursor: pointer;
-	}
+  text-decoration: none;
+  display: block;
+  text-align: center;
+  color: $btnTextColor;
+  background-color: $btnBackgroundColor;
+  &:hover {
+    background-color: $btnHoverBackgroundColor;
+    cursor: pointer;
+  }
 }
 
 .rounded-btn {
-	@extend .btn;
-	// TODO: define this in terms of ems
-	@include border-radius(10px);
+  @extend .btn;
+  // TODO: define this in terms of ems
+  @include border-radius(10px);
 }
 
 .rounded-shadow-btn {
-	@extend .rounded-btn;
-	@include box-shadow(0 0 10px $btnShadowColor);
+  @extend .rounded-btn;
+  @include box-shadow(0 0 10px $btnShadowColor);
 }
 
 h1, h2, h3, h4, h5, h6 {
