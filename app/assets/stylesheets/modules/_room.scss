@@ -12,8 +12,9 @@ $roomPaddingLeft : 50px;
 
 $roomOpenBorderThickness : 10px;
 
-// TODO: the two sides still overlap, why?
-$roomLeftSideWidth : 70%;
+// TODO: can this be done without coupling to a container width?
+$roomLeftSideWidth : 560px;
+$roomContainerWidth : 850px;
 
 $roomDescriptionColor: #bbb;
 
@@ -72,7 +73,7 @@ $roomDescriptionColor: #bbb;
 
   .userPreview {
     position: absolute;
-    width: (100% - $roomLeftSideWidth);
+    width: ( - $roomLeftSideWidth);
     top: ($roomPaddingTop + 10px);
     right: ($roomPaddingRight + 10px);
 
