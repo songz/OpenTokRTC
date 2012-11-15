@@ -10,9 +10,18 @@ html {
   position:relative;
 }
 
-// Border Box Rulez
+// Border Box sizing is more logical
 * { 
   @include box-sizing('border-box');
+}
+
+// Layout sections
+section {
+  @include border-radius(10px);
+  @include box-shadow(3px 4px 5px $btnShadowColor);
+  padding: 15px;
+  background: $backgroundContrastColor;
+  margin: 10px;
 }
 
 /*
@@ -42,6 +51,11 @@ html {
   @include box-shadow(0 0 10px $btnShadowColor);
 }
 
+/*
+ * Heading Colors
+ */
+
 h1, h2, h3, h4, h5, h6 {
   color: $hdrColor;
 }
+

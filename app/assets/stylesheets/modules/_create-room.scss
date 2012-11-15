@@ -18,6 +18,7 @@
     @include border-radius(5px);
     @include box-shadow(inset 2px 2px 3px $inputInnerShadowColor);
     background-color: desaturate(darken($backgroundColor, 9%), 3%);
+    background-color: $backgroundContrastColor;
     padding: 5px 10px;
     margin-bottom: 15px;
     color: desaturate(lighten($hdrColor, 10%), 15%);

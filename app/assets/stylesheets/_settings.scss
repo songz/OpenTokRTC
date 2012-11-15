@@ -28,6 +28,7 @@ $dark-gray : #444;
 // Element Properties
 
 $backgroundColor : $warm-gray;
+$backgroundContrastColor : desaturate(darken($backgroundColor, 9%), 3%);
 
 $btnTextColor : white;
 $btnBackgroundColor: $pink;
