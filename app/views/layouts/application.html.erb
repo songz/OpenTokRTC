@@ -12,7 +12,19 @@
 <body class="<%= params[:controller].parameterize %>_controller <%= params[:action].parameterize %>_action">
 
   <div class="container">
+    <div id="header">
+      <div class="container">
+        <div id="logo">
+          <div>
+            <i class="icon-film"></i> 
+          </div>
+          <h4>OpenTok WebRTC</h4>
+        </div>
+      </div>
+    </div>
+
     <%= yield %>
+
   </div>
 
 </body>

@@ -1,32 +1,53 @@
-<h1 class="page-hdr">Rooms</h1>
-<ul class="room-list"> </ul>
-<a class="create-room-btn">Create Room</a>
+<div class="roomContainer">
+  <div id="intro">
+    <h1>OpenTok Celebrates Chrome 23 !</h1>
+    <h2>
+      TRY out the latest addition to chrome- WebRTC! 
+      <br />
+      Add live video to any site with 
+      <a href="http://opentok.com">
+      OpenTok.
+      </a>
+    </h2>  
+    <a href="#CreateJam" data-toggle="modal" class="create-room-btn">Create New Room</a>
 
-<div class="modal hide fade create-room">
-<%= form_for(@room) do |f| %>
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h3>Create A Room</h3>
+    <div id="illustration">
+      <img src="https://dl.dropbox.com/u/253668/TokBox/text.png" alt="" />
+    </div>
+
   </div>
-  <div class="modal-body">
-    <% if @room.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@room.errors.count, "error") %> prohibited this room from being saved:</h2>
-        <ul>
-          <% @room.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-          <% end %>
-        </ul>
+
+  <div class="section_divider"></div>
+
+  <h1 class="page-hdr">Join Existing Rooms:</h1>
+  <ul class="room-list"> </ul>
+
+  <div class="modal hide fade create-room">
+    <%= form_for(@room) do |f| %>
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Create A Room</h3>
+      </div>
+      <div class="modal-body">
+        <% if @room.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@room.errors.count, "error") %> prohibited this room from being saved:</h2>
+            <ul>
+              <% @room.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <%= f.text_field :title, placeholder: "Room Title:" %>
+        <%= f.text_area :description, {placeholder: "Room Description", rows:10, cols:30} %>
+      </div>
+      <div class="modal-footer">
+        <%= f.submit "Create", :class=>"submitTopic" %>
       </div>
     <% end %>
-
-    <%= f.text_field :title, placeholder: "Room Title:" %>
-    <%= f.text_area :description, {placeholder: "Room Description", rows:10, cols:30} %>
   </div>
-  <div class="modal-footer">
-    <%= f.submit "Create", :class=>"submitTopic" %>
-  </div>
-<% end %>
 </div>
 
 <script id="room-template" type="text/x-handlebars-template">

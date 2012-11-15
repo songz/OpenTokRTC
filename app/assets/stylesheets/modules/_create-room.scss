@@ -6,11 +6,18 @@
 
 .create-room-btn {
   @extend .rounded-shadow-btn;
-  @include adjust-font-size-to($h1-font-size);
-  width: 300px;
-  height: 2em;
-  line-height: 2em;
+  text-decoration:none;
+  position:absolute;
+  bottom:20px;
+  left:20px;
+  padding:30px 10px 30px 10px;
+  font-size:30px;
+  width:400px;
+  color:white;
+  text-align:center;
+  background-color:#C40A68;
 }
+
 
 .create-room {
   input, textarea {
