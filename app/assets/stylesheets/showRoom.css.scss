@@ -1,13 +1,17 @@
 body.rooms_controller {
   &.show_action {
 
-    * {
-      box-sizing: content-box;
-    }
+    // Crutches: these should be removed while modularizing the styles.
+    // It was put here just to help make things "work" and get a usable 
+    // version out.
+    * { box-sizing: content-box; }
+    .container { width: 1000px; }
 
-    .container {
-      width: 1000px;
-    }
+    // TODO: list of modules
+    // * StreamsContainer
+    // * StreamContainer
+    // * ChatArea
+    // * VideoEffects?
 
     #createClientOverlay{
       position:fixed;
@@ -15,7 +19,7 @@ body.rooms_controller {
       right:0;
       left:0;
       bottom:0;
-      background-color: rgba(0,0,0,0.95);
+      background-color: $overlayBlockingColor;
       z-index:2;
     }
 
@@ -24,7 +28,7 @@ body.rooms_controller {
       right: 0px;
       left:280px;
       z-index:3;
-      color: #C40A68;
+      color: $hdrColor;
     }
 
     #streams{
@@ -44,7 +48,6 @@ body.rooms_controller {
 
     // Taking this rule out because it interfere's with OpenTok tracking bug
     // I don't know if its useful anywhere else
-
     //#streams_container a{
     //  position:absolute;
     //  top:120px;
@@ -99,9 +102,8 @@ body.rooms_controller {
       width:100%;
       border-top-left-radius:100px;
       border-bottom-left-radius:100px;
-      background-color:white;
       height:100%;
-      background-color:#C40A68;
+      background-color: $roomAccentColor;
     }
 
     #title_content h3{
@@ -111,7 +113,7 @@ body.rooms_controller {
       width:81%;
       height:60px;
       text-align:center;
-      color:white;
+      color: $hdrContrastColor;
     }
 
     #user_image{
@@ -135,6 +137,7 @@ body.rooms_controller {
       width:80px;
       height:80px;
     }
+
     #chatroom{
       position:absolute;
       right:-20px;
@@ -144,8 +147,8 @@ body.rooms_controller {
       height:545px;
       border-radius:5px;
       border:3px solid #C40A68;
-
     }
+
     #displayChat{
       width:410px;
       height:495px;
@@ -153,19 +156,23 @@ body.rooms_controller {
       overflow:auto;
       background:#EEE;
     }
+
     #displayChat li{
       margin:10px 5px 5px 5px;
       font-size:15px;
       word-wrap:break-word;
     }
-     #displayChat li h4{
-       display:inline;
-       font-size:15px;
-     }
+
+    #displayChat li h4{
+     display:inline;
+     font-size:15px;
+    }
+
     #chatInput{
       width:422px;
       height:40px;
     }
+
     #chatInput input{
       border:1px solid #DDD;
       border-radius:5px;
@@ -176,54 +183,38 @@ body.rooms_controller {
       height:35px;
       width:368px;
       font-size:20px;
-      color:#5A5A5A;
+      color: $chatInputColor;
       padding-left:45px;
-
     }
+
     #chatInput i{
       font-size:30px;
       position:relative;
       left:10px;
       top:-25px;
+      // hardcoded in javascript
       color:#8D8F8F;
       float:left;
     }
-     #chatInput input:focus{
-       outline: none;
-       box-shadow: 1px 1px 3px #999 inset;
-     }
 
-    .modal-header h3{
-      color:#C40A68;
+    #chatInput input:focus{
+     outline: none;
+     box-shadow: 1px 1px 3px #999 inset;
     }
-    .modal-footer .btn{
-      background:#C40A68;
-      color:white;
-      font-weight:bold;
-    }
-    .modal-body{
-      position:relative;
-    }
+
     #photo_preview{
       float:right;
       margin-right:20px;
       width:200px;
       height:150px;
     }
-    #retake{
-      background:rgba(196,10,104,0.7);
-      color:white;
-      position:absolute;
-      top:180px;
-      right:100px;
-      float:right;
-    }
+
     #startRecording{
         width:100%;
         height:40px;
         font-size:32px;
-        background:#C40A68;
-        color:white;
+        background: $roomAccentColor;
+        color: $hdrContrastColor;
         padding-top:20px;
     }
   }
