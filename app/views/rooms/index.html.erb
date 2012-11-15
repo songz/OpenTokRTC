@@ -30,33 +30,27 @@
 </div>
 
 <script id="room-template" type="text/x-handlebars-template">
-  {{#if open}}
-  <li class="room open" room="{{id}}">
-  {{else}}
-  <li class="room" room="{{id}}">
-  {{/if}}
-    <h2 class="name">{{title}}</h2>
-    <h3 class="description"><i class="icon-info-sign"></i> {{description}} </h3>
-    <span class="liveSign">
-      {{! TODO: fill in the text and swap out the image with css }}
-      {{#if open}}
-      <img src="/img/greenlight.png" alt="" />
-      <span>Open</span>
-      {{else}}
-      <img src="/img/greylight.png" alt="" />
-      <span>Closed</span>
-      {{/if}}
-    </span>
+  <h2 class="name">{{title}}</h2>
+  <h3 class="description"><i class="icon-info-sign"></i> {{description}} </h3>
+  <span class="liveSign">
+    {{! TODO: fill in the text and swap out the image with css }}
+    {{#if open}}
+    <img src="/img/greenlight.png" alt="" />
+    <span>Open</span>
+    {{else}}
+    <img src="/img/greylight.png" alt="" />
+    <span>Closed</span>
+    {{/if}}
+  </span>
 
-    <div class="userPreview">
-      <h4>Currently In Chat:</h4>
-      <ul>
-        {{#each clients}}
-        <li client="{{this.id}}"><img src="{{this.imgdata}}"/></li>
-        {{/each}}
-      </ul>
-    </div>
-  </li>
+  <div class="userPreview">
+    <h4>Currently In Chat:</h4>
+    <ul>
+      {{#each clients}}
+      <li client="{{this.id}}"><img src="{{this.imgdata}}"/></li>
+      {{/each}}
+    </ul>
+  </div>
 </script>
 
 <script id="client-template" type="text/x-handlebars-template">

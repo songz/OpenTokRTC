@@ -17,7 +17,7 @@ channel.bind 'room-created', (data)->
 channel.bind 'room-destroyed', (data)->
   console.log "room-destroyed"
   console.log data
-  $("[room=#{data.id}]").remove()
+  $("[data-room=#{data.id}]").remove()
 channel.bind 'client-destroyed', (data)->
   console.log "client-destroyed"
   console.log data
@@ -25,7 +25,7 @@ channel.bind 'client-destroyed', (data)->
 channel.bind 'client-created', (data)->
   console.log "client-created"
   console.log data
-  console.log $("[room=#{data.room_id}] #user_preview").append( clientTemplate(data) )
+  console.log $("[data-room=#{data.room_id}] #user_preview").append( clientTemplate(data) )
 
 # BackboneJS
 class Room extends Backbone.Model
@@ -35,10 +35,16 @@ class Rooms extends Backbone.Collection
   url: "/rooms"
 
 class RoomView extends Backbone.View
+  tagName: "li",
+  className: "room",
   template: Handlebars.compile( $("#room-template").html() )
   events:
     "click" : "roomSelected"
   render: ->
+    if @model.get("clients").length < 4
+      @$el.addClass("open")
+      @model.set("open", true)
+    @$el.attr("data-room", @model.get("id"))
     @$el.html @template(@model.toJSON())
     return @
   roomSelected: ->
@@ -54,10 +60,6 @@ class RoomsView extends Backbone.View
   render: =>
     @$el.empty()
     for model in @collection.models
-      if model.get('clients').length >= 4
-        model.set {open:false}
-      else
-        model.set {open:true}
       view = new RoomView {model:model}
       @$el.append view.render().el
   addRoom: (data) ->
