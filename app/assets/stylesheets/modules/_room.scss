@@ -73,7 +73,7 @@ $roomDescriptionColor: #bbb;
 
   .userPreview {
     position: absolute;
-    width: ( - $roomLeftSideWidth);
+    width: ($roomContainerWidth - $roomLeftSideWidth);
     top: ($roomPaddingTop + 10px);
     right: ($roomPaddingRight + 10px);
 
