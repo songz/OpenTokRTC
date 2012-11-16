@@ -1,3 +1,21 @@
+.showRoomContainer{
+  #statusBar{
+    position:fixed;
+    top:-25px;
+    left: 50%;
+    margin-left: -100px;
+    padding-top: 30px;
+    width: 200px;
+    height: 30px;
+    background-color:#fff;
+    color: $pink;
+    font-size: 20px;
+    text-align:center;
+    border-radius:15px;
+    box-shadow: 0px 0px 3px 3px #999;
+    display:none;
+  }
+}
 body.rooms_controller {
   &.show_action {
 
@@ -52,25 +70,33 @@ body.rooms_controller {
       height:380px;
       border-radius:5px;
       background:url('/img/empty_slot.png');
-      border:10px solid #C40A68;
+      border:10px solid $pink;
       background-color:white;
+      .subscriber_stream_content:hover .flagUser{
+      }
+
+      .subscriber_stream_content .flagUser{
+        position:absolute;
+        top:75px;
+        left:50px;
+        border:none;
+        box-shadow:0.15em 0.25em 0.33em rgba(0, 0, 0, 0.3);
+        background-color:#C40A68;
+        color:white;
+        font-size:15px;
+        padding:10px;
+        border-radius:7px;
+        width: 110px;
+        height: 25px;
+        text-align:center;
+        cursor:pointer;
+        display:none;
+      }
     }
 
-    // Taking this rule out because it interfere's with OpenTok tracking bug
-    // I don't know if its useful anywhere else
-    //#streams_container a{
-    //  position:absolute;
-    //  top:120px;
-    //  left:95px;
-    //  border:none;
-    //  box-shadow:0.15em 0.25em 0.33em rgba(0, 0, 0, 0.3);
-    //  background-color:#C40A68;
-    //  color:white;
-    //  font-size:15px;
-    //  padding:10px;
-    //  border-radius:7px;
-    //}
-
+    .clickThrough{
+      pointer-events:none;
+    }
     #streams_container div{
       position:absolute;
       width:260px;
@@ -80,7 +106,6 @@ body.rooms_controller {
 
     .stream_content {
       z-index:1;
-      pointer-events:none;
     }
 
     #stream_1{
@@ -156,7 +181,7 @@ body.rooms_controller {
       width:422px;
       height:545px;
       border-radius:5px;
-      border:3px solid #C40A68;
+      border:3px solid $pink;
     }
 
     #displayChat{

@@ -1,4 +1,5 @@
 <div class="showRoomContainer">
+<div id="statusBar">Joining Room ...</div>
 <section id="title">
   <div id="title_content">
     <div id="user_image">
@@ -16,25 +17,25 @@
     </div>
     <div id="stream_1" class="createClientVideo">
       <div class="stream_content">
-	<div id="streamv1" class="publisherContainer">
-	  <div id="myPublisher"></div>
-	</div>
+        <div id="streamv1" class="publisherContainer">
+          <div id="myPublisher"></div>
+        </div>
       </div>
     </div>
-    <div id="stream_2">
+    <div id="stream_2" class="subscriber_stream_content">
       <div class="stream_content">
-	<div id="streamv2" class="subscriberContainer">
-	</div>
+        <div id="streamv2" class="subscriberContainer">
+        </div>
       </div>
     </div>
-    <div id="stream_3">
+    <div id="stream_3" class="subscriber_stream_content">
       <div class="stream_content">
-	<div id="streamv3" class="subscriberContainer"></div>
+        <div id="streamv3" class="subscriberContainer"></div>
       </div>
     </div>
-    <div id="stream_4">
+    <div id="stream_4" class="subscriber_stream_content">
       <div class="stream_content">
-	<div id="streamv4" class="subscriberContainer"></div>
+        <div id="streamv4" class="subscriberContainer"></div>
       </div>
     </div>
   </div>
@@ -63,8 +64,12 @@
 
 </div>
 
-<script id="message-template" type="text/x-handlebars-template">
+<script id="messageTemplate" type="text/x-handlebars-template">
   <div class="chatMessage"><em>{{name}}: </em>{{text}}</div>
+</script>
+<script id="userStreamTemplate" type="text/x-handlebars-template">
+    <div id="{{id}}"></div>
+    <div class="flagUser" streamConnection="{{id}}">Offensive User</div>
 </script>
 
 <div id="createClientOverlay"></div>

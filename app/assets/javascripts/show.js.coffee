@@ -14,20 +14,39 @@ sessionId = $('#info').attr('tbSession')
 token = $("#info").attr('tbToken')
 session = ""
 
+# templates
+window.messageTemplate = Handlebars.compile( $("#messageTemplate").html() )
+window.userStreamTemplate = Handlebars.compile( $("#userStreamTemplate").html() )
+
 # TokBox Code
+removeStream = (cid) ->
+  element$ = $(".stream#{cid}")
+  element$.addClass "subscriberContainer"
+  element$.removeClass ".stream#{cid}"
+
 subscribeStreams = (streams) ->
   for stream in streams
     if session.connection.connectionId == stream.connection.connectionId
       return
     divId = "stream#{stream.connection.connectionId}"
-    newDiv = $("<div />", {id:divId})
     element$ = $(".subscriberContainer:first")
-    element$.append newDiv
+    myCode = window.userStreamTemplate( {id:divId} )
+    element$.html myCode
+    console.log element$.find('.flagUser')
+    element$.find('.flagUser').click ->
+      streamConnection = $(this).attr('streamConnection')
+      inappropriate = confirm("Is this user being inappropriate?")
+      if inappropriate
+        $(".#{streamConnection} video").css("-webkit-filter", "Blur(15px)")
+        channel.trigger 'client-inappropriate', { streamConnection: streamConnection }
+        alert( "Thankyou. User will be removed")
     element$.addClass("stream#{stream.connection.connectionId}")
     element$.removeClass("subscriberContainer")
-    session.subscribe( stream, divId , {width:259, height: 189} )
+    session.subscribe( stream, divId , {width:260, height:190} )
 
 sessionConnectedHandler = (event) ->
+  if event.streams >= 4
+    window.location = "/"
   subscribeStreams(event.streams)
   session.publish( publisher )
 
@@ -38,9 +57,7 @@ destroyedStreams = (e) ->
   for stream in e.streams
     if session.connection.connectionId == stream.connection.connectionId
       return
-    element$ = $(".stream#{stream.connection.connectionId}")
-    element$.addClass "subscriberContainer"
-    element$.removeClass ".stream#{stream.connection.connectionId}"
+    removeStream( stream.connection.connectionId )
 
 # Start Execution - connect to pusher and session
 startExecution = ->
@@ -51,18 +68,22 @@ startExecution = ->
     count = channel.members.count
     if count.length >= 4
       window.location = "/"
+    $(".filterOption").click ->
+      $(".filterOption").removeClass("optionSelected")
+      prop = $(this).text()
+      applyFilter( prop, "#myPublisher video" )
+      channel.trigger 'client-filter', { cid: session.connection.connectionId, filter: prop }
+      $(this).addClass("optionSelected")
+
   channel.bind 'client-filter', (data) ->
     console.log data
     applyFilter( data.filter, ".stream#{data.cid} video" )
-  session = TB.initSession( sessionId )
-  session.addEventListener 'streamCreated', streamCreatedHandler
-  session.addEventListener 'sessionConnected', sessionConnectedHandler
-  session.addEventListener 'streamDestroyed', destroyedStreams
-  session.connect( api_key, token )
+  channel.bind 'client-inappropriate', (data) ->
+    if "stream#{session.connection.connectionId}" == data.streamConnection
+      window.location = "/"
 
 # Chat Room
 dataRef = new Firebase("https://song.firebaseio.com/tbwebrtc/#{sessionId}")
-window.messageTemplate = Handlebars.compile( $("#message-template").html() )
 $('#messageInput').keydown (e) ->
   if (e.keyCode == 13)
     text = $('#messageInput').val()
@@ -88,17 +109,21 @@ $('#submitClientName').click ->
   client =
     imgdata:imgdata
     name:name
-  $('#clientInfoContainer h1').text('Loading...')
-  $('#submitClientName').fadeOut('fast')
+  $('#clientInfoContainer').remove()
+  $('#createClientOverlay').fadeOut 'slow', ->
+    $('#statusBar').slideDown('slow')
+  session = TB.initSession( sessionId )
+  session.addEventListener 'streamCreated', streamCreatedHandler
+  session.addEventListener 'sessionConnected', sessionConnectedHandler
+  session.addEventListener 'streamDestroyed', destroyedStreams
+  session.connect( api_key, token )
   $.post "/clients", {client:client, room:room_id}, (data)->
     if data.id > 0
-      $('#clientInfoContainer').fadeOut('fast')
-      $('#createClientOverlay').fadeOut('slow')
+      $('#statusBar').slideUp('slow')
       $("#userImageSrc").attr('src', data.imgdata)
       startExecution()
     else
-      $('#clientInfoContainer h1').text('What is your name?')
-      $('#submitClientName').fadeIn('fast')
+      window.location = "/"
  
 applyFilter = (prop, selector) ->
   switch prop
@@ -113,13 +138,21 @@ applyFilter = (prop, selector) ->
     when "None"
       $(selector).css("-webkit-filter", "")
 
-$(".filterOption").click ->
-  $(".filterOption").removeClass("optionSelected")
-  prop = $(this).text()
-  applyFilter( prop, "#myPublisher video" )
-  channel.trigger 'client-filter', { cid: session.connection.connectionId, filter: prop }
-  $(this).addClass("optionSelected")
-
 #focus on name Field
 $("#clientName").focus()
 
+$(".subscriber_stream_content").mouseenter ->
+  $(this).find('.flagUser').show()
+  console.log("HOVERRRR!")
+$(".subscriber_stream_content").mouseleave ->
+  $(this).find('.flagUser').hide()
+  console.log("HOVERRRR!")
+
+# remove for testing
+#startExecution()
+#$('#clientInfoContainer').fadeOut('fast')
+#session = TB.initSession( sessionId )
+#session.addEventListener 'streamCreated', streamCreatedHandler
+#session.addEventListener 'sessionConnected', sessionConnectedHandler
+#session.addEventListener 'streamDestroyed', destroyedStreams
+#session.connect( api_key, token )
