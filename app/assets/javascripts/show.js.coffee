@@ -124,6 +124,7 @@ $('#submitClientName').click ->
       $("#userImageSrc").attr('src', data.imgdata)
       startExecution()
     else
+      alert("Sorry, the room appears to be full")
       window.location = "/"
  
 applyFilter = (prop, selector) ->
