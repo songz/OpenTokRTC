@@ -29,6 +29,16 @@ body.rooms_controller {
       left:280px;
       z-index:3;
       color: $hdrColor;
+      h1{
+        margin-top:0;
+        line-height:100%;
+      }
+      #submitClientName{
+        @extend .rounded-shadow-btn;
+        margin-top: 20px;
+        padding: 10px;
+        width:165px;
+      }
     }
 
     #streams{

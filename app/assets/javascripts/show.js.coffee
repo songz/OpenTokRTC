@@ -7,13 +7,13 @@ Pusher.channel_auth_endpoint = '/pusher/auth'
 pusher = new Pusher('9b96f0dc2bd6198af8ed')
 
 # OpenTok Video Initializers
-#TB.setLogLevel(TB.DEBUG)
 api_key = '21393201'
 publisher = TB.initPublisher( api_key, "myPublisher", {width:260, height:190} )
 sessionId = $('#info').attr('tbSession')
 token = $("#info").attr('tbToken')
-session = TB.initSession( sessionId )
+session = ""
 
+# TokBox Code
 subscribeStreams = (streams) ->
   for stream in streams
     if session.connection.connectionId == stream.connection.connectionId
@@ -41,40 +41,39 @@ destroyedStreams = (e) ->
     element$.addClass "subscriberContainer"
     element$.removeClass ".stream#{stream.connection.connectionId}"
 
-session.addEventListener 'streamCreated', streamCreatedHandler
-session.addEventListener 'sessionConnected', sessionConnectedHandler
-session.addEventListener 'streamDestroyed', destroyedStreams
-
-# Start Execution
+# Start Execution - connect to pusher and session
 startExecution = ->
   channel = pusher.subscribe("presence-#{sessionId}")
   channel.bind 'pusher:subscription_succeeded', ->
     myId = channel.members.me.id
     window.userName = channel.members.me.info.name
     count = channel.members.count
+    if count.length >= 4
+      window.location = "/"
+  session = TB.initSession( sessionId )
+  session.addEventListener 'streamCreated', streamCreatedHandler
+  session.addEventListener 'sessionConnected', sessionConnectedHandler
+  session.addEventListener 'streamDestroyed', destroyedStreams
   session.connect( api_key, token )
 
-# Chat Box
+# Chat Room
 dataRef = new Firebase("https://song.firebaseio.com/tbwebrtc/#{sessionId}")
-
 window.messageTemplate = Handlebars.compile( $("#message-template").html() )
-
 $('#messageInput').keydown (e) ->
   if (e.keyCode == 13)
     text = $('#messageInput').val()
     dataRef.push({name: window.userName, text: text})
     $('#messageInput').val('')
-
 dataRef.on 'child_added', (snapshot) ->
   message = window.messageTemplate( snapshot.val() )
   $("#displayChat").append message
   $('#displayChat')[0].scrollTop = $('#displayChat')[0].scrollHeight
-
 $('#chatInput input').focus ->
   $('.icon-comments-alt').css('color','#C40A68')
 $('#chatInput input').focusout ->
   $('.icon-comments-alt').css('color','#8D8F8F')
 
+# Submit a room and registering user
 $('#submitClientName').click ->
   name = $("#clientName").val()
   imgdata = publisher.getImgData()
@@ -95,3 +94,6 @@ $('#submitClientName').click ->
     else
       $('#clientInfoContainer h1').text('What is your name?')
       $('#submitClientName').fadeIn('fast')
+
+$("#clientName").focus()
+

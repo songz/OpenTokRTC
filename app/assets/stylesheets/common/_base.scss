@@ -43,6 +43,7 @@ section {
 .rounded-btn {
   @extend .btn;
   // TODO: define this in terms of ems
+  // why ems? I hate ems
   @include border-radius(10px);
 }
 
