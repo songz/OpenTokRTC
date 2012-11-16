@@ -28,7 +28,10 @@ class PagesController < ApplicationController
           p "Channel occupied"
         when 'channel_vacated'
           p "channel is empty"
-          ap event['channel']
+          session_id = event['channel'].split('presence-').last
+          for e in Room.where( session_id: session_id )
+            e.destroy()
+          end
         when 'member_removed'
           client = Client.find(event['user_id'])
           if client.room.clients.length == 1
