@@ -34,6 +34,7 @@ class ClientsController < ApplicationController
   # PUT /rooms/1
   # PUT /rooms/1.json
   def update
+    @room = Room.find(params[:room])
     client = @rooms.clients.find(params[:id])
 
     respond_to do |format|
@@ -50,6 +51,7 @@ class ClientsController < ApplicationController
   # DELETE /rooms/1
   # DELETE /rooms/1.json
   def destroy
+    @room = Room.find(params[:room])
     client = @room.clients.find(params[:id])
     client.destroy
 

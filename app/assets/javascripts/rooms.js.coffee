@@ -25,7 +25,7 @@ channel.bind 'client-destroyed', (data)->
 channel.bind 'client-created', (data)->
   console.log "client-created"
   console.log data
-  console.log $("[data-room=#{data.room_id}] #user_preview").append( clientTemplate(data) )
+  $("[data-room=#{data.room_id}] .userPreview ul").append( clientTemplate(data) )
 
 # BackboneJS
 class Room extends Backbone.Model
@@ -35,8 +35,8 @@ class Rooms extends Backbone.Collection
   url: "/rooms"
 
 class RoomView extends Backbone.View
-  tagName: "li",
-  className: "room",
+  tagName: "li"
+  className: "room"
   template: Handlebars.compile( $("#room-template").html() )
   events:
     "click" : "roomSelected"

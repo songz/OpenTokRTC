@@ -30,9 +30,10 @@ class PagesController < ApplicationController
           p "channel is empty"
           session_id = event['channel'].split('presence-').last
           for e in Room.where( session_id: session_id )
-            e.destroy()
+            e.destroy() # Necessary because sometimes client not always destroyed (multiple created)
           end
         when 'member_removed'
+          client = Client.find(event['user_id'])
           client.destroy()
           ap "client destroyed"
         end

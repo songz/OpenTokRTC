@@ -2,7 +2,7 @@ class Client < ActiveRecord::Base
   attr_accessible :flag, :imgdata, :point, :room_id, :name
   belongs_to :room
   before_save :uploadImage
-	before_create :notify_creation
+	after_create :notify_creation
 	before_destroy :notify_destruction
 
   def uploadImage
