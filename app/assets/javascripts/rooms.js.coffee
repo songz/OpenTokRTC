@@ -54,8 +54,9 @@ class RoomView extends Backbone.View
     clients.push(data)
     @model.set {clients: clients}
     if clients.length >= 4
+      console.log "CLIENT LENGTH >= 4"
       @model.set({open:false})
-      @$el.addClass("open")
+      @$el.removeClass("open")
       @$el.attr("data-room", @model.get("id"))
       @$el.html @template(@model.toJSON())
   removeClient: (data) ->
@@ -93,7 +94,7 @@ class RoomsView extends Backbone.View
   addRoom: (data) ->
     model = new Room( data )
     view = new RoomView {model:model}
-    @views[models.get('id')] = view
+    @views[model.get('id')] = view
     @$el.append view.render().el
   removeRoom: (data) ->
     console.log @views
