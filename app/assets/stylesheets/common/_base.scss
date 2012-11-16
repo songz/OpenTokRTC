@@ -59,3 +59,39 @@ h1, h2, h3, h4, h5, h6 {
   color: $hdrColor;
 }
 
+#header{
+  width:100%; 
+  /*background-color:rgba(0,170,153,0.5);*/
+  height:80px;
+}
+#logo{
+  position:relative;
+  width:550px;
+  height:80px;
+
+}
+#logo div{
+  background:#C40A68;
+  position:absolute;
+  width:50px;
+  height:50px;
+  text-align:center;
+  font-size:40px;
+  color:white;
+  border-radius:5px;
+  top:20px;
+}
+.icon-film{
+  position:relative;
+  top:15px;
+}
+
+#logo h4{
+  position:absolute;
+  top:15px;
+  left:60px;
+  font-size:45px;
+  font-family: 'Carrois Gothic SC', sans-serif;
+  margin-top:0px;
+}
+
