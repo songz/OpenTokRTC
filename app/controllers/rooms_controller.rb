@@ -3,7 +3,7 @@ class RoomsController < ApplicationController
   # GET /rooms.json
   def index
     @room = Room.new
-    @rooms = Room.all
+    @rooms = Room.allLive
 
     respond_to do |format|
       format.html # index.html.erb

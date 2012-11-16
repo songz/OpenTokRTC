@@ -1,9 +1,19 @@
 class Room < ActiveRecord::Base
-  attr_accessible :client_id, :description, :feature, :session_id, :title, :clients_attributes
+  attr_accessible :client_id, :description, :feature, :session_id, :title, :clients_attributes, :live
   has_many :clients, :dependent => :destroy
   accepts_nested_attributes_for :clients
   before_destroy :notify_destruction
-  after_create :notify_creation
+
+  def self.allLive
+    # this replaces Room.all function. We only want to show rooms with > 1 person in it
+    self.where(:live=>true)
+  end
+
+  def goLive
+    # When a room is created, the public channel for the whole app will be notified
+    self.update_attributes( live:true )
+    Pusher[Webrtc::Application.config.application_channel].trigger('room-created', self.attributes.merge({clients:self.clients}) )
+  end
 
   def self.find_by_channel_name(channel_name="")
     session_id = channel_name.gsub(/^presence-/, "")
@@ -24,8 +34,6 @@ class Room < ActiveRecord::Base
   protected
 
   def notify_creation
-    # When a room is created, the public channel for the whole app will be notified
-    Pusher[Webrtc::Application.config.application_channel].trigger('room-created', self.attributes.merge({clients:self.clients}) )
   end
 
   def notify_destruction

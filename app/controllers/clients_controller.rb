@@ -22,6 +22,7 @@ class ClientsController < ApplicationController
     @room = Room.find(params[:room])
     client = @room.clients.build(params[:client])
     if client.save!
+      @room.goLive
       session[:client_id] = client.id
       session[:client_name] = client.name
       session[:client_room_id] = client.room_id
