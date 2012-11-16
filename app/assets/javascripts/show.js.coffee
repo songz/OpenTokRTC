@@ -122,6 +122,3 @@ $(".filterOption").click ->
 #focus on name Field
 $("#clientName").focus()
 
-
-# delete after Test
-startExecution()
