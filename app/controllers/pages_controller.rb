@@ -28,6 +28,7 @@ class PagesController < ApplicationController
           p "Channel occupied"
         when 'channel_vacated'
           p "channel is empty"
+          ap event['channel']
         when 'member_removed'
           client = Client.find(event['user_id'])
           if client.room.clients.length == 1
