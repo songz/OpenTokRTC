@@ -32,10 +32,6 @@ class Room < ActiveRecord::Base
   end
 
   protected
-
-  def notify_creation
-  end
-
   def notify_destruction
     # When a room is destroyed, the public channel for the whole app will be notified
     Pusher[Webrtc::Application.config.application_channel].trigger('room-destroyed', self.attributes)
