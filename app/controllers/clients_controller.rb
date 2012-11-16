@@ -23,13 +23,12 @@ class ClientsController < ApplicationController
   # POST /rooms
   # POST /rooms.json
   def create
+    ap params
+    ap "CREATE CLIENT"
     @room = Room.find(params[:room])
-    if @room.clients.length > 0
-      client = @room.clients.build(params[:client])
-    else
-      client = Client.new(params[:client])
-    end
-    if client.save!
+    if @room.clients.length < 4
+      #client = @room.clients.build(params[:client])
+      client = @room.clients.create(params[:client])
       @room.goLive
       session[:client_id] = client.id
       session[:client_name] = client.name

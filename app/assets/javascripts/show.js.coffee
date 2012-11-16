@@ -22,6 +22,7 @@ window.userStreamTemplate = Handlebars.compile( $("#userStreamTemplate").html() 
 # TokBox Code
 removeStream = (cid) ->
   element$ = $(".stream#{cid}")
+  element$.empty()
   element$.addClass "subscriberContainer"
   element$.removeClass ".stream#{cid}"
 
@@ -136,6 +137,7 @@ $('#submitClientName').click ->
       getClientData(room_id)
       startExecution()
     else
+      alert("Sorry, the room appears to be full")
       window.location = "/"
  
 applyFilter = (prop, selector) ->
@@ -156,10 +158,8 @@ $("#clientName").focus()
 
 $(".subscriber_stream_content").mouseenter ->
   $(this).find('.flagUser').show()
-  console.log("HOVERRRR!")
 $(".subscriber_stream_content").mouseleave ->
   $(this).find('.flagUser').hide()
-  console.log("HOVERRRR!")
 
 # Update server Client data
 updateClientData = ->
