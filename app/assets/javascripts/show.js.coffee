@@ -84,9 +84,9 @@ $('#submitClientName').click ->
   client =
     imgdata:imgdata
     name:name
+  $('#clientInfoContainer h1').text('Loading...')
+  $('#submitClientName').fadeOut('fast')
   $.post "/clients", {client:client, room:room_id}, (data)->
-    $('#clientInfoContainer h1').text('Loading...')
-    $('#submitClientName').fadeOut('fast')
     if data.id > 0
       $('#clientInfoContainer').fadeOut('fast')
       $('#createClientOverlay').fadeOut('slow')
