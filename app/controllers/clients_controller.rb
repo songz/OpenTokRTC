@@ -42,11 +42,12 @@ class ClientsController < ApplicationController
   # PUT /rooms/1
   # PUT /rooms/1.json
   def update
-    @room = Room.find(params[:room])
-    client = @rooms.clients.find(params[:id])
+    client = Client.find(params[:id])
+    client.cid = params[:cid]
+    client.filter = params[:filter]
 
     respond_to do |format|
-      if client.update_attributes(params[:client])
+      if client.save!
         format.html { redirect_to client, notice: 'Client was successfully updated.' }
         format.json { head :no_content }
       else
