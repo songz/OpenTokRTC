@@ -25,9 +25,6 @@ class ClientsController < ApplicationController
       session[:client_id] = client.id
       session[:client_name] = client.name
       session[:client_room_id] = client.room_id
-
-      # Notify everyone else interested via Pusher
-      #Pusher[@room.channel_name].trigger('created', client.attributes, request.headers["X-Pusher-Socket-ID"])
       render json: client, status: :created, location: client
     else
       render json: {status:"failed"}
@@ -41,10 +38,6 @@ class ClientsController < ApplicationController
 
     respond_to do |format|
       if client.update_attributes(params[:client])
-
-        # Notify everyone else interested via Pusher
-        Pusher[@room.channel_name].trigger('updated', client.attributes, request.headers["X-Pusher-Socket-ID"])
-
         format.html { redirect_to client, notice: 'Client was successfully updated.' }
         format.json { head :no_content }
       else
@@ -61,9 +54,6 @@ class ClientsController < ApplicationController
     client.destroy
 
     respond_to do |format|
-      # Notify everyone else interested via Pusher
-      Pusher[@room.channel_name].trigger('destroyed', client.attributes, request.headers["X-Pusher-Socket-ID"])
-
       format.html { redirect_to rooms_url }
       format.json { head :no_content }
     end

@@ -3,7 +3,7 @@ class Room < ActiveRecord::Base
   has_many :clients, :dependent => :destroy
   accepts_nested_attributes_for :clients
   before_destroy :notify_destruction
-  before_create :notify_creation
+  after_create :notify_creation
 
   def self.find_by_channel_name(channel_name="")
     session_id = channel_name.gsub(/^presence-/, "")
@@ -25,7 +25,7 @@ class Room < ActiveRecord::Base
 
   def notify_creation
     # When a room is created, the public channel for the whole app will be notified
-    Pusher[Webrtc::Application.config.application_channel].trigger('room-created', self.attributes)
+    Pusher[Webrtc::Application.config.application_channel].trigger('room-created', self.attributes.merge({clients:self.clients}) )
   end
 
   def notify_destruction

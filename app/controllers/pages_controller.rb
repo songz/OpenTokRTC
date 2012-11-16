@@ -33,11 +33,6 @@ class PagesController < ApplicationController
             e.destroy()
           end
         when 'member_removed'
-          client = Client.find(event['user_id'])
-          if client.room.clients.length == 1
-            ap "room destroyed"
-            client.room.destroy()
-          end
           client.destroy()
           ap "client destroyed"
         end
