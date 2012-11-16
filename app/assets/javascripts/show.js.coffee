@@ -94,6 +94,7 @@ $('#submitClientName').click ->
     if data.id > 0
       $('#clientInfoContainer').fadeOut('fast')
       $('#createClientOverlay').fadeOut('slow')
+      $("#userImageSrc").attr('src', data.imgdata)
       startExecution()
     else
       $('#clientInfoContainer h1').text('What is your name?')
