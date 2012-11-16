@@ -21,6 +21,7 @@ window.userStreamTemplate = Handlebars.compile( $("#userStreamTemplate").html() 
 # TokBox Code
 removeStream = (cid) ->
   element$ = $(".stream#{cid}")
+  element$.empty()
   element$.addClass "subscriberContainer"
   element$.removeClass ".stream#{cid}"
 
@@ -143,10 +144,8 @@ $("#clientName").focus()
 
 $(".subscriber_stream_content").mouseenter ->
   $(this).find('.flagUser').show()
-  console.log("HOVERRRR!")
 $(".subscriber_stream_content").mouseleave ->
   $(this).find('.flagUser').hide()
-  console.log("HOVERRRR!")
 
 # remove for testing
 #startExecution()
