@@ -1,5 +1,5 @@
 class Client < ActiveRecord::Base
-  attr_accessible :flag, :imgdata, :point, :room_id, :name
+  attr_accessible :flag, :imgdata, :point, :room_id, :name, :filter, :cid
   belongs_to :room
   before_save :uploadImage
 	after_create :notify_creation

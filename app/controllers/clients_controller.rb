@@ -3,7 +3,11 @@ class ClientsController < ApplicationController
   # GET /rooms
   # GET /rooms.json
   def index
-    @clients = Client.all
+    if params.has_key?("room")
+      @clients = Client.where(:room_id => params[:room])
+    else
+      @clients = Client.all
+    end
 
     respond_to do |format|
       format.html # index.html.erb

@@ -1,5 +1,6 @@
 myId = ""
 position = ""
+window.clientsData = {}
 
 # Pusher Initialization
 Pusher.channel_auth_transport = 'jsonp'
@@ -39,15 +40,22 @@ subscribeStreams = (streams) ->
       if inappropriate
         $(".#{streamConnection} video").css("-webkit-filter", "Blur(15px)")
         channel.trigger 'client-inappropriate', { streamConnection: streamConnection }
-        alert( "Thankyou. User will be removed")
+        alert( "Thank you. User will be removed")
     element$.addClass("stream#{stream.connection.connectionId}")
     element$.removeClass("subscriberContainer")
     session.subscribe( stream, divId , {width:260, height:190} )
+    # Apply any existing filters to the video element
+    if window.clientsData[stream.connection.connectionId]?
+      newClient = window.clientsDta[stream.connection.connectionId]
+      if newClient.filter?
+        applyFilter(newClient.filter, ".stream#{newClient.cid} video")
 
 sessionConnectedHandler = (event) ->
   if event.streams >= 4
     window.location = "/"
   subscribeStreams(event.streams)
+  # save connection id to server
+  window.myClient.cid = session.connection.connectionId
   session.publish( publisher )
 
 streamCreatedHandler = (event) ->
@@ -73,6 +81,8 @@ startExecution = ->
       prop = $(this).text()
       applyFilter( prop, "#myPublisher video" )
       channel.trigger 'client-filter', { cid: session.connection.connectionId, filter: prop }
+      window.myClient.filter = prop
+      updateClientData()
       $(this).addClass("optionSelected")
 
   channel.bind 'client-filter', (data) ->
@@ -116,11 +126,14 @@ $('#submitClientName').click ->
   session.addEventListener 'streamCreated', streamCreatedHandler
   session.addEventListener 'sessionConnected', sessionConnectedHandler
   session.addEventListener 'streamDestroyed', destroyedStreams
-  session.connect( api_key, token )
   $.post "/clients", {client:client, room:room_id}, (data)->
     if data.id > 0
+      window.myClient = data
       $('#statusBar').slideUp('slow')
       $("#userImageSrc").attr('src', data.imgdata)
+      session.connect( api_key, token )
+      # read all the client data
+      getClientData(room_id)
       startExecution()
     else
       window.location = "/"
@@ -147,6 +160,43 @@ $(".subscriber_stream_content").mouseenter ->
 $(".subscriber_stream_content").mouseleave ->
   $(this).find('.flagUser').hide()
   console.log("HOVERRRR!")
+
+# Update server Client data
+updateClientData = ->
+  $.ajax {
+    type: "PUT",
+    url: "/clients/#{window.myClient.id}.json",
+    data: JSON.stringify(window.myClient),
+    contentType: 'application/json',
+    dataType: 'json',
+    success: (data) ->
+      console.log('Saved client data to server')
+      console.log(data)
+    error: (jqHXR, textStatus) ->
+      console.log("failed to save client data to server: #{textStatus}")
+  }
+
+# Get client data for all the clients in the room
+getClientData = (roomId) ->
+  $.ajax {
+    type: 'GET',
+    url: '/clients.json',
+    data: { "room" : roomId },
+    contentType: 'application/json',
+    dataType: 'json',
+    success: (data) ->
+      console.log('recieved client info from server')
+      storeClientDataByCid(data)
+    error: (jqHXR, textStatus) ->
+      console.log("failed to recieve client info from server: #{textStatus}")
+  }
+
+# Transforms the array of clients recieved from the server to a hash
+# with cid as the key
+storeClientDataByCid = (data) ->
+  for client in data
+    window.clientsData[client.cid] = client
+
 
 # remove for testing
 #startExecution()
