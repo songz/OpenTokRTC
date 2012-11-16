@@ -19,6 +19,8 @@ class ClientsController < ApplicationController
   # POST /rooms
   # POST /rooms.json
   def create
+    ap params
+    ap "CREATE CLIENT"
     @room = Room.find(params[:room])
     if @room.clients.length > 0
       client = @room.clients.build(params[:client])
