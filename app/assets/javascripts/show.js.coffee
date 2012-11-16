@@ -5,6 +5,7 @@ position = ""
 Pusher.channel_auth_transport = 'jsonp'
 Pusher.channel_auth_endpoint = '/pusher/auth'
 pusher = new Pusher('9b96f0dc2bd6198af8ed')
+channel = ""
 
 # OpenTok Video Initializers
 api_key = '21393201'
@@ -50,6 +51,9 @@ startExecution = ->
     count = channel.members.count
     if count.length >= 4
       window.location = "/"
+  channel.bind 'client-filter', (data) ->
+    console.log data
+    applyFilter( data.filter, ".stream#{data.cid} video" )
   session = TB.initSession( sessionId )
   session.addEventListener 'streamCreated', streamCreatedHandler
   session.addEventListener 'sessionConnected', sessionConnectedHandler
@@ -94,11 +98,30 @@ $('#submitClientName').click ->
     else
       $('#clientInfoContainer h1').text('What is your name?')
       $('#submitClientName').fadeIn('fast')
+ 
+applyFilter = (prop, selector) ->
+  switch prop
+    when "Blur"
+      $(selector).css("-webkit-filter", "Blur(15px)")
+    when "Sepia"
+      $(selector).css("-webkit-filter", "sepia(100%)")
+    when "Grayscale"
+      $(selector).css("-webkit-filter", "grayscale(100%)")
+    when "Invert"
+      $(selector).css("-webkit-filter", "invert(100%)")
+    when "None"
+      $(selector).css("-webkit-filter", "")
 
 $(".filterOption").click ->
   $(".filterOption").removeClass("optionSelected")
+  prop = $(this).text()
+  applyFilter( prop, "#myPublisher video" )
+  channel.trigger 'client-filter', { cid: session.connection.connectionId, filter: prop }
   $(this).addClass("optionSelected")
 
 #focus on name Field
 $("#clientName").focus()
 
+
+# delete after Test
+startExecution()
