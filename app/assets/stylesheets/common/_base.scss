@@ -72,15 +72,16 @@ h1, h2, h3, h4, h5, h6 {
 
 }
 #logo div{
-  background:#C40A68;
   position:absolute;
-  width:50px;
-  height:50px;
+  width:234px;
+  height:70px;
   text-align:center;
   font-size:40px;
   color:white;
   border-radius:5px;
   top:20px;
+  background-image:url(/assets/otlogo.png);
+  background-repeat:no-repeat;
 }
 .icon-film{
   position:relative;
@@ -89,10 +90,14 @@ h1, h2, h3, h4, h5, h6 {
 
 #logo h4{
   position:absolute;
-  top:15px;
-  left:60px;
+  top:25px;
+  left:80px;
   font-size:45px;
   font-family: 'Carrois Gothic SC', sans-serif;
   margin-top:0px;
 }
 
+#logoImage{
+  width: 100px;
+  height: 100px;
+}

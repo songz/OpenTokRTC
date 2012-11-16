@@ -95,5 +95,10 @@ $('#submitClientName').click ->
       $('#clientInfoContainer h1').text('What is your name?')
       $('#submitClientName').fadeIn('fast')
 
+$(".filterOption").click ->
+  $(".filterOption").removeClass("optionSelected")
+  $(this).addClass("optionSelected")
+
+#focus on name Field
 $("#clientName").focus()
 
