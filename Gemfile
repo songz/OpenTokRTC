@@ -15,7 +15,6 @@ gem 'opentok'
 gem 'pg'
 gem 'awesome_print'
 gem 'aws-s3'
-gem 'mini_magick'
 
 # Gems used only for assets and not required
 # in production environments by default.

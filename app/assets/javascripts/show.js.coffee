@@ -117,9 +117,6 @@ $('#submitClientName').click ->
   if (not imgdata?) or imgdata.length < 10
     alert("Please allow chrome to access your device camera")
     return
-  client =
-    imgdata:imgdata
-    name:name
   $('#clientInfoContainer').remove()
   $('#createClientOverlay').fadeOut 'slow', ->
     $('#statusBar').slideDown('slow')
@@ -127,18 +124,31 @@ $('#submitClientName').click ->
   session.addEventListener 'streamCreated', streamCreatedHandler
   session.addEventListener 'sessionConnected', sessionConnectedHandler
   session.addEventListener 'streamDestroyed', destroyedStreams
-  $.post "/clients", {client:client, room:room_id}, (data)->
-    if data.id > 0
-      window.myClient = data
-      $('#statusBar').slideUp('slow')
-      $("#userImageSrc").attr('src', data.imgdata)
-      session.connect( api_key, token )
-      # read all the client data
-      getClientData(room_id)
-      startExecution()
-    else
-      alert("Sorry, the room appears to be full")
-      window.location = "/"
+
+  # Resize image via canvas, then upload base64
+  canvas = document.getElementById( 'myPictureCanvas' )
+  ctx = canvas.getContext("2d")
+  image = new Image()
+  image.src = "data:image/png;base64,#{imgdata}"
+  image.onload = ->
+    #drawImage( src, s_offsetX, s_offsetY, s_width, s_height, ... )
+    ctx.drawImage(image, 80, 0, 480, 480, 0, 0, 100, 100)
+    dataURL = canvas.toDataURL("image/png")
+    client =
+      imgdata:dataURL
+      name:name
+    $.post "/clients", {client:client, room:room_id}, (data)->
+      if data.id > 0
+        window.myClient = data
+        $('#statusBar').slideUp('slow')
+        $("#userImageSrc").attr('src', data.imgdata)
+        session.connect( api_key, token )
+        # read all the client data
+        getClientData(room_id)
+        startExecution()
+      else
+        alert("Sorry, the room appears to be full")
+        window.location = "/"
  
 applyFilter = (prop, selector) ->
   switch prop
