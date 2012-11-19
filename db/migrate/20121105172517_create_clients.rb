@@ -3,7 +3,7 @@ class CreateClients < ActiveRecord::Migration
     create_table :clients do |t|
       t.string :name
       t.integer :room_id
-      t.string :imgdata
+      t.text :imgdata
       t.integer :flag
       t.integer :point
 
