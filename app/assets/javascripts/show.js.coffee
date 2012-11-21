@@ -47,7 +47,8 @@ subscribeStreams = (streams) ->
     session.subscribe( stream, divId , {width:260, height:190} )
     # Apply any existing filters to the video element
     if window.clientsData[stream.connection.connectionId]?
-      newClient = window.clientsDta[stream.connection.connectionId]
+      console.log "STREAM RECEIVED... PPLAYING FILTER"
+      newClient = window.clientsData[stream.connection.connectionId]
       if newClient.filter?
         applyFilter(newClient.filter, ".stream#{newClient.cid} video")
 
@@ -139,7 +140,7 @@ $('#submitClientName').click ->
       name:name
     $.post "/clients", {client:client, room:room_id}, (data)->
       if data.id > 0
-        window.myClient = data
+        window.myClient = {id:data.id}
         $('#statusBar').slideUp('slow')
         $("#userImageSrc").attr('src', data.imgdata)
         session.connect( api_key, token )
