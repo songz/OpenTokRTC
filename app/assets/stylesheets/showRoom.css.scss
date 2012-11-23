@@ -285,3 +285,16 @@ body.rooms_controller {
   margin-top: 30px;
   position:relative;
 }
+
+.Blur video{
+  -webkit-filter: Blur(15px);
+}
+.Sepia video{
+  -webkit-filter: Sepia(100%);
+}
+.Grayscale video{
+  -webkit-filter: Grayscale(100%);
+}
+.Invert video{
+  -webkit-filter: Invert(100%);
+}

@@ -50,7 +50,8 @@ subscribeStreams = (streams) ->
       console.log "STREAM RECEIVED... PPLAYING FILTER"
       newClient = window.clientsData[stream.connection.connectionId]
       if newClient.filter?
-        applyFilter(newClient.filter, ".stream#{newClient.cid} video")
+        applyClassFilter(newClient.filter, ".stream#{newClient.cid}")
+        #applyFilter(newClient.filter, ".stream#{newClient.cid} video")
 
 sessionConnectedHandler = (event) ->
   if event.streams >= 4
@@ -80,8 +81,8 @@ startExecution = ->
       window.location = "/"
     $(".filterOption").click ->
       $(".filterOption").removeClass("optionSelected")
-      prop = $(this).text()
-      applyFilter( prop, "#myPublisher video" )
+      prop = $(this).attr('value')
+      applyClassFilter( prop, "#myPublisher" )
       channel.trigger 'client-filter', { cid: session.connection.connectionId, filter: prop }
       window.myClient.filter = prop
       updateClientData()
@@ -89,7 +90,8 @@ startExecution = ->
 
   channel.bind 'client-filter', (data) ->
     console.log data
-    applyFilter( data.filter, ".stream#{data.cid} video" )
+    #applyFilter( data.filter, ".stream#{data.cid} video" )
+    applyClassFilter( data.filter, ".stream#{data.cid}" )
   channel.bind 'client-inappropriate', (data) ->
     if "stream#{session.connection.connectionId}" == data.streamConnection
       window.location = "/"
@@ -151,18 +153,9 @@ $('#submitClientName').click ->
         alert("Sorry, the room appears to be full")
         window.location = "/"
  
-applyFilter = (prop, selector) ->
-  switch prop
-    when "Blur"
-      $(selector).css("-webkit-filter", "Blur(15px)")
-    when "Sepia"
-      $(selector).css("-webkit-filter", "sepia(100%)")
-    when "Grayscale"
-      $(selector).css("-webkit-filter", "grayscale(100%)")
-    when "Invert"
-      $(selector).css("-webkit-filter", "invert(100%)")
-    when "None"
-      $(selector).css("-webkit-filter", "")
+applyClassFilter = (prop, selector) ->
+  $(selector).removeClass( "Blur Sepia Grayscale Invert" )
+  $(selector).addClass( prop )
 
 #focus on name Field
 $("#clientName").focus()
