@@ -12,8 +12,7 @@ pusher = new Pusher('9b96f0dc2bd6198af8ed')
 channel = pusher.subscribe(window.applicationChannel)
 channel.bind 'room-created', (data)->
   console.log "room-created"
-  $.get "/rooms/#{data.id}.json", (data) ->
-    roomsView.addRoom( data )
+  roomsView.addRoom( data )
 channel.bind 'room-destroyed', (data)->
   console.log "room-destroyed"
   roomsView.removeRoom( data )
