@@ -9,7 +9,7 @@ class Client < ActiveRecord::Base
 	def notify_creation
     # When a client is created, the public channel for the whole app will be
 		# notified
-    Pusher[Webrtc::Application.config.application_channel].trigger('client-created', {id:self.id})
+    #Pusher[Webrtc::Application.config.application_channel].trigger('client-created', {id:self.id})
 	end
 
 	def notify_destruction
