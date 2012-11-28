@@ -1,4 +1,6 @@
 class PagesController < ApplicationController
+  protect_from_forgery :except => :auth # stop rails CSRF protection for this action
+
   def auth
     ap session[:client_id]
     ap session[:client_name]
