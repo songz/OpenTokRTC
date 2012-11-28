@@ -33,6 +33,12 @@ class ClientsController < ApplicationController
       #client = @room.clients.build(params[:client])
       client = @room.clients.create(params[:client])
       @room.goLive
+      ap session[:client_id]
+      ap session[:client_id]
+      ap session[:client_id]
+      ap session[:client_id]
+      ap session[:client_id]
+      ap session[:client_id]
       session[:client_id] = client.id
       session[:client_name] = client.name
       session[:client_room_id] = client.room_id
