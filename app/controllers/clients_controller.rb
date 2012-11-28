@@ -43,6 +43,7 @@ class ClientsController < ApplicationController
       ap "setting session client"
       ap "setting session client"
       ap session[:client_id]
+      ap session[:client_id]
       render json: client, status: :created, location: client
     else
       render json: {status:"failed"}
