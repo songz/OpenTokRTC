@@ -21,6 +21,12 @@
 
   <h1 class="page-hdr">Join Existing Rooms:</h1>
   <ul class="room-list"> </ul>
+  <hr />
+  <footer>
+    <a href="http://tokbox.com/blog/author/song">
+      <h1>Read about how this app was built</h1>
+    </a>
+  </footer>
 
   <div class="modal hide fade create-room">
     <%= form_for(@room) do |f| %>
@@ -52,7 +58,7 @@
 
 <script id="room-template" type="text/x-handlebars-template">
   <h2 class="name">{{title}}</h2>
-  <h3 class="description"><i class="icon-info-sign"></i> {{description}} </h3>
+  <h3 class="description"> {{description}} </h3>
   <span class="liveSign">
     {{! TODO: fill in the text and swap out the image with css }}
     {{#if open}}

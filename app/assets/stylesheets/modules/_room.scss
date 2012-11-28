@@ -13,10 +13,12 @@ $roomPaddingLeft : 50px;
 $roomOpenBorderThickness : 10px;
 
 // TODO: can this be done without coupling to a container width?
-$roomLeftSideWidth : 560px;
+$roomLeftSideWidth : 550px;
 $roomContainerWidth : 850px;
+$roomNameHeight : 48px;
 
 $roomDescriptionColor: #bbb;
+$roomDescriptionHeight: 52px;
 
 .room {
   @include border-radius(100px 10px 10px 100px);
@@ -48,14 +50,20 @@ $roomDescriptionColor: #bbb;
     }
   }
 
+  .name{
+    height: $roomNameHeight;
+  }
+
   // Left side of Room View
   .name, .description {
     margin:0;
     width: $roomLeftSideWidth;
+    overflow:auto;
   }
 
   .description {
     color: $roomDescriptionColor;
+    height: $roomDescriptionHeight;
   }
 
   // Right side of Room View
@@ -109,3 +117,19 @@ $roomDescriptionColor: #bbb;
   padding:15px;
   background-color: $backgroundContrastColor;
 }
+footer{
+  margin-bottom: 50px;
+  a{
+    text-decoration:none;
+    h1{
+      text-align:center;
+      padding: 20px 50px;
+      margin: 50px 100px 150px 100px;
+      border-radius:50px;
+      &:hover{
+        background-color: #fff;
+      }
+    }
+  }
+}
+
