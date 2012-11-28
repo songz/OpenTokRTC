@@ -1,4 +1,5 @@
 class PagesController < ApplicationController
+  skip_before_filter :redirect_https
   protect_from_forgery :except => :auth # stop rails CSRF protection for this action
 
   def auth
