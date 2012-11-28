@@ -15,6 +15,6 @@ class Client < ActiveRecord::Base
 	def notify_destruction
     # When a client is destroyed, the public channel for the whole app will be
 		# notified
-    Pusher[Webrtc::Application.config.application_channel].trigger('client-destroyed', {id:self.id})
+    Pusher[Webrtc::Application.config.application_channel].trigger('client-destroyed', {id:self.id, room_id:self.room_id})
 	end
 end
