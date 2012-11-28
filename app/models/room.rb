@@ -17,7 +17,7 @@ class Room < ActiveRecord::Base
     p "checking LIVE status!"
     p "checking LIVE status!"
     if not self.live
-      Pusher[Webrtc::Application.config.application_channel].trigger('room-created', self.attributes.merge({clients:self.clients}) )
+      Pusher[Webrtc::Application.config.application_channel].trigger('room-created', self.attributes )
       p "Went live. Pusher triggered room created"
       p "Went live. Pusher triggered room created"
       p "Went live. Pusher triggered room created"
