@@ -2,24 +2,18 @@ class PagesController < ApplicationController
   protect_from_forgery :except => :auth # stop rails CSRF protection for this action
 
   def auth
-    ap "PUSHER AUTH"
-    ap "PUSHER AUTH"
-    ap "PUSHER AUTH"
-    ap "PUSHER AUTH"
-    ap "PUSHER AUTH"
-    ap "PUSHER AUTH"
     ap session[:client_id]
     ap session[:client_name]
     ap session[:client_room_id]
-    #@client = Client.find session[:client_id]
-    #response = Pusher[params[:channel_name]].authenticate(params[:socket_id], {
-    #  user_id: @client.id,
-    #  user_info: {
-    #    name: @client.name,
-    #    room_id: @client.room_id,
-    #  }
-    #})
-    response = Pusher[params[:channel_name]].authenticate(params[:socket_id])
+    @client = Client.find session[:client_id]
+    response = Pusher[params[:channel_name]].authenticate(params[:socket_id], {
+      user_id: @client.id,
+      user_info: {
+        name: @client.name,
+        room_id: @client.room_id,
+      }
+    })
+    #response = Pusher[params[:channel_name]].authenticate(params[:socket_id])
     render :json=> response.to_json, :callback => params[:callback]
   end
 
@@ -31,13 +25,6 @@ class PagesController < ApplicationController
         ap event
         case event["name"]
         when 'member_added'
-          ap "USER ADDED"
-          ap "USER ADDED"
-          ap "USER ADDED"
-          ap "USER ADDED"
-          ap "USER ADDED"
-          ap "USER ADDED"
-          ap event['user_id']
           ap "client is added to room"
         when 'channel_occupied'
           p "Channel occupied"
@@ -48,13 +35,6 @@ class PagesController < ApplicationController
             e.destroy() # Necessary because sometimes client not always destroyed (multiple created)
           end
         when 'member_removed'
-          ap "USER REMOVED"
-          ap "USER REMOVED"
-          ap "USER REMOVED"
-          ap "USER REMOVED"
-          ap "USER REMOVED"
-          ap "USER REMOVED"
-          ap event['user_id']
           client = Client.find(event['user_id'])
           client.destroy()
           ap "client destroyed"
