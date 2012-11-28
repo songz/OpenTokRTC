@@ -2,6 +2,12 @@ class PagesController < ApplicationController
   protect_from_forgery :except => :auth # stop rails CSRF protection for this action
 
   def auth
+    ap "PUSHER AUTH"
+    ap "PUSHER AUTH"
+    ap "PUSHER AUTH"
+    ap "PUSHER AUTH"
+    ap "PUSHER AUTH"
+    ap "PUSHER AUTH"
     ap session[:client_id]
     ap session[:client_name]
     ap session[:client_room_id]
@@ -11,9 +17,9 @@ class PagesController < ApplicationController
       user_info: {
         name: @client.name,
         room_id: @client.room_id,
-        imgdata: @client.imgdata
       }
     })
+    response = Pusher[params[:channel_name]].authenticate(params[:socket_id])
     render :json=> response.to_json, :callback => params[:callback]
   end
 

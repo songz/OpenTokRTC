@@ -36,6 +36,13 @@ class ClientsController < ApplicationController
       session[:client_id] = client.id
       session[:client_name] = client.name
       session[:client_room_id] = client.room_id
+      ap "setting session client"
+      ap "setting session client"
+      ap "setting session client"
+      ap "setting session client"
+      ap "setting session client"
+      ap "setting session client"
+      ap session[:client_id]
       render json: client, status: :created, location: client
     else
       render json: {status:"failed"}
