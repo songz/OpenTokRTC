@@ -1,4 +1,5 @@
 class ClientsController < ApplicationController
+  protect_from_forgery :except => :create # stop rails CSRF protection for this action
 
   # GET /rooms
   # GET /rooms.json
