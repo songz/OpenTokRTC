@@ -36,8 +36,10 @@ class PagesController < ApplicationController
             e.destroy() # Necessary because sometimes client not always destroyed (multiple created)
           end
         when 'member_removed'
-          client = Client.find(event['user_id'])
-          client.destroy()
+          client = Client.find_by_id(event['user_id'])
+          if client
+            client.destroy()
+          end
           ap "client destroyed"
         end
       end
