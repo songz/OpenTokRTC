@@ -9,7 +9,7 @@ $(".create-room").on 'shown', ->
 # When new room is created, new view should be created
 clientTemplate = Handlebars.compile( $("#client-template").html() )
 pusher = new Pusher('9b96f0dc2bd6198af8ed')
-channel = pusher.subscribe(applicationChannel)
+channel = pusher.subscribe(window.applicationChannel)
 channel.bind 'room-created', (data)->
   console.log "room-created"
   roomsView.addRoom( data )

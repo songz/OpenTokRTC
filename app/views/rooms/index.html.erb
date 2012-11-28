@@ -83,7 +83,6 @@
 <%= javascript_include_tag "backbone" %>
 <%= javascript_include_tag "handlebar" %>
 <script>
-  var applicationChannel = "<%= Webrtc::Application.config.application_channel %>";
-  var apiKey = "<%= API_KEY %>";
+  window.applicationChannel = "<%= Webrtc::Application.config.application_channel %>";
 </script>
 <%= javascript_include_tag "rooms" %>
