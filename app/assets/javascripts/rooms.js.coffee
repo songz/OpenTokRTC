@@ -13,7 +13,6 @@ channel = pusher.subscribe(window.applicationChannel)
 channel.bind 'room-created', (data)->
   console.log "room-created"
   $.get "/rooms/#{data.id}.json", (data) ->
-    console.log data
     roomsView.addRoom( data )
 channel.bind 'room-destroyed', (data)->
   console.log "room-destroyed"
@@ -23,7 +22,8 @@ channel.bind 'client-destroyed', (data)->
   roomsView.removeClient( data )
 channel.bind 'client-created', (data)->
   console.log "client-created"
-  roomsView.addClient( data )
+  $.get "/clients/#{data.id}.json", (data) ->
+    roomsView.addClient( data )
 
 # BackboneJS
 class Room extends Backbone.Model
