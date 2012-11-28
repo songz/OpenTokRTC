@@ -12,7 +12,7 @@ class Room < ActiveRecord::Base
   def goLive
     # When a room is created, the public channel for the whole app will be notified
     if not self.live
-      Pusher[Webrtc::Application.config.application_channel].trigger('room-created', self.attributes )
+      Pusher[Webrtc::Application.config.application_channel].trigger('room-created', self.attributes.merge({clients:[]}) )
       self.update_attributes( live:true )
     end
   end
