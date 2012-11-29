@@ -16,7 +16,7 @@ class RoomsController < ApplicationController
   def show
     @room = Room.find(params[:id])
     @client = @room.clients.build
-    @token = OTSDK.generateToken( :session_id=>@room.session_id, :role=>OpenTok::RoleConstants::PUBLISHER )
+    @token = OTSDK.generateToken( :session_id=>@room.session_id, :role=>OpenTok::RoleConstants::MODERATOR )
 
     respond_to do |format|
       format.html # show.html.erb
