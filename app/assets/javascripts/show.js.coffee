@@ -73,6 +73,7 @@ destroyedStreams = (e) ->
 
 # Start Execution - connect to pusher and session
 startExecution = ->
+  session.connect( api_key, token )
   channel = pusher.subscribe("presence-#{sessionId}")
   channel.bind 'pusher:subscription_succeeded', ->
     myId = channel.members.me.id
@@ -146,7 +147,6 @@ $('#submitClientName').click ->
         window.myClient = {id:data.id}
         $('#statusBar').slideUp('slow')
         $("#userImageSrc").attr('src', data.imgdata)
-        session.connect( api_key, token )
         # read all the client data
         getClientData(room_id)
         startExecution()
