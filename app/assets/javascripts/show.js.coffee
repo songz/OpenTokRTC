@@ -57,6 +57,7 @@ subscribeStreams = (streams) ->
 sessionConnectedHandler = (event) ->
   if event.streams >= 4
     window.location = "/"
+  startExecution()
   subscribeStreams(event.streams)
   # save connection id to server
   window.myClient.cid = session.connection.connectionId
@@ -73,7 +74,6 @@ destroyedStreams = (e) ->
 
 # Start Execution - connect to pusher and session
 startExecution = ->
-  session.connect( api_key, token )
   channel = pusher.subscribe("presence-#{sessionId}")
   channel.bind 'pusher:subscription_succeeded', ->
     myId = channel.members.me.id
@@ -149,7 +149,7 @@ $('#submitClientName').click ->
         $("#userImageSrc").attr('src', data.imgdata)
         # read all the client data
         getClientData(room_id)
-        startExecution()
+        session.connect( api_key, token )
       else
         alert("Sorry, the room appears to be full")
         window.location = "/"
