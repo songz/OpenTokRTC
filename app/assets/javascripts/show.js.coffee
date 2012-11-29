@@ -13,7 +13,7 @@ api_key = '21393201'
 publisher = TB.initPublisher( api_key, "myPublisher", {width:260, height:190} )
 sessionId = $('#info').attr('tbSession')
 token = $("#info").attr('tbToken')
-window.session = ""
+session = ""
 
 # templates
 window.messageTemplate = Handlebars.compile( $("#messageTemplate").html() )
