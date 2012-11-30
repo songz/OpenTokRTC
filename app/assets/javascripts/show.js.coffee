@@ -21,6 +21,7 @@ window.userStreamTemplate = Handlebars.compile( $("#userStreamTemplate").html() 
 
 # TokBox Code
 removeStream = (cid) ->
+  applyClassFilter( null, ".stream#{data.cid}" )
   element$ = $(".stream#{cid}")
   element$.empty()
   element$.addClass "subscriberContainer"
@@ -58,6 +59,7 @@ sessionConnectedHandler = (event) ->
   if event.streams >= 4
     window.location = "/"
   startExecution()
+  $('#statusBar').slideUp('slow')
   subscribeStreams(event.streams)
   # save connection id to server
   window.myClient.cid = session.connection.connectionId
