@@ -21,7 +21,7 @@ window.userStreamTemplate = Handlebars.compile( $("#userStreamTemplate").html() 
 
 # TokBox Code
 removeStream = (cid) ->
-  applyClassFilter( null, ".stream#{data.cid}" )
+  applyClassFilter( null, ".stream#{cid}" )
   element$ = $(".stream#{cid}")
   element$.empty()
   element$.addClass "subscriberContainer"
