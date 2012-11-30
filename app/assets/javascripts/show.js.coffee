@@ -59,6 +59,7 @@ sessionConnectedHandler = (event) ->
   if event.streams >= 4
     window.location = "/"
   startExecution()
+  console.log "Joining Room Sliding up!"
   $('#statusBar').slideUp('slow')
   subscribeStreams(event.streams)
   # save connection id to server
@@ -117,7 +118,7 @@ $('#chatInput input').focusout ->
   $('.icon-comments-alt').css('color','#8D8F8F')
 
 # Submit a room and registering user
-$('#submitClientName').click ->
+joinRoom = ->
   name = $("#clientName").val()
   imgdata = publisher.getImgData()
   room_id = $('#info').attr('room_id')
@@ -156,6 +157,12 @@ $('#submitClientName').click ->
         alert("Sorry, the room appears to be full")
         window.location = "/"
  
+$('#clientName').keydown (e) ->
+  if (e.keyCode == 13)
+    joinRoom()
+$('#submitClientName').click ->
+  joinRoom()
+
 applyClassFilter = (prop, selector) ->
   $(selector).removeClass( "Blur Sepia Grayscale Invert" )
   $(selector).addClass( prop )
