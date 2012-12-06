@@ -72,6 +72,9 @@
 <script id="messageTemplate" type="text/x-handlebars-template">
   <div class="chatMessage"><em>{{name}}: </em>{{text}}</div>
 </script>
+<script id="eventTemplate" type="text/x-handlebars-template">
+  <div class="chatEvent chatMessage"><em>{{name}} {{event}} the room</em></div>
+</script>
 <script id="userStreamTemplate" type="text/x-handlebars-template">
     <div id="{{id}}"></div>
     <div class="flagUser" streamConnection="{{id}}">Offensive User</div>

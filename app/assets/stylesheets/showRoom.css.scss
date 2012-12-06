@@ -196,6 +196,10 @@ body.rooms_controller {
       padding:5px;
       overflow:auto;
       background:#EEE;
+      .chatEvent{
+        text-align:center;
+        color: #aaa;
+      }
     }
 
     #displayChat .chatMessage{

@@ -17,6 +17,7 @@ session = ""
 
 # templates
 window.messageTemplate = Handlebars.compile( $("#messageTemplate").html() )
+window.eventTemplate = Handlebars.compile( $("#eventTemplate").html() )
 window.userStreamTemplate = Handlebars.compile( $("#userStreamTemplate").html() )
 
 # TokBox Code
@@ -75,6 +76,11 @@ destroyedStreams = (e) ->
       return
     removeStream( stream.connection.connectionId )
 
+chatRoomMessage = (message) ->
+  $("#displayChat").append message
+  $('#displayChat')[0].scrollTop = $('#displayChat')[0].scrollHeight
+
+
 # Start Execution - connect to pusher and session
 startExecution = ->
   channel = pusher.subscribe("presence-#{sessionId}")
@@ -93,6 +99,10 @@ startExecution = ->
       updateClientData()
       $(this).addClass("optionSelected")
 
+  channel.bind 'client-roomEvent', (data) ->
+    console.log "CLIENT LEFT/JOINED room"
+    chatRoomMessage( window.eventTemplate( data ) )
+
   channel.bind 'client-filter', (data) ->
     console.log data
     #applyFilter( data.filter, ".stream#{data.cid} video" )
@@ -110,8 +120,7 @@ $('#messageInput').keydown (e) ->
     $('#messageInput').val('')
 dataRef.on 'child_added', (snapshot) ->
   message = window.messageTemplate( snapshot.val() )
-  $("#displayChat").append message
-  $('#displayChat')[0].scrollTop = $('#displayChat')[0].scrollHeight
+  chatRoomMessage( message )
 $('#chatInput input').focus ->
   $('.icon-comments-alt').css('color','#C40A68')
 $('#chatInput input').focusout ->

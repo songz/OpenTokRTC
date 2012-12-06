@@ -29,14 +29,14 @@ class PagesController < ApplicationController
           ap "client is added to room"
           client = Client.find_by_id(event['user_id'])
           client.goLive
-          Pusher[Webrtc::Application.config.application_channel].trigger('client-created', {id:event['user_id']})
         when 'channel_occupied'
           p "Channel occupied"
         when 'channel_vacated'
           p "channel is empty"
           session_id = event['channel'].split('presence-').last
           for e in Room.where( session_id: session_id )
-            e.destroy() # Necessary because sometimes client not always destroyed (multiple created)
+            e.destroy() 
+            # Necessary because sometimes client not always destroyed (multiple created)
           end
         when 'member_removed'
           client = Client.find_by_id(event['user_id'])
