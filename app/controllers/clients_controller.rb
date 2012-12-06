@@ -33,7 +33,6 @@ class ClientsController < ApplicationController
     if @room.clients.length < 4
       #client = @room.clients.build(params[:client])
       client = @room.clients.create(params[:client])
-      @room.goLive
       session[:client_id] = client.id
       session[:client_name] = client.name
       session[:client_room_id] = client.room_id

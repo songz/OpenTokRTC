@@ -31,6 +31,10 @@ class PagesController < ApplicationController
           client.goLive
         when 'channel_occupied'
           p "Channel occupied"
+          for e in Room.where( session_id: session_id )
+            e.destroy() 
+            e.goLive
+          end
         when 'channel_vacated'
           p "channel is empty"
           session_id = event['channel'].split('presence-').last
