@@ -27,6 +27,8 @@ class PagesController < ApplicationController
         case event["name"]
         when 'member_added'
           ap "client is added to room"
+          client = Client.find_by_id(event['user_id'])
+          client.goLive
           Pusher[Webrtc::Application.config.application_channel].trigger('client-created', {id:event['user_id']})
         when 'channel_occupied'
           p "Channel occupied"

@@ -4,6 +4,10 @@ class Client < ActiveRecord::Base
 	after_create :notify_creation
 	before_destroy :notify_destruction
 
+  def goLive
+    self.update_attributes( live:true )
+  end
+
 	protected
 
 	def notify_creation
