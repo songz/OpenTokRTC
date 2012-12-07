@@ -15,6 +15,8 @@ gem 'opentok'
 gem 'pg'
 gem 'awesome_print'
 gem 'aws-s3'
+gem 'rabl'
+gem 'oj' #JSON parser to work tiwh Rabl
 
 # Gems used only for assets and not required
 # in production environments by default.

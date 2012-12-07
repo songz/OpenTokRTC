@@ -20,7 +20,7 @@ class RoomsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @rooms.to_json( include: :clients ) }
+      format.json { render json: @room.to_json( include: :clients ) }
     end
   end
 
