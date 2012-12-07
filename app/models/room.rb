@@ -9,6 +9,10 @@ class Room < ActiveRecord::Base
     self.where(:live=>true)
   end
 
+  def liveClients
+    self.clients.where(live:true)
+  end
+
   def goLive
     # When a room is created, the public channel for the whole app will be notified
     if not self.live

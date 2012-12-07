@@ -15,3 +15,8 @@ AWS::S3::Base.establish_connection!(
 )
 S3Bucket = 'DemoWebRTC'
 S3URL = 'https://s3.amazonaws.com/DemoWebRTC'
+
+Rabl.configure do |config|
+  config.include_json_root = false
+  config.include_child_root = false
+end

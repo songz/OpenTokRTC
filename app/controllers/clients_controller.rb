@@ -30,7 +30,7 @@ class ClientsController < ApplicationController
     ap params
     ap "CREATE CLIENT"
     @room = Room.find(params[:room])
-    if @room.clients.length < 4
+    if @room.liveClients.length < 4
       #client = @room.clients.build(params[:client])
       client = @room.clients.create(params[:client])
       session[:client_id] = client.id
