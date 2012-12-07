@@ -1,8 +1,8 @@
 class ClientsController < ApplicationController
   protect_from_forgery :except => :create # stop rails CSRF protection for this action
 
-  # GET /rooms
-  # GET /rooms.json
+  # GET /clients
+  # GET /clients.json
   def index
     if params.has_key?("room")
       @clients = Client.where(:room_id => params[:room])
@@ -24,8 +24,8 @@ class ClientsController < ApplicationController
     end
   end
 
-  # POST /rooms
-  # POST /rooms.json
+  # POST /clients
+  # POST /clients.json
   def create
     ap params
     ap "CREATE CLIENT"
@@ -42,8 +42,8 @@ class ClientsController < ApplicationController
     end
   end
 
-  # PUT /rooms/1
-  # PUT /rooms/1.json
+  # PUT /clients/1
+  # PUT /clients/1.json
   def update
     client = Client.find(params[:id])
     client.cid = params[:cid]
@@ -60,8 +60,8 @@ class ClientsController < ApplicationController
     end
   end
 
-  # DELETE /rooms/1
-  # DELETE /rooms/1.json
+  # DELETE /clients/1
+  # DELETE /clients/1.json
   def destroy
     @room = Room.find(params[:room])
     client = @room.clients.find(params[:id])
