@@ -4,12 +4,6 @@ class Room < ActiveRecord::Base
   accepts_nested_attributes_for :clients
   before_destroy :notify_destruction
 
-  alias :original_clients :clients
-
-  def clients
-    return self.original_clients.where( room_id: self.id, live:true ).to_a
-  end
-
   def self.allLive
     # this replaces Room.all function. We only want to show rooms with > 1 person in it
     self.where(:live=>true)
