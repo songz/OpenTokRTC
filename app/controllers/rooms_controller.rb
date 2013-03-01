@@ -4,7 +4,6 @@ class RoomsController < ApplicationController
   def index
     @room = Room.new
     @rooms = Room.allLive
-
     respond_to do |format|
       format.html # index.html.erb
       #format.json { render json: @rooms.to_json( include: :clients ) }

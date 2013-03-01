@@ -12,7 +12,6 @@ html {
 
 // Border Box sizing is more logical
 * { 
-  @include box-sizing('border-box');
 }
 
 // Layout sections

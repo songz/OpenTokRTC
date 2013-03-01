@@ -175,6 +175,7 @@ $('#submitClientName').click ->
 applyClassFilter = (prop, selector) ->
   $(selector).removeClass( "Blur Sepia Grayscale Invert" )
   $(selector).addClass( prop )
+  console.log "applyclassfilter..."+prop
 
 #focus on name Field
 $("#clientName").focus()
