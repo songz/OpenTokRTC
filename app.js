@@ -25,7 +25,11 @@ app.set( 'view engine', 'ejs' );
 // *** When user goes to root directory, render index page
 // ***
 app.get("/", function( req, res ){
-  res.render( 'index', {greeting:"Hello World"} );
+  if(req.secure){
+    res.render( 'index' );
+  }else{
+    res.redirect( 'https://opentokrtc.com' );
+  }
 });
 
 var presenceListener = {};
