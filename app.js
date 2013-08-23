@@ -25,6 +25,7 @@ app.set( 'view engine', 'ejs' );
 // *** When user goes to root directory, render index page
 // ***
 app.get("/", function( req, res ){
+  console.log(req.secure);
   if(req.secure){
     res.render( 'index' );
   }else{
