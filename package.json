@@ -1,0 +1,10 @@
+{
+    "name":"NodeOpenTok",
+    "version":"0.0.2",
+    "dependencies":{
+      "express":"",
+      "firebase":"",
+      "opentok":"",
+      "ejs":""
+    }
+}

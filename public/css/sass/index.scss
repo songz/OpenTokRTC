@@ -1,0 +1,90 @@
+@import "variables";
+
+body{
+  background-color: #1ba3dd;
+}
+.container{
+  width: 960px;
+  padding: 100px 50px;
+  background: rgba( 0,0,0, 0.7 );
+}
+body, input{
+  font-family: $avantFont;
+  color:#eeeef2;
+}
+h1{
+  font-family: $avantFont;
+  font-size:60px;
+  line-height:100%;
+  margin-top:0;
+  margin-bottom:30px;
+  text-transform:capitalize;
+  text-align:center;
+  line-height:100%;
+}
+
+#roomContainer{
+  text-align:center;
+}
+
+#roomName{
+  background-color: transparent; 
+  border-style: solid; 
+  border-width: 0px 0px 3px 0px; 
+  border-color: #88889a;
+  color:#eeeef2;
+  font-size: 40px;
+  line-height:100%;
+  text-align:center;
+  height:60px;
+  width: 400px;
+  box-sizing: border-box;
+  vertical-align: top;
+  margin: 0;
+  padding: 0;
+}
+
+#submitButton{
+  background-color:#eeeef2;
+  width: 150px;
+  height: 60px;
+  box-sizing: border-box;
+  line-height:100%;
+  display:inline-block;
+  font-size: 40px;
+  margin: 0 0 0 15px;
+  padding: 10px;
+  text-align:center;
+  color:#454545;
+  opacity: 0.8;
+}
+#submitButton:hover{
+  cursor:pointer;
+  opacity: 1;
+}
+#actionItem{
+  width: 565px;
+  text-align:left;
+  margin:auto;
+}
+
+input{
+  vertical-align: bottom;
+}
+
+input::-webkit-input-placeholder { /* WebKit browsers */
+  line-height: 130%;
+}
+input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  line-height: 130%;
+}
+input::-moz-placeholder { /* Mozilla Firefox 19+ */
+  line-height: 130%;
+}
+input:-ms-input-placeholder { /* Internet Explorer 10+ */
+  line-height: 130%;
+}
+
+#infoBox{
+  margin-top: 50px;
+}

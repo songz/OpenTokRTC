@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WebRTC Demo - Video chatting in room <%= rid %></title>
+  <meta name="description" content="Simple and easy to use WebRTC Demo for multi-party video chat with text chat"> 
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8">
+  <link rel="stylesheet" href="/vendors/fontAwesome/css/font-awesome.css" />
+  <link rel="stylesheet" href="/vendors/bootstrap/css/bootstrap.min.css" />
+  <link href='https://fonts.googleapis.com/css?family=Carrois+Gothic+SC' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/css/room.css" />
+
+  <script src="http://code.jquery.com/jquery-1.10.2.min.js" type="text/javascript"></script>
+  <script type='text/javascript' src='https://cdn.firebase.com/v0/firebase.js'></script>
+  <script src="https://swww.tokbox.com/webrtc/v2.0/js/TB.min.js"></script>
+  <script src="/vendors/bootstrap/js/bootstrap.js"></script>
+  <script src="/vendors/handlebars.js" type="text/javascript"></script>
+  <script src="http://songz.github.io/layoutContainer/javascript/layoutContainer.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="container">
+  <section id="title">
+    <div id="title_content">
+      <p class="titleText"><%= rid %></p>
+      <p>
+      Share Link: 
+      <a href="http://opentokrtc.com/<%= rid %>">
+        http://opentokrtc.com/<%= rid %>
+      </a>
+      </p>
+    </div>
+  </section>
+
+  <div id="streams_container">
+    <div class="streamContainer">
+      <div id="myPublisher"></div>
+    </div>
+  </div>
+
+  <div id="chatroom">
+    <div id="chatElementContainer">
+      <div id="displayChat"><ul id=""></ul></div>
+      <div id="chatInput">
+        <input type="" id="messageInput" disabled/>
+        <i class="icon-comments-alt"></i>
+      </div>
+    </div>
+  </div>
+
+  <div id="filterContainer">
+    <h1>Filters: </h1>
+    <div id="filterOptions">
+      <h1 class="filterOption" data-value="Blur">Blur</h1>
+      <h1 class="filterOption" data-value="Sepia">Sepia</h1>
+      <h1 class="filterOption" data-value="Grayscale" >Grayscale</h1>
+      <h1 class="filterOption" data-value="Invert" >Invert</h1>
+      <h1 class="filterOption optionSelected" data-value="">None</h1>
+    </div>
+  </div>
+</div>
+
+
+<script id="messageTemplate" type="text/x-handlebars-template">
+<div class="chatMessage"><em>{{name}}: </em>{{{text}}}</div>
+</script>
+
+<script id="notifyTemplate" type="text/x-handlebars-template">
+  <div class="chatEvent chatMessage"><em>{{message}}</em></div>
+</script>
+
+<script id="userStreamTemplate" type="text/x-handlebars-template">
+  <div class="streamContainer {{id}}">
+    <div id="{{id}}"></div>
+    <div class="flagUser" data-streamconnection="{{id}}">Offensive User</div>
+  </div>
+</script>
+
+<script src="/js/room.js" type="text/javascript"></script>
+<script type="text/javascript">
+  new User("<%= rid %>", "<%= apiKey %>", "<%= sid %>", "<%= token %>");
+</script>
+
+</body>
+</html>

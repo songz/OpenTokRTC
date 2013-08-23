@@ -1,0 +1,225 @@
+/*
+ * Normalize variables
+ */
+/*
+ * Bootstrap variables
+ */
+/*
+ * Colors
+ */
+/*
+ * Layout
+ */
+/*
+ * Normalize variables
+ */
+/*
+ * Bootstrap variables
+ */
+/*
+ * Colors
+ */
+/*
+ * Layout
+ */
+.Blur video {
+  -webkit-filter: Blur(15px);
+  -moz-filter: Blur(15px);
+  filter: Blur(15px); }
+
+.Sepia video {
+  -webkit-filter: Sepia(100%);
+  -moz-filter: Sepia(100%);
+  filter: Sepia(100%); }
+
+.Grayscale video {
+  -webkit-filter: Grayscale(100%);
+  filter: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='grayscale'><feColorMatrix type='matrix' values='0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0'/></filter></svg>#grayscale"); }
+
+.Invert video {
+  -webkit-filter: Invert(100%);
+  filter: Invert(100%); }
+
+#filterContainer {
+  border: 1px solid #DDD;
+  height: 43px;
+  box-sizing: border-box;
+  box-shadow: 1px 1px 3px #999 inset;
+  font-size: 20px;
+  color: white;
+  padding-top: 10px;
+  text-align: center;
+  position: fixed;
+  bottom: 0px;
+  right: 400px;
+  left: 0px;
+  background-color: #EEE; }
+  #filterContainer h1 {
+    display: inline;
+    font-size: 20px;
+    line-height: 100%;
+    padding: 0 10px;
+    color: #444444;
+    font-family: "AvantGardeGothicITCW01X";
+    font-weight: normal; }
+  #filterContainer #filterOptions {
+    display: inline; }
+    #filterContainer #filterOptions .filterOption {
+      font-family: "AvantGardeGothicITCW01X";
+      font-weight: normal;
+      color: #999999;
+      cursor: pointer; }
+      #filterContainer #filterOptions .filterOption:hover {
+        background-color: #1ba3dd;
+        color: white; }
+    #filterContainer #filterOptions .optionSelected {
+      background-color: #1ba3dd;
+      color: white; }
+
+/*
+ * Normalize variables
+ */
+/*
+ * Bootstrap variables
+ */
+/*
+ * Colors
+ */
+/*
+ * Layout
+ */
+#chatroom {
+  background: white;
+  border: 3px solid #1ba3dd;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 400px;
+  box-sizing: border-box; }
+
+#chatElementContainer {
+  height: 100%;
+  position: relative; }
+
+#displayChat {
+  padding: 5px;
+  overflow: auto;
+  background: #EEE;
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 40px; }
+  #displayChat .chatEvent {
+    text-align: center;
+    color: #aaa; }
+  #displayChat .chatMessage {
+    margin: 10px 5px 5px 5px;
+    font-size: 15px;
+    word-wrap: break-word; }
+  #displayChat li h4 {
+    display: inline;
+    font-size: 15px; }
+
+#chatInput {
+  height: 40px;
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 0; }
+  #chatInput input {
+    border: 1px solid #DDD;
+    background: none;
+    height: 40px;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 20px;
+    color: #444444;
+    padding-left: 45px; }
+    #chatInput input:focus {
+      outline: none;
+      box-shadow: 1px 1px 3px #999 inset; }
+  #chatInput i {
+    font-size: 30px;
+    position: relative;
+    left: 10px;
+    top: -25px;
+    color: #8D8F8F;
+    float: left; }
+
+body {
+  background-color: #222; }
+  body * {
+    box-sizing: content-box; }
+  body .container {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0; }
+  body #streams_container {
+    position: fixed;
+    top: 75px;
+    bottom: 42px;
+    right: 395px;
+    left: 0px;
+    background-color: #222;
+    text-align: center;
+    box-sizing: border-box; }
+    body #streams_container .streamContainer {
+      display: inline-block;
+      position: relative;
+      text-align: center;
+      box-sizing: border-box; }
+      body #streams_container .streamContainer .OT_video-container {
+        transition: width 1s;
+        -webkit-transition: width 1s; }
+    body #streams_container .flagUser {
+      position: absolute;
+      top: 10px;
+      left: 0px;
+      right: 0px;
+      margin: auto;
+      border: none;
+      box-shadow: 0.15em 0.25em 0.33em rgba(0, 0, 0, 0.3);
+      background-color: #C40A68;
+      color: white;
+      font-size: 15px;
+      padding: 10px;
+      border-radius: 7px;
+      width: 110px;
+      height: 20px;
+      text-align: center;
+      cursor: pointer;
+      display: none; }
+  body .clickThrough {
+    pointer-events: none; }
+  body #title {
+    position: fixed;
+    top: 0;
+    right: 400px;
+    left: 0px;
+    height: 70px;
+    width: 300px;
+    margin: auto; }
+  body #title_content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); }
+    body #title_content p {
+      color: #eeeef2;
+      text-align: center; }
+      body #title_content p a {
+        color: #1ba3dd; }
+  body #title_content .titleText {
+    width: 100%;
+    height: 30px;
+    text-align: center;
+    color: white;
+    font-family: "AvantGardeGothicITCW01X";
+    font-weight: lighter;
+    vertical-align: middle;
+    line-height: 100%;
+    font-size: 30px; }

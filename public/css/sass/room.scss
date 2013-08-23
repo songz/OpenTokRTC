@@ -1,0 +1,115 @@
+@import "variables";
+@import "filters";
+@import "chatBox";
+
+section {
+}
+
+body {
+    // Crutches: these should be removed while modularizing the styles.
+    // It was put here just to help make things "work" and get a usable 
+    // version out.
+    background-color: #222;
+
+    * { box-sizing: content-box; }
+
+    // TODO: list of modules
+    // * StreamsContainer
+    // * StreamContainer
+    // * ChatArea
+    // * VideoEffects?
+
+    .container{
+      position: fixed;
+      top:0;
+      bottom:0;
+      right:0;
+      left:0;
+    }
+
+    #streams_container{
+      position:fixed;
+      top: 75px;
+      bottom: 42px;
+      right: 395px;
+      left: 0px;
+      background-color:#222;
+      text-align:center;
+      box-sizing: border-box;
+
+      .streamContainer{
+        display: inline-block;
+        position: relative;
+        text-align:center;
+        box-sizing: border-box;
+        .OT_video-container{
+          transition: width 1s;
+          -webkit-transition: width 1s;
+        }
+      }
+
+      .subscriber_stream_content:hover .flagUser{
+      }
+
+      .flagUser{
+        position:absolute;
+        top:10px;
+        left:0px;
+        right:0px;
+        margin: auto;
+        border:none;
+        box-shadow:0.15em 0.25em 0.33em rgba(0, 0, 0, 0.3);
+        background-color:#C40A68;
+        color:white;
+        font-size:15px;
+        padding:10px;
+        border-radius:7px;
+        width: 110px;
+        height: 20px;
+        text-align:center;
+        cursor:pointer;
+        display:none;
+      }
+    }
+
+    .clickThrough{
+      pointer-events:none;
+    }
+
+    #title{
+      position:fixed;
+      top:0;
+      right: 400px;
+      left: 0px;
+      height:70px;
+      width: 300px;
+      margin: auto;
+    }
+
+    #title_content{
+      position:relative;
+      width:100%;
+      height:100%;
+      background-color: rgba(0,0,0,0.5);
+      p{
+        color: #eeeef2;
+        text-align:center;
+        a{
+          color: $pink;
+        }
+      }
+    }
+
+    #title_content .titleText{
+      width: 100%;
+      height:30px;
+      text-align:center;
+      color: $hdrContrastColor;
+      font-family: $avantFont;
+      font-weight: lighter;
+      vertical-align:middle;
+      line-height:100%;
+      font-size: 30px;
+    }
+}
+
