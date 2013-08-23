@@ -25,7 +25,7 @@ app.set( 'view engine', 'ejs' );
 // *** When user goes to root directory, render index page
 // ***
 app.get("/", function( req, res ){
-  if(request.header('x-forwarded-proto')=="https"){
+  if(req.header('x-forwarded-proto')=="https"){
     res.render( 'index' );
   }else{
     res.redirect( 'https://opentokrtc.com' );
