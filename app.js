@@ -25,15 +25,19 @@ app.set( 'view engine', 'ejs' );
 // *** When user goes to root directory, render index page
 // ***
 app.get("/", function( req, res ){
-  if(req.header('x-forwarded-proto')=="https"){
-    res.render( 'index' );
-  }else{
+  if(req.header('x-forwarded-proto')!="https"){
     res.redirect( 'https://opentokrtc.com' );
+  }else{
+    res.render( 'index' );
   }
 });
 
 var presenceListener = {};
 app.get("/:rid", function( req, res ){
+  if(req.header('x-forwarded-proto')!="https"){
+    res.redirect( 'https://opentokrtc.com'+req.url );
+    return;
+  }
   // find request format, json or html?
   var path = req.params.rid.split(".json");
   var rid = path[0];
