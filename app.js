@@ -38,6 +38,7 @@ app.get("/:rid", function( req, res ){
     res.redirect( 'https://opentokrtc.com'+req.url );
     return;
   }
+
   // find request format, json or html?
   var path = req.params.rid.split(".json");
   var rid = path[0];
