@@ -15,8 +15,10 @@ $('#roomName').keypress (e) ->
   if (e.keyCode == 13)
     goToRoom()
 
-mtop = (window.innerHeight - $(".container").height())/3
-$(".container").css({"margin-top": "#{mtop}px"})
-window.onresize = ->
-  mtop = (window.innerHeight - $(".container").height())/3
-  $(".container").css({"margin-top": "#{mtop}px"})
+verticalCenter = ->
+  mtop = (window.innerHeight - $(".container").outerHeight())/2
+  $(".container").css({"margin-top": "#{mtop+0.2*mtop}px"})
+
+window.onresize = verticalCenter
+
+verticalCenter()

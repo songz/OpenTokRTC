@@ -57,11 +57,16 @@ h1{
   text-align:center;
   color:#454545;
   opacity: 0.8;
+  text-decoration:none;
+  &:focus{
+    opacity: 1;
+  }
+  &:hover{
+    cursor:pointer;
+    opacity: 1;
+  }
 }
-#submitButton:hover{
-  cursor:pointer;
-  opacity: 1;
-}
+
 #actionItem{
   width: 565px;
   text-align:left;

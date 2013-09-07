@@ -5,8 +5,6 @@ var express = require('express');
 var Firebase = require('firebase');
 var OpenTokLibrary = require('opentok');
 
-console.log( process.env.NODE_ENV );
-
 // ***
 // *** OpenTok Constants for creating Session and Token values
 // ***
@@ -36,6 +34,7 @@ app.get("/", function( req, res ){
 });
 
 var presenceListener = {};
+
 app.get("/:rid", function( req, res ){
   // make sure that we are always in https
   if(req.header('x-forwarded-proto')!="https" == "production" ){
@@ -53,8 +52,8 @@ app.get("/:rid", function( req, res ){
     presenceListener[rid] = true
     var presenceRef = new Firebase("https://rtcdemo.firebaseIO.com/room/" + rid + "/users");
     presenceRef.on('value', function(dataSnapshot){
+      // remove room if there is no one in the room
       if(dataSnapshot.numChildren() == 0){
-        // remove room if there is no one in the room
         roomRef.remove();
       }
     });
