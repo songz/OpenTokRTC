@@ -5,6 +5,8 @@ var express = require('express');
 var Firebase = require('firebase');
 var OpenTokLibrary = require('opentok');
 
+console.log( process.env.NODE_ENV );
+
 // ***
 // *** OpenTok Constants for creating Session and Token values
 // ***
@@ -25,7 +27,8 @@ app.set( 'view engine', 'ejs' );
 // *** When user goes to root directory, render index page
 // ***
 app.get("/", function( req, res ){
-  if(req.header('x-forwarded-proto')!="https"){
+  // make sure that we are always in https
+  if(req.header('x-forwarded-proto')!="https" && process.env.NODE_ENV == "production" ){
     res.redirect( 'https://opentokrtc.com' );
   }else{
     res.render( 'index' );
@@ -34,7 +37,8 @@ app.get("/", function( req, res ){
 
 var presenceListener = {};
 app.get("/:rid", function( req, res ){
-  if(req.header('x-forwarded-proto')!="https"){
+  // make sure that we are always in https
+  if(req.header('x-forwarded-proto')!="https" == "production" ){
     res.redirect( 'https://opentokrtc.com'+req.url );
     return;
   }
