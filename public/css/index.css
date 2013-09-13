@@ -10,17 +10,23 @@
 /*
  * Layout
  */
+html, body {
+  height: 100%; }
+
 body {
-  background-color: #1ba3dd; }
+  background: #1e1916 no-repeat center center fixed;
+  /* Old browsers */
+  background-image: radial-gradient(circle at 50% 50%, #463b34, #1e1916);
+  min-height: 100%; }
 
 .container {
   width: 960px;
-  padding: 80px 50px;
-  background: rgba(0, 0, 0, 0.7); }
+  box-sizing: border-box;
+  min-height: 100%; }
 
 body, input {
   font-family: "AvantGardeGothicITCW01X";
-  color: #eeeef2; }
+  color: #ffffff; }
 
 h1 {
   font-family: "AvantGardeGothicITCW01X";
@@ -40,7 +46,7 @@ h1 {
   border-style: solid;
   border-width: 0px 0px 3px 0px;
   border-color: #88889a;
-  color: #eeeef2;
+  color: #ffffff;
   font-size: 40px;
   line-height: 100%;
   text-align: center;
@@ -52,7 +58,7 @@ h1 {
   padding: 0; }
 
 #submitButton {
-  background-color: #eeeef2;
+  background-color: #ffffff;
   width: 150px;
   height: 60px;
   box-sizing: border-box;
@@ -63,7 +69,7 @@ h1 {
   padding: 10px;
   text-align: center;
   color: #454545;
-  opacity: 0.8;
+  opacity: 0.9;
   text-decoration: none; }
   #submitButton:focus {
     opacity: 1; }
