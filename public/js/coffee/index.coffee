@@ -16,7 +16,7 @@ $('#roomName').keypress (e) ->
     goToRoom()
 
 verticalCenter = ->
-  mtop = (window.innerHeight - $(".container").outerHeight())/2
+  mtop = (window.innerHeight - $(".container").outerHeight())/3
   $(".container").css({"margin-top": "#{mtop+0.2*mtop}px"})
 
 window.onresize = verticalCenter

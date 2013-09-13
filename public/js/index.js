@@ -27,7 +27,7 @@
 
   verticalCenter = function() {
     var mtop;
-    mtop = (window.innerHeight - $(".container").outerHeight()) / 2;
+    mtop = (window.innerHeight - $(".container").outerHeight()) / 3;
     return $(".container").css({
       "margin-top": "" + (mtop + 0.2 * mtop) + "px"
     });
