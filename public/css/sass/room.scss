@@ -9,7 +9,7 @@ body {
     // Crutches: these should be removed while modularizing the styles.
     // It was put here just to help make things "work" and get a usable 
     // version out.
-    background-color: #222;
+    @include radialBackground( $darkBrown, $lightBrown );
 
     * { box-sizing: content-box; }
 
@@ -33,7 +33,6 @@ body {
       bottom: 42px;
       right: 395px;
       left: 0px;
-      background-color:#222;
       text-align:center;
       box-sizing: border-box;
 

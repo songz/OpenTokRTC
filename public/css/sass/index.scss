@@ -4,8 +4,7 @@ html,body{
   height:100%;
 }
 body{
-  background:#1e1916 no-repeat center center fixed; /* Old browsers */
-  background-image: radial-gradient(circle at 50% 50%, #463b34, #1e1916);
+  @include radialBackground( $darkBrown, $lightBrown );
   min-height: 100%;
 }
 .container{

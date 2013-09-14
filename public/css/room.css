@@ -1,4 +1,7 @@
 /*
+ * Mixins
+ */
+/*
  * Normalize variables
  */
 /*
@@ -9,6 +12,9 @@
  */
 /*
  * Layout
+ */
+/*
+ * Mixins
  */
 /*
  * Normalize variables
@@ -76,6 +82,9 @@
       background-color: #1ba3dd;
       color: white; }
 
+/*
+ * Mixins
+ */
 /*
  * Normalize variables
  */
@@ -149,7 +158,13 @@
     float: left; }
 
 body {
-  background-color: #222; }
+  background: #433931 no-repeat center center fixed;
+  /* Old browsers */
+  background-image: radial-gradient(circle at 50% 50%, #433931, #1e1916);
+  background-image: -webkit-radial-gradient(50% 50%, circle, #433931, #1e1916);
+  background-image: -moz-radial-gradient(50% 50%, circle, #433931, #1e1916);
+  background-image: -ms-radial-gradient(50% 50%, circle, #433931, #1e1916);
+  background-image: -o-radial-gradient(50% 50%, circle, #433931, #1e1916); }
   body * {
     box-sizing: content-box; }
   body .container {
@@ -164,7 +179,6 @@ body {
     bottom: 42px;
     right: 395px;
     left: 0px;
-    background-color: #222;
     text-align: center;
     box-sizing: border-box; }
     body #streams_container .streamContainer {

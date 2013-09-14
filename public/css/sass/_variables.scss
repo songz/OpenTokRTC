@@ -1,4 +1,17 @@
 /*
+ * Mixins
+ */
+
+@mixin radialBackground( $to, $from ){
+  background:$from no-repeat center center fixed; /* Old browsers */
+  background-image: radial-gradient(circle at 50% 50%, $from, $to);
+  background-image: -webkit-radial-gradient(50% 50%, circle, $from, $to);
+  background-image: -moz-radial-gradient(50% 50%, circle, $from, $to);
+  background-image: -ms-radial-gradient(50% 50%, circle, $from, $to);
+  background-image: -o-radial-gradient(50% 50%, circle, $from, $to);
+}
+
+/*
  * Normalize variables
  */
 $legacy-support-for-ie7 : false;
@@ -18,6 +31,10 @@ $white : #fff;
 /*
  * Colors
  */
+
+//index page
+$darkBrown: #1e1916;
+$lightBrown: #433931;
 
 // Theme
 
