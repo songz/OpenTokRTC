@@ -10,7 +10,13 @@ body{
 .container{
   width: 960px;
   box-sizing: border-box;
-  min-height: 100%
+  min-height: 100%;
+  text-align:center;
+  #opentokLogo{
+    position:fixed;
+    bottom: 20px;
+    right: 20px;
+  }
 }
 body, input{
   font-family: $avantFont;
